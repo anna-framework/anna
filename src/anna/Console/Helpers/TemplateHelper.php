@@ -14,7 +14,7 @@ class TemplateHelper
 
 	public function __construct() 
     {
-		$this->templates_path = SYS_ROOT . 'Lib' . DS . 'Assets' . DS;
+		$this->templates_path = ANNA_ROOT . 'Assets' . DS;
 	}
 
 	/**
