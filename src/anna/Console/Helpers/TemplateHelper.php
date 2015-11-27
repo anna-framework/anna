@@ -2,7 +2,7 @@
 
 namespace Anna\Console\Helpers;
 
-use Anna;
+use Anna\Error;
 use Anna\Routers\Router;
 
 class TemplateHelper
