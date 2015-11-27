@@ -25,6 +25,24 @@ class Config
 
 	public function __construct()
     {
+        if(!defined('SYS_ROOT')){
+            define('SYS_ROOT', dirname(dirname(dirname(dirname(dirname(__DIR__))))) . DS);
+        }
+
+        chdir(SYS_ROOT);
+
+        if(!defined('DS')){
+            define('DS', DIRECTORY_SEPARATOR);
+        }
+        
+        if(!defined('PS')){
+            define('PS', PATH_SEPARATOR);
+        }
+        
+        if(!defined('EOL')){
+            define('EOL', PHP_EOL);
+        }
+
 		$this->config_array = [];
 		$this->config_path = SYS_ROOT . 'App' . DS . 'Config' . DS;
 	}
