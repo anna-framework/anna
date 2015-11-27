@@ -1,0 +1,22 @@
+namespace {{namespace}};
+
+{{use_suberclass}}
+{{use_model}}
+
+/**
+ * ------------------------------------------------------
+ * {{repository_name}}Repository
+ * ------------------------------------------------------
+ *
+ * Repositório gerado automaticamente pela Anna
+ *
+ * @author {{dev_name}}
+ * @since {{data}}
+ * @package {{namespace}};
+ */
+ class {{repository_name}}Repository extends Repository
+ {
+
+	{{construct}}
+
+ }

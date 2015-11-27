@@ -1,0 +1,38 @@
+namespace {{namespace}};
+
+use Anna\Controller;
+
+/**
+ * ------------------------------------------------------
+ * {{controller_name}}Controller
+ * ------------------------------------------------------
+ *
+ * Controlador Restfull gerado automaticamente pela Anna
+ *
+ * @author {{dev_name}}
+ * @since {{data}}
+ * @package {{namespace}};
+ */
+class {{controller_name}}Controller extends Controller
+{
+
+	public function create()
+    {
+		//do the thing
+	}
+
+	public function read()
+    {
+
+	}
+
+	public function update()
+    {
+
+	}
+
+	public function delete()
+    {
+
+	}
+}

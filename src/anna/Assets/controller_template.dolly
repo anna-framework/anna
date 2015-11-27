@@ -1,0 +1,24 @@
+namespace {{namespace}};
+
+use Anna\Controller;
+
+/**
+ * ------------------------------------------------------
+ * {{controller_name}}Controller
+ * ------------------------------------------------------
+ *
+ * Gerado automaticamente pela Anna
+ *
+ * @author {{dev_name}}
+ * @since {{data}}
+ * @package {{namespace}};
+ */
+class {{controller_name}}Controller extends Controller
+{
+
+	public function index()
+    {
+		{{show_view}}
+	}
+
+}
