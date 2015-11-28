@@ -25,4 +25,4 @@ php anna list
 
 ## Contribuição
 Fique a vontade para participar do projeto, caso tenha alguma idéia para componente ou algo que torne a Anna ainda mais simples, basta clonar!
-Alterações também podem ser realizadas no instalador do framework, acesasr em: https://github.com/anna-framework/installer
+Alterações também podem ser realizadas no instalador do framework, acessar em: https://github.com/anna-framework/installer
