@@ -59,9 +59,15 @@ class Application
 		$controller = $this->wakeUpController($url_params);
 
 		if (isset($url_params['watcher'])){
-			$this->runWatcher($url_params['watcher'], $controller);
+			$watcher_result = $this->runWatcher($url_params['watcher'], $controller);
         }
-        
+
+        if(!$watcher_result){
+            $response = new Response('acesso_negado', 404);
+            $response->display();
+            return;
+        }
+
 		$method = $url_params['method'];
 
 		if (isset($url_params['method_params'])){
@@ -135,7 +141,7 @@ class Application
 		$watcher = new $full_name_watcher();
 
 		$watcher->setController($controller);
-		$watcher->do();
+		return $watcher->run();
 	}
 
 	/**

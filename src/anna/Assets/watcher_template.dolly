@@ -1,0 +1,22 @@
+namespace {{namespace}};
+
+use Anna\Watchers\Abstracts\WatcherAbstract;
+
+/**
+ * ------------------------------------------------------
+ * {{watcher}}Watcher
+ * ------------------------------------------------------
+ *
+ * Watcher gerado automaticamente pela Anna
+ *
+ * @author {{dev_name}}
+ * @since {{data}}
+ * @package {{namespace}};
+ */
+class {{watcher_name}}Watcher extends WatcherAbstract
+{
+    public function run()
+    {
+        // do the thing
+    }
+}
