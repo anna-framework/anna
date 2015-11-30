@@ -25,13 +25,14 @@ class Config
 
 	public function __construct()
     {
-        if(!defined('SYS_ROOT')){
+
+        if (!defined('SYS_ROOT')) {
             define('SYS_ROOT', dirname(dirname(dirname(dirname(dirname(__DIR__))))) . DS);
         }
 
         chdir(SYS_ROOT);
 
-        if(!defined('DS')){
+        if (!defined('DS')) {
             define('DS', DIRECTORY_SEPARATOR);
         }
         
@@ -42,6 +43,10 @@ class Config
         if(!defined('EOL')){
             define('EOL', PHP_EOL);
         }
+
+		if(!defined('ANNA_ROOT')) {
+			define('ANNA_ROOT', __DIR__ . DS);
+		}
 
 		$this->config_array = [];
 		$this->config_path = SYS_ROOT . 'App' . DS . 'Config' . DS;

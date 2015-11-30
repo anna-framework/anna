@@ -3,20 +3,7 @@
         "limit": 25,
         "execution_task_count": 0,
         "active": false,
-        "memory_usage": 2.75
+        "memory_usage": 0
     },
-    "workers": [
-        {
-            "name": "Trabalhador Teste",
-            "string_timed": "10s",
-            "registered_at": "2015-11-25 15:06:34",
-            "active_in": "2015-11-25 11:00:00",
-            "times_performed": 40,
-            "last_run": "2015-11-26 11:39:55",
-            "next_run": "2015-11-26 11:39:55",
-            "active": false,
-            "limit_performation": 40,
-            "class_name": "App\\Workers\\TesteWorker"
-        }
-    ]
+    "workers": []
 }
