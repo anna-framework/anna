@@ -93,7 +93,7 @@ class Table
         $this->save();
     }
 
-    public function registerWorkers($workers) 
+    public function registerWorkers($workers)
     {
 
         foreach ($workers as $worker) {
@@ -139,7 +139,7 @@ class Table
             }
         }
 
-        $this->save();        
+        $this->save();
     }
 
     public function save()
@@ -164,26 +164,28 @@ class Table
 
     /**
      * Retorna uma instancia do worker encontrado ou retorna null
-     * 
+     *
      * @param  string $name
      * @return Worker
      */
-    public function getWorkerByName($name) 
-    {
-        foreach ($this->information['workers'] as $worker) {
-            $reflection = new \ReflectionClass($worker['class_name']);
-            $worker = $reflection->newInstance();
-            $worker->configure();
+	 public function getWorkerByName($name)
+     {
+         foreach ($this->information['workers'] as $worker) {
+             if($worker['name'] == $name){
+ 	            $reflection = new \ReflectionClass($worker['class_name']);
+ 	            $worker = $reflection->newInstance();
+ 	            $worker->configure();
 
-            if ($worker->getWorkerName() == $name) {
-                return $worker;
-            }
-        }
+ 	            if ($worker->getWorkerName() == $name) {
+ 	                return $worker;
+ 	            }
+             }
+         }
 
-        return null;
-    }
+         return null;
+     }
 
-    public function getWorkers() 
+    public function getWorkers()
     {
         return $this->information['workers'];
     }
@@ -202,7 +204,7 @@ class Table
         fwrite($a, $text . EOL . EOL);
         fclose($a);
     }
-    
+
     public function turnOff()
     {
         $this->information['config']['active'] = false;
