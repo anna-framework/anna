@@ -205,20 +205,20 @@ a {
 
 @media screen and (min-width: 64em) {
   .main-content {
-    max-width: 64rem;
     padding: 2rem 6rem;
     margin: 0 auto;
-    font-size: 1.1rem; } }
+    text-align: justify;
+ } }
 
 @media screen and (min-width: 42em) and (max-width: 64em) {
   .main-content {
-    padding: 2rem 4rem;
-    font-size: 1.1rem; } }
+    padding: 2rem 4rem; } }
 
 @media screen and (max-width: 42em) {
   .main-content {
     padding: 2rem 1rem;
-    font-size: 1rem; } }
+    font-size: 1rem; 
+    text-align: justify; } }
 
 .site-footer {
   padding-top: 2rem;
@@ -243,3 +243,22 @@ a {
 @media screen and (max-width: 42em) {
   .site-footer {
     font-size: 0.9rem; } }
+
+*::selection { 
+    color: white; 
+    background-color: orange;
+}
+
+.page-header{
+    margin-top: 0 !important;
+}
+.lateral-menu h4{
+    margin-top: 30px;
+}
+
+.main-nav{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+}
