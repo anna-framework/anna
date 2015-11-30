@@ -60,12 +60,12 @@ class Application
 
 		if (isset($url_params['watcher'])){
 			$watcher_result = $this->runWatcher($url_params['watcher'], $controller);
-        }
 
-        if(!$watcher_result){
-            $response = new Response('acesso_negado', 404);
-            $response->display();
-            return;
+            if(!$watcher_result){
+                $response = new Response('acesso_negado', 404);
+                $response->display();
+                return;
+            }
         }
 
 		$method = $url_params['method'];
