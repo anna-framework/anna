@@ -1,0 +1,400 @@
+<div style="float: right; margin: 19px;">
+    <img src="img/logo.png" />
+</div>
+
+<h3>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Componentes externos
+</h3>
+
+<p>
+    A Anna faz uso de diversos pacotes open source existentes na internet. Estes componentes foram escolhidos pelo fato de serem reconhecidos pela comunidade,
+    por sere eficientes, e óbviamente por que existem né? não iremos reinventar a roda aqui atoa.
+</p>
+<p>&nbsp;</p>
+<h4>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Componentes:
+</h4>
+
+<p>
+    Se você olhar o composer.json do framework, não do instalador, você verá algo parecido com isso:
+</p>
+
+
+<!--?prettify lang=json-->
+<pre class="prettyprint">
+    "require": {
+        "windwalker/renderer": "2.*",
+        "illuminate/view": "4.*",
+        "symfony/filesystem": "*",
+        "symfony/routing": "*",
+        "doctrine/orm": "*",
+        "php-di/php-di": "*",
+        "symfony/http-foundation": "^2.7",
+        "psy/psysh": "^0.6.1"
+    },
+</pre>
+
+<p>
+    A partir daqui iremos dar uma olhada superficial em cada pacote desses, em como ele é utilizado no framework, e um link para um manual mais completo.
+</p>
+<p>&nbsp;</p>
+<h5>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    windwalker/renderer e illuminate/view
+</h5>
+
+<p>
+    Este pacote é uma junção de diversas view engines e tem como dependência o pacote illuminate/view, foi escolhido por isso mesmo, em um único pacote podemos dispor de usar 
+    as as view engines: blade, mustache e twig.
+</p>
+
+<p>
+    A Anna disponibiliza a possibilidade de se utilizar qualquer uma dessas 3 engines apenas alterando a propriedade 'view-engine' em <b>App/Config/view.php</b>:
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    return [
+		
+    	/**
+    	 * Para renderizar suas views, você pode utilizar as engines: blade, twig ou mustache
+    	 */
+    	'view-engine' => 'blade',
+
+    	/*
+    	 *  Local onde é armazenado as views, sinta-se livre para alterar
+    	 */
+    	'view-folder' => 'App/Views/',
+
+    	/*
+    	 * local onde será armazenado os caches das views 
+    	 */
+    	'cache-folder' => 'cache/'
+    ];
+</pre>
+
+
+<p>
+    Para mais informações sobre como utilizar o sistema de views da Anna <a href="?page=view" targete="_blank">clique aqui</a>.
+</p>
+<p>
+    Para saber mais sobre o pacote acesse: <a href="https://github.com/ventoviro/windwalker-renderer" targete="_blank">windwalker/renderer</a>.
+</p>
+
+<p>&nbsp;</p>
+
+<h5>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    symfony/routing
+</h5>
+
+<p>
+    Como a nomeclatura já sugere, este pacote trata as entradas de uri e mapeia as rotas com base em uma configuração de rotas pré estabelecida. 
+    A Anna simplifica ao máximo este processo oferecendo uma forma simples de configuração de rotas que pode ser acessada em App\Config\routes.php:
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    $router->add("/", "HomeController::index");
+    $router->add("/index{any}", "HomeController::index");
+    $router->add("/users", "UsersController::index");
+    $router->add("/users/{any}", "UsersController::index");
+
+    $router->addWatcher('Teste', function($router){
+        $router->add("/teste", "TesteController::index");
+    });
+
+    $route->addPrefix('/frutas', function($router){
+        $router->add("/banana", "FrutasController::banana");
+        $router->add("/uva", "FrutasController::uva");
+        $router->add("/laranja", "FrutasController::laranja");
+    });
+</pre>
+<p>
+    
+</p>
+<p>
+    Para mais informações sobre como criar rotas, acesse a página <a href="?page=rotas">criando rotas</a>.
+</p>
+<p>
+    Para mais informações sobre o pacote symfony/routing, acesse o manual do componente: 
+    <a href="http://symfony.com/doc/current/components/routing/introduction.html" target="_blank">The Routing Component</a>.
+</p>
+
+
+
+<p>&nbsp;</p>
+
+<h5>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    doctrine/orm
+</h5>
+
+<p>
+    O pacote mais pesado, porém na minha opinião o mais útil.
+</p>
+<p>
+    Doctrine PHP é uma biblioteca fantástica de abstração da camada de banco de dados. Ela oferece inúmeras ferramentas para organizar e facilitar a vida
+    do desenvolvedor, tanto para utilização básica quanto para uso mais pesado incluindo gestão de cache e outras opções avançadas.
+</p>
+
+<p>
+    A Anna oferece uma utilização simples, para quem quer apenas facilidade de uso, incluído no framework há um repositório com as soluções básicas para criar CRUD
+    implementados. Fica a cargo do desenvolvedor tomar nota do padrão de <i>annotations</i> utilizado pelo doctrine para mapear os models. A documentação de referência
+    das <i>annotations</i> podem ser lidas 
+    <a href="http://doctrine-orm.readthedocs.org/projects/doctrine-orm/en/latest/reference/annotations-reference.html" target="_blank">neste link</a>.
+</p>
+
+<p>
+    Para um exemplo simples de como utilizar os models doctrine com o repositório já fornecido:
+</p>
+
+<p>
+    Primeiro, deve-se criar o um repositório e um model atravéz do comando anna na linha de comando. Note que é utilizado a flag m no comando para que a 
+    Anna também crie um model com o mesmo nome do repositório
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    php anna make:repository User -m
+</pre>
+<p>&nbsp;</p>
+
+<p>
+    Então, após a mensagem da anna você poderá acessar as pastas App\Models e App\Repositories e verá as classes criadas
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    //Classe repository
+    class UserRepository extends Repository
+    {
+        /**
+    	 * @inject UserModel
+    	 * @var UserModel
+    	 */
+    	public $model;
+    }
+</pre>
+<p>&nbsp;</p>
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    //Classe model
+    class UserModel extends \Anna\Databases\Model
+    {
+
+    	/**
+    	 * @Id
+    	 * @Column(type="integer")
+    	 * @GeneratedValue
+    	 */
+    	public $id;
+    }
+</pre>
+<p>&nbsp;</p>
+<p>
+    A partir de agora, basta acessar a classe UserModel e adicionar os campos desejados conforme as anotações do doctrine, por exemplo:
+</p>
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    //Classe model
+    class UserModel extends \Anna\Databases\Model
+    {
+    	/**
+    	 * @Id
+    	 * @Column(type="integer")
+    	 * @GeneratedValue
+    	 */
+    	public $id;
+
+        /**
+         * @Column(type='string', length=50, nullable=false);
+         */
+        public $name;
+
+        /**
+         * @Column(type='string', length=50, nullable=false);
+         */
+        public $email;
+
+        /**
+         * @Column(type='string', length=50, nullable=false);
+         */
+        public $password;
+    }
+</pre>
+<p>&nbsp;</p>
+<p>
+    Agora basta rodar o comando anna na linha de comando e seus models serão registrado no banco de dados
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    php anna db:export
+</pre>
+<p>&nbsp;</p>
+<p>
+    A partir dai você pode usar salvar, buscar e editar na tabela user do banco de dados:
+</p>
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    //controller
+    ...
+    $user = new UserModel();
+    $user->name = 'Xupinha';
+    $user->email = "xupinha@gmail.com";
+    $user->pass = bcrypt('segredo');
+
+    $repository = new UserRepository();
+    $repository->setModel($user);
+    $repository->save();
+    ...
+</pre>
+<p>&nbsp;</p>
+
+<p>
+    Para mais informações sobre como utilizar models e repositórios, acesse as páginas 
+    <a href="?page=rotas">criando models</a> e <a href="?page=repositorios">criando repositórios</a>.
+</p>
+
+<p>
+    Para mais informações sobre o pacote doctrine/orm, acesse o manual do componente: 
+    <a href="http://doctrine-orm.readthedocs.org/en/latest/" target="_blank">Doctrine ORM</a>.
+</p>
+
+<p>&nbsp;</p>
+<h5>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    php-di/php-di
+</h5>
+
+<p>
+    Este pacote implementa o padrão <i>dependence injection</i>. Facilita a importação e instanciação dos componentes utilizados a partir do controller, se você
+    observou o repositório gerado com o comando anna, percebeu que nas anotações da propriedade model, possue uma tag chamada @inject seguida do nome da classe model.
+    O que ela faz é instanciar a propriedade com uma instância nova da classe referenciada poupando tempo de escrita, veja o exemplo a baixo:
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    class HomeController extends Controller
+    {
+        /**
+         * @inject App\Repositories\UserRepository
+         */
+        private $repo;
+
+        public function index(){
+            $user = $this->repo->search(['id' => 12], true);
+        }
+    }
+</pre>
+<p>&nbsp;</p>
+
+<p>
+    Para mais informações sobre o pacote php-di/php-di, acesse o manual do componente: <a href="https://github.com/PHP-DI/PHP-DI" target="_blank">php-di/php-di</a>.
+</p>
+<p>&nbsp;</p>
+<h5>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    symfony/http-foundation
+</h5>
+
+<p>
+    Symfony http-foundation é um facilitador que visa centralizar os <i>requests</i> e as <i>responses</i>. A única coisa que a ANNA faz é criar uma classe intermediária entre
+    a biblioteca para facilitar e padronizar o uso nas namespaces.
+</p>
+
+<p>
+    Para utilizar a classe Request basta seguir o exemplo:
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    //controller
+
+    public function index(){
+        $request = new Anna\Request();
+    
+        //pegando dados do post
+        $getPostData = $request->post('param_name');
+    
+        //pegando dados do get
+        $getGetData = $request->get('param_name');
+    }
+</pre>
+<p>&nbsp;</p>
+<p>
+    E para utilizar a classe Response basta seguir o exemplo:
+</p>
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    //controller
+
+    public function listaFrutas(){
+        $frutas = ['banana', 'uva', 'maça', 'laranja'];
+        $headers = ['content-type' => 'text/json'];
+
+        //retornando json com código de resposta diferente de 200;
+        return new Anna\Response(json_encode($frutas), 201, $headers);
+
+        //para retornar apenas json, não é necessário converter o array/objeto, 
+        //nem precisa criar um objeto response, basta retornar
+        return $frutas;
+    }
+</pre>
+<p>&nbsp;</p>
+
+<p>
+    Para mais informações sobre o pacote symfony/http-foundation, acesse o manual do componente: 
+    <a href="http://symfony.com/doc/current/components/http_foundation/introduction.html" target="_blank">symfony/http-foundation</a>.
+</p>
+
+<p>&nbsp;</p>
+<h5>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    psy/psysh
+</h5>
+
+<p>
+    Esta biblioteca com nome psicodélico é o mecanismo que possibilita a anna oferecer um comando para debug muito útil, o desk.
+</p>
+<p>
+    O commando desk serve para debugar na linha de comando alguma classe ou método que se esta desenvolvendo. Para ativar o modo desk, digite na linha de comando:
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    php anna desk;
+</pre>
+<p>&nbsp;</p>
+<p>
+    A Anna entrará então em modo de desenvolvimento, você poderá efetuar comandos que irão sendo executados em tempo real e a responsta do retorno é dada na linha de baixo.
+</p>
+
+<img src="img/desk.jpg" />
+<p>&nbsp;</p>
+
+<p>
+    Para mais informações sobre o pacote psy/psysh, acesse o manual do componente: 
+    <a href="http://psysh.org/" target="_blank">psy/psysh</a>.
+</p>
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;&amp;lang=js&amp;skin=desert"></script>
