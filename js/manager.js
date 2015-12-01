@@ -8,8 +8,8 @@ function getParameterByName(name) {
 $(document).ready(function(){
     var page = getParameterByName('page');
     
-    if(page == '' || page == undefined){
-        page = index;
+    if(!page){
+        page = 'index';
     }
 
     $.ajax({

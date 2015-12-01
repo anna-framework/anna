@@ -1,0 +1,112 @@
+<div style="float: right; margin: 19px;">
+    <img src="img/logo.png" />
+</div>
+
+<h3>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Pré Requisitos do sistema
+</h3>
+
+<p>
+    Para que a Anna rode linda, leve e solta, seu ambiente precisa estar devidamente configurado, não é difícil olha só:
+</p>
+
+<h4>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    PHP 5.4+ e linha de comando
+</h4>
+
+<p>
+    O PHP necessário é o 5.4+, ele já está um pouco defasado, por isso acreditamos que não será muito dificil encontrar servidores para ele caso 
+    você queira utilizar hospedagens comerciais em seu projeto. Óbviamente, quanto mais recente a versão do PHP utilizada melhor.
+</p>
+
+<p>
+    Outra configuração que auxiliará muito, porém não é obrigatória, é disponibilizar o PHP na linha de comando, se você está no linux, não há nada o que fazer, já estará lá.
+    Porém, caso utilize o windows basta ir até a pasta onde está o php.exe, copiar o endereço na barra de endereço do windows, e colocar esse endereço na variavel de ambiente PATH.
+</p>
+
+<div class="clearfix">
+    <div style="float:right; margin: 19px;">
+        <img src="img/variaveis_de_ambiente.jpg" />
+    </div>
+    <p>
+        No menu inicial do windows, busque por "Variaveis de ambiente" você pode editar tanto as variaveis do sistema quanto do seu usuário, da no mesmo.
+        Procure pela variável PATH, caso não exista, pode criar uma, e adicione o caminho do PHP lá, tomando sempre cuidado de separar esse caminho de outros que possam
+        existir lá com ";".
+    </p>
+</div>
+
+<p>
+    Para confirmar se seu PHP está rodando na linha de comando, feche os consoles abertos, e abra um novo digite então:
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    php -v
+</pre>
+
+<div style="float:right; margin: 19px;">
+    <img src="img/console.jpg" />
+</div>
+
+<p>
+    Caso tenha dado algo diferente da imagem a cima, deve-ser verificar as razões do erro.
+</p>
+
+<h3>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Composer
+</h3>
+
+<p>
+    Fazer o download manual de todos os pacotes que a Anna utiliza, é dolorido, são vários pacotes cada um com suas próprias dependências. Para evitar essa problemática e manter seus pacotes
+    atualizados, alguém teve a genial idéia de criar o COMPOSER <a href="https://getcomposer.org/doc/00-intro.md" target="_blank" title="Composer">clique aqui para saber mais</a>.
+</p>
+
+<p>
+    Se você utiliza linux, mais uma vez, basta instala-lo e ele já estará no seu terminal, agora você trabalha com windows, aconselho a utilizar o instalador do composer ao invés de baixar o arquivo
+    composer.phar, pois o mesmo já adiciona o comando composer no seu console no escopo global. Sendo asim, acionando o comando:
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    composer -V
+</pre>
+
+<p>
+    Você terá:
+</p>
+
+<div style="float:right; margin: 19px;">
+    <img src="img/console-composer.jpg" />
+</div>
+
+
+
+<h4>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Fazendo os workers trabalharem
+</h4>
+
+<p>
+    Caso você queria utilizar os workers para rodar trabalhos e tempos em tempos, a Anna oferece um mecanismo que visa substituir a tabela de cronjob, lhe dando autonomia para rodar de forma
+    prática seus jobs.
+</p>
+
+<p>
+    Para tanto, caso você utilize windows ou seu servidor de produção seja windows, é necessário ativar no php.ini a extensão <strong>php_dotnet.com.dll</strong>,
+    esta biblioteca permite que a Anna gerence seus workers em processos paralelos evitando craches e parada de trabalhos. Esta DLL já vem com o php por padrão, basta
+    ser ativada no php.ini.
+</p>
+
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;&amp;lang=js&amp;skin=desert"></script>
