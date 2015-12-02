@@ -1,0 +1,137 @@
+<div style="float: right; margin: 19px;">
+    <img src="img/logo.png" />
+</div>
+
+<h3>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Anna, sua assistente de desenvolvimento
+</h3>
+
+<p>
+    A Anna oferece, como visto nos tutoriais anteriores, uma ferramenta de linha de comando para auxilio na criação das coisas necessárias
+    para um desenvolvimento mais ágil, e tudo começa com o comando:
+</p>
+
+<!--?prettify lang=json-->
+<pre class="prettyprint">
+    php anna list
+</pre>
+<p>&nbsp;</p>
+<p>
+    A Anna utiliza o pacote symfony/console para processar as requisiões e exibir os retornos dos comandos. A lista de comandos que a anna 
+    disponibiliza é bem extensa, e crescente. Para saber informações sobre os comandos basta utilzar a opçãp <i>--help</i>.
+</p>
+
+<p>
+    A Anna utiliza o pacote symfony/console para processar as requisiões e exibir os retornos dos comandos. A lista de comandos que a anna 
+    disponibiliza é bem extensa, e crescente. Para saber informações sobre os comandos basta utilzar a opçãp <i>--help</i>.
+</p>
+<p>&nbsp;</p>
+<h4>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Comandos <i>php anna make:</i>
+</h4>
+<p>
+    As os comandos <i>make:</i> tem um funcioamento muito semelhante, por exemplo, para criar um novo controller:
+</p>
+
+<!--?prettify lang=json-->
+<pre class="prettyprint">
+    php anna make:controller Frutas
+</pre>
+<p>&nbsp;</p>
+
+<p>
+    Este comando, irá criar dentro da pasta App\Controllers um arquivo chamado FrutasController.php com a classe FrutasController. Ou seja, não é necessário
+    adicionar o sufixo Controller, nem nenhum outro sufixo para os outros comandos make.
+</p>
+<p>&nbsp;</p>
+<h4>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Comandos <i>php anna job:</i>
+</h4>
+
+<p>
+    Estes são comandos especiais que visam facilitar a vida da gestão de jobs que devem ser executados de períodos em períodos. Apesar de já esta funcionando
+    ainda, estes comandos irão ganhar melhorias e novos comportamentos em breve.
+</p>
+
+<p>
+    O comando <i>job:up</i> faz com a anna inicie um processo leve em background que irá observar seus <i>Workers</i>, de acordo com a configuração adicionada no 
+    worker em questão, <a href="?page=workers">veja como configurar workers</a>, ele será chamado sempre que der a hora de ser executado, em outro processo paralelo.
+</p>
+
+<p>
+    Quando se cria novos workers enquanto a anna já está executando a observação, é necessário utilizar o comando  <i>job:register</i> para que ela atualize a tabela
+    com os novos workers. E para desligar a obsrevação dos workers basta dar o comando <i>job:down</i>
+</p>
+
+<p>
+    Em breve, haverá outro comando para que possa-se visualizar as estatísticas do funcionamento dos workers.
+</p>
+<p>&nbsp;</p>
+
+<h4>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Comandos <i>php anna db:</i>
+</h4>
+
+<p>
+    Estes comandos servem, como a nomeclatura sugere, para efetuar ações relativas ao banco de dados. O comando <i>db:export</i> por padrão
+    carrega os models criados na pasta App\Models e cria as tabelas no banco de dados (seja qual for o banco ou a engine). Caso adicionado a 
+    opção <i>-u</i> ao comando, ele irá verificar tabela por tabela com os seus respetivos models e irá atualizadas caso haja divergência.
+</p>
+
+<p>
+    Atenção, esse processo só funciona em alterações Models -> banco de dados, se você alterar a tabela na mão e rodar o comando export com opção <i>-u</i>
+    as alterações nas tabelas serão perdidas.
+</p>
+
+<p>
+    Muito cuidado com o comando <i>job:dro-tables</i> ele irá dropar todas as tabelas do seu banco sem te perguntar nada :)
+</p>
+<p>&nbsp;</p>
+<h4>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    <i>php anna desk</i>
+</h4>
+<p>
+    Muito cuidado com o comando <i>job:dro-tables</i> ele irá dropar todas as tabelas do seu banco sem te perguntar nada :)
+</p>
+<p>&nbsp;</p>
+
+<h4>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Documentação
+</h4>
+<p>
+    Se você observar o arquivo App\Config\app.php verá que existe uma área para por seu nome
+</p>
+<!--?prettify lang=json-->
+<pre class="prettyprint">
+    /*
+     * O nome do desenvolvedor
+     */
+    'developer' => 'Cristiano Gomes <cmgomes.es@gmail.com>',
+</pre>
+<p>&nbsp;</p>
+<p>
+    Basta por seu nome e email para que os comandos make: ao gerar as classes ponha na documentação da nova classe a sua assinatura.
+</p>
+    
+
+
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;&amp;lang=js&amp;skin=desert"></script>

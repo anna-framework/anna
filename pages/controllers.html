@@ -1,0 +1,67 @@
+
+<h3>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Criando Controllers
+</h3>
+
+<p>
+    O esqueleto do controlador de página é simples, não foge ao padrão do mercado.
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    class HomeController extends Anna\Controller{
+    	public function index(){
+            return view('home');
+    	}
+    }
+</pre>
+<p>&nbsp;</p>
+<p>
+    O importante é que seu controlador tenha o sufixo Controller e extenda Anna\Controller. E deve-se ater ao fato de que o roteador não mapeia a url automaticamente
+    para o seu controlador, há sempre de se registrar a rota dele, para isso acesse: <a href="?page=rotas">Criando Rotas</a>.
+</p>
+<p>
+    Existe o comando anna para criar controladores mais facilmente e ja com um bloco elegante de documentação, por exemplo o comando:
+</p>
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    php anna make:controller Usuario
+</pre>
+<p>&nbsp;</p>
+
+<p>
+    Irá gerar uma classe controladora assim:
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    namespace App\Controllers;
+
+    use Anna\Controller;
+
+    /**
+     * ------------------------------------------------------
+     * UsuarioController
+     * ------------------------------------------------------
+     *
+     * Gerado automaticamente pela Anna
+     *
+     * @author Cristiano Gomes <cmgomes.es@gmail.com>
+     * @since 02/12/2015
+     * @package App\Controllers;
+     */
+    class UsuarioController extends Controller
+    {
+
+    	public function index()
+        {
+    		//do the thing
+    	}
+
+    }
+</pre>
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;&amp;lang=js&amp;skin=desert"></script>
