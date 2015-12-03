@@ -24,6 +24,7 @@ class LogHelper
 
     /**
      * Escreve arquivo de log.
+     * @param string $message
      */
     public function writel($message, $fileSalt)
     {
@@ -45,6 +46,10 @@ class LogHelper
         }
     }
 
+    /**
+     * @param string $log
+     * @param \DateTime $date
+     */
     private function edit($log, $date, $message)
     {
         $logcontent = 'Time : '.$date->format('H:i:s')."\r\n".$message."\r\n\r\n";

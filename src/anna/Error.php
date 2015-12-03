@@ -34,7 +34,7 @@ class Error
     /**
      * Registra os erros em arquivo enquanto direciona o usuário para uma página genérica de erro.
      *
-     * @param Exception $ex
+     * @param \Exception $ex
      */
     public static function logProduction(\Exception $ex)
     {
@@ -64,7 +64,7 @@ class Error
     /**
      * Envia os dados para a tela para apreciação do desenvolvedor.
      *
-     * @param Exception $ex
+     * @param \Exception $ex
      */
     public static function logDev(\Exception $ex)
     {
@@ -74,7 +74,6 @@ class Error
     /**
      * Registra os erros em arquivo enquanto direciona o usuário para uma página genérica de erro.
      *
-     * @param Exception $ex
      */
     public static function logFile($text)
     {
