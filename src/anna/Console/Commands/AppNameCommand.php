@@ -63,6 +63,9 @@ class AppNameCommand extends Command
         $output->writeln('Namespace raiz trocado com sucesso.');
     }
 
+    /**
+     * @param OutputInterface $output
+     */
     private function changeComposerRoots($name, $output)
     {
         $file = SYS_ROOT.'composer.json';
@@ -93,6 +96,7 @@ class AppNameCommand extends Command
     /**
      * Carrega os comandos criandos pelos desenvolvedores inicialização.
      *
+     * @param string $path
      * @return array
      */
     private function loadAppCommands($path)
