@@ -1,8 +1,6 @@
 <?php
 namespace Anna\ViewRenderes;
 
-use Windwalker\Renderer\MustacheRenderer;
-
 /**
  * -------------------------------------------------------------
  * MustacheRenderer
@@ -14,7 +12,7 @@ use Windwalker\Renderer\MustacheRenderer;
  * @since 03, Novembro 2015
  * @package Anna\ViewRenderes
  */
-class MustacheRenderer extends MustacheRenderer
+class MustacheRenderer extends \Windwalker\Renderer\MustacheRenderer
 {
 	
 }

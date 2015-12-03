@@ -1,8 +1,6 @@
 <?php
 namespace Anna\ViewRenderes;
 
-use Windwalker\Renderer\TwigRenderer;
-
 /**
  * -------------------------------------------------------------
  * TwigRenderer
@@ -14,7 +12,7 @@ use Windwalker\Renderer\TwigRenderer;
  * @since 03, Novembro 2015
  * @package Anna\ViewRenderes
  */
-class TwigRenderer extends TwigRenderer
+class TwigRenderer extends \Windwalker\Renderer\TwigRenderer
 {
 	
 }

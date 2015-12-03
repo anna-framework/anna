@@ -1,8 +1,6 @@
 <?php
 namespace Anna\ViewRenderes;
 
-use Windwalker\Renderer\BladeRenderer;
-
 /**
  * -------------------------------------------------------------
  * BladeRenderer
@@ -14,7 +12,7 @@ use Windwalker\Renderer\BladeRenderer;
  * @since 03, Novembro 2015
  * @package Anna\ViewRenderes
  */
-class BladeRenderer extends BladeRenderer
+class BladeRenderer extends \Windwalker\Renderer\BladeRenderer
 {
 	
 }
