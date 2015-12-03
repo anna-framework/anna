@@ -7,6 +7,7 @@
 
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/anna-framework/anna.svg)](http://isitmaintained.com/project/anna-framework/anna "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/anna-framework/anna.svg)](http://isitmaintained.com/project/anna-framework/anna "Percentage of issues still open")
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/anna-framework/anna/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/anna-framework/anna/?branch=master)
 
 
 
