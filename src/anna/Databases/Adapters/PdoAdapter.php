@@ -38,7 +38,7 @@ class PdoAdapter implements AdaptersInterface
 		$paths = [SYS_ROOT . 'App' . DS . 'Models' . DS];
 
 		// the connection configuration
-		$conn_params = array[
+		$conn_params = [
 			'host'	   => $config->get('database.connection.host'),
 		    'driver'   => $config->get('database.connection.driver'),
 		    'user'     => $config->get('database.connection.user'),
