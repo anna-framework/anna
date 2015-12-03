@@ -1,5 +1,7 @@
 ## Anna PHP
 
+[![StyleCI](https://styleci.io/repos/46992617/shield)](https://styleci.io/repos/46992617)
+
 O framework Anna PHP foi desenvolvido para trazer o que há de mais moderno no desenvolvimento web para PHP com simplicidade
 e facilidade de utilização de seus componentes.
 
