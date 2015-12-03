@@ -10,13 +10,13 @@
     "minimum-stability": "dev",
     "require": {
         "windwalker\/renderer": "2.1.4",
-        "illuminate\/view": "5.1.25",
-        "symfony\/filesystem": "3.0",
-        "symfony\/routing": "3.0",
-        "doctrine\/orm": "2.5.2",
-        "php-di\/php-di": "5.1.0",
+        "illuminate\/view": "5.1.*",
+        "symfony\/filesystem": "3.*",
+        "symfony\/routing": "3.*",
+        "doctrine\/orm": "2.5.*",
+        "php-di\/php-di": "5.1.*",
         "symfony\/http-foundation": "2.8",
-        "psy\/psysh": "0.6.1",
+        "psy\/psysh": "0.6.*",
         "phpunit/phpunit": "4.6.*"
     },
     
