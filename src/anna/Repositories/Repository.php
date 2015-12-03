@@ -78,10 +78,10 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
      * Caso as opções de soft delete estejam configuradas o campo buscará por a data atual no campo informado
      * como delflag nas configurações do aplicativo.
      *
-     * @param string $model Nome de um model existente
+     * @param string $modelname Nome de um model existente
      * @param int    $id    valor da chave primária do registro
      *
-     * @return bool
+     * @return false|null
      */
     public function remove($modelname, $id)
     {
@@ -246,7 +246,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
     /**
      * Entrega a ferramenta QueryBuider do Doctrine2 para construção de queries customizadas utilizando DQL.
      *
-     * @return QueryBuilder
+     * @return \Doctrine\ORM\QueryBuilder
      */
     public function createQueryBuilder()
     {
@@ -283,7 +283,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
      *
      * @param Model $model
      *
-     * @return Anna\Repositories\Repository
+     * @return Repository
      */
     public function setModel(Model $model)
     {

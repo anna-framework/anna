@@ -141,6 +141,10 @@ class MakeRepositoryCommand extends Command
         fclose($hand);
     }
 
+    /**
+     * @param string $class_name
+     * @param OutputInterface $output
+     */
     private function callMakeModel($class_name, $output)
     {
         $cmd = 'make:model';

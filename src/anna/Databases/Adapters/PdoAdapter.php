@@ -46,8 +46,8 @@ class PdoAdapter implements AdaptersInterface
 
         try {
             $this->pdo = new PdoDriver('mysql:dbname='.$conn_params['dbname'].';host='.$conn_params['host'].'',
-                 $conn_params['user'],
-                 $conn_params['password'],
+                    $conn_params['user'],
+                    $conn_params['password'],
                 [
                     \PDO::MYSQL_ATTR_INIT_COMMAND          => 'SET NAMES '.$conn_params['charset'],
                     \PDO::ATTR_EMULATE_PREPARES            => false,

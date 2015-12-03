@@ -18,6 +18,9 @@ class PdoDriver extends \PDO
     public $columnCount = 0;
     public $querycount = 0;
 
+    /**
+     * @param string $link
+     */
     public function __construct($link, $user, $senha, $array)
     {
         $this->log = new LoggingHelper();
@@ -60,6 +63,8 @@ class PdoDriver extends \PDO
 
     /**
      * Inicia conexão com o driver database PDO.
+     * @param string $params
+     * @return string
      */
     private function BuildParams($query, $params = null)
     {
@@ -81,7 +86,7 @@ class PdoDriver extends \PDO
         $rawStatement = explode(' ', $query);
         $this->Execute($query, $params);
         $statement = strtolower($rawStatement[0]);
-        if ($statement    === 'select' || $statement === 'show') {
+        if ($statement === 'select' || $statement === 'show') {
             return $this->sQuery->fetchAll($fetchmode);
         } elseif ($statement === 'insert' || $statement === 'update' || $statement === 'delete') {
             return $this->sQuery->rowCount();

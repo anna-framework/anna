@@ -125,6 +125,9 @@ trait RouterTrait
         $this->addEspecifcMethod($route_name, $path, 'DELETE', $parameters);
     }
 
+    /**
+     * @param string $method
+     */
     private function addEspecifcMethod($route_name, $path, $method, $parameters = [])
     {
         if (isset($parameters['methods']) && is_array($parameters['methods'])) {
