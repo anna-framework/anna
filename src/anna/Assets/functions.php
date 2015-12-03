@@ -135,6 +135,29 @@ function view($template)
 }
 
 /**
+ * Extrai o nome da pasta a partir do possível namespace recebido.
+ */
+private function nameToFolderName($name, $folder_base)
+{
+    $name = str_replace('/', '_', $name);
+    $name = str_replace('\\', '_', $name);
+    $parts = explode('_', $name);
+
+    $base_path = SYS_ROOT.'App'.DS.$folder_base;
+    $folder_name = '';
+
+    foreach ($parts as $subfolder) {
+        $folder_name .= DS.$subfolder;
+    }
+
+    if (!is_dir($base_path.$folder_name)) {
+        return (mkdir($base_path.$folder_name)) ? $folder_name : false;
+    } else {
+        return $folder_name;
+    }
+}
+
+/**
  * Carrega os models criados pelo desenvolvedor.
  *
  * @return array

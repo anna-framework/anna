@@ -37,7 +37,7 @@ class MakeControllerCommand extends Command
         $name = trim($input->getArgument('name'));
         $parts = explode('\\', $name);
         $class_name = end($parts);
-        $folder_name = $this->nameToFolderName($name);
+        $folder_name = nameToFolderName($name, 'Controllers');
         $view_folder = strtolower(str_replace(DS, '', $folder_name));
         $root_ns = Config::getInstance()->get('root-namespace');
 
@@ -85,29 +85,6 @@ class MakeControllerCommand extends Command
         }
 
         $output->writeln('Anna: Controlador '.$class_name.'Controller criado com sucesso.');
-    }
-
-    /**
-     * Extrai o nome da pasta a partir do possível namespace recebido.
-     */
-    private function nameToFolderName($name)
-    {
-        $name = str_replace('/', '_', $name);
-        $name = str_replace('\\', '_', $name);
-        $parts = explode('_', $name);
-
-        $base_path = SYS_ROOT.'App'.DS.'Controllers';
-        $folder_name = '';
-
-        foreach ($parts as $subfolder) {
-            $folder_name .= DS.$subfolder;
-        }
-
-        if (!is_dir($base_path.$folder_name)) {
-            return (mkdir($base_path.$folder_name)) ? $folder_name : false;
-        } else {
-            return $folder_name;
-        }
     }
 
     /**

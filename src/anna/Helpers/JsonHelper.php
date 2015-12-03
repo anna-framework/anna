@@ -6,6 +6,8 @@ class JsonHelper
 {
     public static function encode($json, $group = false)
     {
+        $jsonSafed = [];
+
         if ($group) {
             $jsonSafed[$group] = $json;
         } else {

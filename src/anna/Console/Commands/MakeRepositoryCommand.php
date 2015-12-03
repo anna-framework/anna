@@ -38,7 +38,7 @@ class MakeRepositoryCommand extends Command
         $name = $input->getArgument('name');
         $parts = explode('\\', $name);
         $class_name = end($parts);
-        $folder_name = $this->nameToFolderName($name);
+        $folder_name = nameToFolderName($name, 'Repositories');
         $root_ns = Config::getInstance()->get('root-namespace');
 
         $params = [
@@ -91,29 +91,6 @@ class MakeRepositoryCommand extends Command
         fclose($hand);
 
         $output->writeln('Anna: Repositorio '.$class_name.'Repository criado com sucesso.');
-    }
-
-    /**
-     * Extrai o nome da pasta a partir do possível namespace recebido.
-     */
-    private function nameToFolderName($name)
-    {
-        $name = str_replace('/', '_', $name);
-        $name = str_replace('\\', '_', $name);
-        $parts = explode('_', $name);
-
-        $base_path = SYS_ROOT.'App'.DS.'Controllers';
-        $folder_name = '';
-
-        foreach ($parts as $subfolder) {
-            $folder_name .= DS.$subfolder;
-        }
-
-        if (!is_dir($base_path.$folder_name)) {
-            return (mkdir($base_path.$folder_name)) ? $folder_name : false;
-        } else {
-            return $folder_name;
-        }
     }
 
     /**

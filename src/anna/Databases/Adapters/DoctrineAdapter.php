@@ -59,8 +59,6 @@ class DoctrineAdapter implements AdaptersInterface
             }
         }
 
-        //$doctrine_config->setResultCacheImpl($cacheImpl);
-
         $proxy_dir = SYS_ROOT.'App'.DS.'Models'.DS.'Proxies';
 
         if (!is_dir($proxy_dir)) {
@@ -81,8 +79,6 @@ class DoctrineAdapter implements AdaptersInterface
             $this->entityManager = EntityManager::create($conn_params, $doctrine_config);
         }
 
-        // $cache = $this->entityManager->getConfiguration()->getResultCacheImpl();
-        // $deleted = $cacheDriver->deleteAll();
     }
 
     /**

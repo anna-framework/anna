@@ -78,7 +78,6 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
      * Caso as opções de soft delete estejam configuradas o campo buscará por a data atual no campo informado
      * como delflag nas configurações do aplicativo.
      *
-     * @param string $modelname Nome de um model existente
      * @param int    $id    valor da chave primária do registro
      *
      * @return false|null
