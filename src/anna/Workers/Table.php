@@ -40,12 +40,21 @@ class Table
         $this->loadInformation();
     }
 
+    /**
+     * Carrega a informação da tabela de workers
+     * @return void
+     */
     public function loadInformation()
     {
         $file = file_get_contents(__DIR__.DS.'table.json');
         $this->information = json_decode($file, true);
     }
 
+    /**
+     * Registra um worker worker na tabela
+     * @param  array $worker    conjunto de informações sobre um worker
+     * @return void
+     */
     public function registerWorker($worker)
     {
         $worker_obj = $this->getWorkerByName($worker['name']);
@@ -90,6 +99,12 @@ class Table
         $this->save();
     }
 
+    /**
+     * Registra um conjunto de workers de uma vez
+     * 
+     * @param  array $workers 
+     * @return void
+     */
     public function registerWorkers($workers)
     {
         foreach ($workers as $worker) {
@@ -98,15 +113,27 @@ class Table
         $this->save();
     }
 
+    /**
+     * Retira um worker da tabela
+     * @param  string $name
+     * @return void
+     */
     public function unregisterWorker($name)
     {
-        for ($i = 0; $i < count($this->information['workers']); $i++) {
+        $count_workers = count($this->information['workers']);
+        for ($i = 0; $i < $count_workers; $i++) {
             if ($this->information['workers'][$i]['name'] == $name) {
                 unset($this->information['workers'][$i]);
             }
         }
     }
 
+    /**
+     * Atualiza um determinado worker na tabela
+     * 
+     * @param  array $worker 
+     * @return void
+     */
     public function updateWorker($worker)
     {
         foreach ($this->information['workers'] as &$infor_worker) {
@@ -122,6 +149,12 @@ class Table
         $this->save();
     }
 
+    /**
+     * Atualiza um conjunto de workers de uma vez
+     * 
+     * @param  array $workers 
+     * @return void
+     */
     public function updateWorkers($workers)
     {
         foreach ($workers as $worker) {
@@ -138,6 +171,11 @@ class Table
         $this->save();
     }
 
+    /**
+     * Salva a tabela em disco
+     * 
+     * @return void
+     */
     public function save()
     {
         if ($this->changed) {
@@ -183,11 +221,20 @@ class Table
             return;
         }
 
+    /**
+     * Retorna a lista de workers
+     * @return array
+     */
     public function getWorkers()
     {
         return $this->information['workers'];
     }
 
+    /**
+     * Remote todos os workers da tabela
+     * 
+     * @return void
+     */
     public function clearWorkers()
     {
         $this->information['workers'] = [];
@@ -195,14 +242,11 @@ class Table
         $this->save();
     }
 
-    public function escreve($text)
-    {
-        $file = SYS_ROOT.'logs'.DS.'teste.txt';
-        $a = fopen($file, 'a+');
-        fwrite($a, $text.EOL.EOL);
-        fclose($a);
-    }
-
+    /**
+     * Altera a configuração da tabela para desligada, nesse caso os job observer irá parar de rodar
+     * 
+     * @return void
+     */
     public function turnOff()
     {
         $this->information['config']['active'] = false;
@@ -210,6 +254,10 @@ class Table
         $this->save();
     }
 
+    /**
+     * Seta a configura da tabela para ligada, o job observer ao ler continuará rodando
+     * @return void
+     */
     public function turnOn()
     {
         $this->information['config']['active'] = true;
@@ -217,6 +265,11 @@ class Table
         $this->save();
     }
 
+    /**
+     * Atualiza a quantidade de memória gasta pelo observer
+     * @param  floatval $amount 
+     * @return void
+     */
     public function updateMemoryUsage($amount)
     {
         $this->information['config']['memory_usage'] = $amount;

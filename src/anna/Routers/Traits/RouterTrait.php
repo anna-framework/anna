@@ -257,6 +257,11 @@ trait RouterTrait
         }
     }
 
+    abstract public function getSubRouter()
+    {
+        return new SubRouter();
+    }
+    
     /**
      * Adiciona wildcards padrões para serem utilizados na detecção de rotas por regex.
      */

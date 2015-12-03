@@ -78,7 +78,7 @@ class JobObserverCommand extends Command
         $limit_memory = Config::getInstance()->get('app.work-limit-memory');
 
         if ($megabytes >= $limit_memory) {
-            $tabler->turnOff();
+            $table->turnOff();
             exec('php anna job:up');
         }
 

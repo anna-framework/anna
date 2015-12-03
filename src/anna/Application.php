@@ -22,7 +22,7 @@ class Application
     /**
      * Container responsável pela Dependence Injection.
      *
-     * @var DI\Container
+     * @var \DI\Container
      */
     private $di;
 

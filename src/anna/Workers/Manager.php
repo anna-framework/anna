@@ -116,7 +116,7 @@ final class Manager
                 $reflection = new \ReflectionClass($worker);
             } catch (\ReflectionException $e) {
                 $logHelper = new LogHelper();
-                $logHelper->writel($e->getMessage());
+                $logHelper->writeln($e->getMessage());
                 die();
             }
 

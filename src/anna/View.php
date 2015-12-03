@@ -17,9 +17,6 @@ use Windwalker\Renderer\BladeRenderer;
  */
 class View
 {
-    /**
-     * @var AbstractRenderer
-     */
     private $renderer;
     private $template;
     private $params = [];

@@ -98,13 +98,13 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
         if (Config::getInstance()->get('database.softdelete')) {
             $delflag = Config::getInstance()->get('database.delflag');
             $bin_field = $table_name.$delflag;
-            $model->$bin_field = date('Y-m-d H:i:s');
+            $this->model->$bin_field = date('Y-m-d H:i:s');
 
             try {
                 $this->manager->merge($this->model);
                 $this->manager->flush();
             } catch (\Exception $e) {
-                Error::log($exc);
+                Error::log($e);
 
                 return false;
             }
@@ -189,7 +189,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
     public function persist(Model $model)
     {
         try {
-            $this->entity_manager->persist($model);
+            $this->manager->persist($model);
         } catch (\Exception  $e) {
             Error::log($e);
 
