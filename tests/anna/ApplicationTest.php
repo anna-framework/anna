@@ -1,10 +1,9 @@
 <?php
-use Anna\Application;
 
 class ApplicationTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Application::run
+     * @covers \Anna\Application::run
      */
     public function testAssert()
     {
