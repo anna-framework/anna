@@ -61,7 +61,7 @@ class PdoAdapter implements AdaptersInterface
 			);
 			$this->bConnected = true;
 		} catch (\PDOException $e) {
-            Error::log($e)
+            Error::log($e);
 		}
 	}
 
