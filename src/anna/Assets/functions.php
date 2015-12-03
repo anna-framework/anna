@@ -185,7 +185,7 @@ function loadAppModels()
         }
     }
 
-    $lista_final = array_filter($fqcns, function ($item) {
+    $lista_final = array_filter($fqcns, function($item) {
         preg_match('~Model~', $item, $teste);
 
         return (count($teste)) ? true : false;

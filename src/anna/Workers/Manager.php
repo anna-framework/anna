@@ -150,6 +150,7 @@ final class Manager
     /**
      * Carrega os comandos criandos pelos desenvolvedores inicialização.
      *
+     * @param string $path
      * @return array
      */
     private function loadAppWorkers($path)

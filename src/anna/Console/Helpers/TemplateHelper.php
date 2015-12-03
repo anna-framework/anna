@@ -39,7 +39,7 @@ class TemplateHelper
 
     public function render($template, $params)
     {
-        $template_path = $this->templates_path . $template . '.dolly';
+        $template_path = $this->templates_path.$template.'.dolly';
 
         if (is_file($template_path)) {
             $template = file_get_contents($template_path);
