@@ -3,25 +3,27 @@
     "description": "framework",
     "authors": [
         {
-            "name": "cmgomes",
+            "name": "Cristiano Gomes",
             "email": "cmgomes.es@gmail.com"
         }
     ],
     "minimum-stability": "dev",
     "require": {
-        "windwalker\/renderer": "2.*",
-        "illuminate\/view": "4.*",
-        "symfony\/filesystem": "*",
-        "symfony\/routing": "*",
-        "doctrine\/orm": "*",
-        "php-di\/php-di": "*",
-        "symfony\/http-foundation": "^2.7",
-        "psy\/psysh": "^0.6.1"
+        "windwalker\/renderer": "2.1.4",
+        "illuminate\/view": "5.1.25",
+        "symfony\/filesystem": "3.0",
+        "symfony\/routing": "3.0",
+        "doctrine\/orm": "2.5.2",
+        "php-di\/php-di": "5.1.0",
+        "symfony\/http-foundation": "2.8",
+        "psy\/psysh": "0.6.1",
+        "phpunit/phpunit": "4.6.*"
     },
     
     "autoload":{
         "psr-4":{
-            "Anna\\": "src/anna/"
+            "Anna\\": "src/anna/",
+            "AnnaTests\\": "tests/anna/"
         }
     }
 
