@@ -19,7 +19,7 @@ Anna é um framework novo e precisa passar por um processo de maturação. Está
 suas ferramentas.
 
 ## Documentação
-A documentação está sendo escrita e estará disponível no wiki do git hub o quanto antes.
+Você pode acessar a documentação pelo link ao lado: http://anna-framework.github.io/anna/?page=index
 
 ## Instalação
 Para utilizar a Anna, basta digitar este comando no console:
