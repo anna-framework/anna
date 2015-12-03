@@ -49,6 +49,7 @@ class LogHelper
     /**
      * @param string $log
      * @param \DateTime $date
+     * @param string $message
      */
     private function edit($log, $date, $message)
     {
