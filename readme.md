@@ -1,6 +1,8 @@
 ## Anna PHP
 
-[![StyleCI](https://styleci.io/repos/46992617/shield)](https://styleci.io/repos/46992617)
+[![StyleCI](https://styleci.io/repos/46992617/shield)](https://styleci.io/repos/46992617) 
+[![Build Status](https://travis-ci.org/anna-framework/anna.svg?branch=master)](https://travis-ci.org/anna-framework/anna) 
+[![codecov.io](https://codecov.io/github/anna-framework/anna/coverage.svg?branch=master)](https://codecov.io/github/anna-framework/anna?branch=master) 
 
 O framework Anna PHP foi desenvolvido para trazer o que há de mais moderno no desenvolvimento web para PHP com simplicidade
 e facilidade de utilização de seus componentes.
