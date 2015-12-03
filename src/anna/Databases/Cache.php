@@ -117,13 +117,12 @@ class Cache
 
             default:
                 throw new \Exception('O driver especificado não foi encontado.');
-                break;
         }
     }
 
     public function save($id, $data, $life = null)
     {
-        $this->driver->save($id, $data);
+        $this->driver->save($id, $data, $life);
     }
 
     public function contains($id)

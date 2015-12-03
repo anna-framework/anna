@@ -135,20 +135,6 @@ function view($template)
 }
 
 /**
- * Função de log rápido, utilizado registrar o funcionamento de workers em seus subprocesso, muito útil para desenvolvimento
- * de novos workers.
- * 
- * @param string $message
- */
-function logi($message)
-{
-    $file = SYS_ROOT.'errors'.DS.'errors.log';
-    $h = fopen($file, 'a+');
-    fwrite($h, $message.EOL);
-    fclose($h);
-}
-
-/**
  * Carrega os models criados pelo desenvolvedor.
  *
  * @return array

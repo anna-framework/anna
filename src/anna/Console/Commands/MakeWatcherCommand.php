@@ -79,7 +79,6 @@ class MakeWatcherCommand extends Command
         $parts = explode('_', $name);
 
         $base_path = SYS_ROOT.'App'.DS.'Watchers';
-        $controller_name = array_pop($parts);
         $folder_name = '';
 
         foreach ($parts as $subfolder) {

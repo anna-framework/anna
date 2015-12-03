@@ -42,6 +42,6 @@ class RouteListCommand extends Command
         $table->setRows($data);
 
         $output->writeln('Anna: estas sao as rotas registradas ate o momento:');
-        $table->render($output);
+        $table->render();
     }
 }

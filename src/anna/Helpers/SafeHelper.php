@@ -45,8 +45,6 @@ class SafeHelper
                     $array[$key] = addslashes($array[$key]);
                     $array[$key] = filter_var($array[$key], FILTER_SANITIZE_STRING);
                     $array[$key] = html_entity_decode($array[$key], ENT_COMPAT, 'UTF-8');
-                            //$array[$key] = mysql_escape_string ($array[$key]);
-                            //$array[$key] = utf8_encode ($array[$key]);
                 }
             }
         }

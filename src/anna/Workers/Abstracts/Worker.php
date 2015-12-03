@@ -23,7 +23,6 @@ abstract class Worker implements WorkerInterface
     private $worker_name;
     private $start_to_work;
     private $active = false;
-    private $next_run;
     private $exec_number = 0;
 
     /**

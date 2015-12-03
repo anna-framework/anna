@@ -54,41 +54,6 @@ trait RouterTrait
      * @param string $route_name
      * @param mixed  $parameters
      */
-    // public function add($route_name, $parameters)
-    // {
-    // 	if (is_array($parameters)) {
-    // 		$path = $parameters[0];
-    // 		$requirements = isset($parameters[1]['requirements']) ? $parameters[1]['requirements'] : [];
-    // 		$options = 	isset($parameters[1]['options']) ? $parameters[1]['options'] : [];
-    // 		$hosts = isset($parameters[1]['host']) ? $parameters[1]['host'] : null;
-    // 		$schemes = isset($parameters[1]['schemes']) ? $parameters[1]['schemes'] : [];
-    // 		$methods = isset($parameters[1]['methods']) ? $parameters[1]['methods'] : [];
-    // 		$route = new Route($route_name, ['path' => $path], $requirements, $options, $hosts, $schemes, $methods);
-    // 	} else {
-    // 		$route = new Route($route_name, ['path' => $parameters]);
-    // 	}
-    //
-    // 	$this->collection->add($route_name, $route);
-    // }
-
-    /**
-     * Adiciona uma nova rota à coleção de rotas do sistema.
-     *
-     * Os parametros podem ser somente uma string contendo nome do controlador e método da rota no padrão
-     * controller::method ou pode ser um array cujo a primeira posição seja o controlador e método enquanto as demais
-     * posições, todas opcionais, podem ser arrays cujo as chaves seriam:
-     *
-     * - requirements
-     * - options
-     * - hosts
-     * - schemes
-     * - methods
-     *
-     * @see https://symfony.com/doc/current/components/routing/introduction.html
-     *
-     * @param string $route_name
-     * @param mixed  $parameters
-     */
     public function add($route_name, $path, $parameters = [])
     {
         if (count($parameters) > 0) {

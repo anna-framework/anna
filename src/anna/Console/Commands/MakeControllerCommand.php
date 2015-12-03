@@ -80,7 +80,7 @@ class MakeControllerCommand extends Command
         fclose($hand);
 
         //add controlador na router
-        if (!$this->addControllerToRoute($view_folder, $class_name)) {
+        if (!$this->addControllerToRoute($class_name)) {
             $output->writeln('Anna: Nao foi possivel criar uma nova rota.');
         }
 
@@ -97,7 +97,6 @@ class MakeControllerCommand extends Command
         $parts = explode('_', $name);
 
         $base_path = SYS_ROOT.'App'.DS.'Controllers';
-        $controller_name = array_pop($parts);
         $folder_name = '';
 
         foreach ($parts as $subfolder) {
@@ -140,7 +139,7 @@ class MakeControllerCommand extends Command
         return true;
     }
 
-    private function addControllerToRoute($view_folder, $class_name)
+    private function addControllerToRoute($class_name)
     {
         $url_name = strtolower($class_name);
 

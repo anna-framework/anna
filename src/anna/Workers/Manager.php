@@ -217,7 +217,6 @@ final class Manager
                 }
 
                 $periodicity = $testChar[0];
-                $period = '';
 
                 switch ($periodicity) {
                     case 'y':
@@ -249,7 +248,7 @@ final class Manager
                         break;
 
                     default:
-                    throw new \Exception('String de periodicidade mal configurada.');
+                        throw new \Exception('String de periodicidade mal configurada.');
                 }
 
                 $add_string = "+$amount $period";

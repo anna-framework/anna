@@ -39,7 +39,6 @@ class DoctrineAdapter implements AdaptersInterface
     {
         $config = Config::getInstance();
 
-        //$this->$db_config = '';
         $paths = [SYS_ROOT.'App'.DS.'Models'.DS];
         $dev_mode = $config->get('database.debug');
 

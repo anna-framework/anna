@@ -41,7 +41,7 @@ class JobObserverCommand extends Command
             $time = time();
 
             if ($time - $lapse >= 2) {
-                if ($this->inspect() == false) {
+                if ($this->inspect() === false) {
                     return;
                 }
 

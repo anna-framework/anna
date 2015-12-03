@@ -67,7 +67,7 @@ class MakeResourceCommand extends Command
         fclose($hand);
 
         //add controlador na router
-        if (!$this->addResourceToRoute($view_folder, $class_name)) {
+        if (!$this->addResourceToRoute($class_name)) {
             $output->writeln('Anna: Nao foi possivel criar uma nova rota.');
         }
 
@@ -84,7 +84,6 @@ class MakeResourceCommand extends Command
         $parts = explode('_', $name);
 
         $base_path = SYS_ROOT.'App'.DS.'Controllers';
-        $controller_name = array_pop($parts);
         $folder_name = '';
 
         foreach ($parts as $subfolder) {
@@ -98,7 +97,7 @@ class MakeResourceCommand extends Command
         }
     }
 
-    private function addResourceToRoute($view_folder, $class_name)
+    private function addResourceToRoute($class_name)
     {
         $url_name = strtolower($class_name);
 

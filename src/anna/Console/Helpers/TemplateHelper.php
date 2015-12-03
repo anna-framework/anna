@@ -16,8 +16,6 @@ class TemplateHelper
 {
     private static $instance;
 
-    private $templates_folder;
-
     private $templates_path;
     
     public function __construct()

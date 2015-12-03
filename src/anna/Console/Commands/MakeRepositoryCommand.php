@@ -56,7 +56,6 @@ class MakeRepositoryCommand extends Command
                 $params['construct'] = '';
                 $params['use_model'] = '';
             } else {
-                $n = EOL;
                 $model .= 'Model';
                 $declaration = '/**'.EOL;
                 $declaration .= "\t * @inject ".$model.EOL;
@@ -104,7 +103,6 @@ class MakeRepositoryCommand extends Command
         $parts = explode('_', $name);
 
         $base_path = SYS_ROOT.'App'.DS.'Controllers';
-        $controller_name = array_pop($parts);
         $folder_name = '';
 
         foreach ($parts as $subfolder) {

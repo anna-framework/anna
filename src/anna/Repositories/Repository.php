@@ -83,7 +83,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
      *
      * @return false|null
      */
-    public function remove($modelname, $id)
+    public function remove($id)
     {
         $modelname = get_class($this->model);
         $table_name = $this->manager->getClassMetadata($modelname)->getTableName();
@@ -320,8 +320,8 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
         $query = $qb->getQuery();
         unset($qb);
 
-        $query->setFirstResult($offset); //offset
-        $query->setMaxResults($this->per_page); //Limit
+        $query->setFirstResult($offset);
+        $query->setMaxResults($this->per_page); 
 
         try {
             $paginator = new Paginator($query);

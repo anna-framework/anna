@@ -17,11 +17,9 @@ class Request extends \Symfony\Component\HttpFoundation\Request
 {
     /**
      * Constructor.
-     *
      */
     public function __construct()
     {
-        //array $query = array(), array $request = array(), array $attributes = array(), array $cookies = array(), array $files = array(), array $server = array(), $content = null
         $this->initialize($_GET, $_REQUEST, [], $_COOKIE, $_FILES, $_SERVER, null);
     }
 

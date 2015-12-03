@@ -17,8 +17,6 @@ class Error
 {
     /**
      * Determina a forma como o registro do erro será feito com base na variável de ambiente setada nas configurações.
-     *
-     * @param Exception $ex
      */
     public static function log($ex)
     {

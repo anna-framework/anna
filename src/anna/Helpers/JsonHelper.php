@@ -6,7 +6,6 @@ class JsonHelper
 {
     public static function encode($json, $group = false)
     {
-        //SafeHelper::secure($json);
         if ($group) {
             $jsonSafed[$group] = $json;
         } else {
