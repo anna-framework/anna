@@ -55,24 +55,87 @@ trait RouterTrait
 	 * @param string $route_name
 	 * @param mixed $parameters
 	 */
-	public function add($route_name, $parameters)
+	// public function add($route_name, $parameters)
+    // {
+	// 	if (is_array($parameters)) {
+	// 		$path = $parameters[0];
+	// 		$requirements = isset($parameters[1]['requirements']) ? $parameters[1]['requirements'] : [];
+	// 		$options = 	isset($parameters[1]['options']) ? $parameters[1]['options'] : [];
+	// 		$hosts = isset($parameters[1]['host']) ? $parameters[1]['host'] : null;
+	// 		$schemes = isset($parameters[1]['schemes']) ? $parameters[1]['schemes'] : [];
+	// 		$methods = isset($parameters[1]['methods']) ? $parameters[1]['methods'] : [];
+	// 		$route = new Route($route_name, ['path' => $path], $requirements, $options, $hosts, $schemes, $methods);
+	// 	} else {
+	// 		$route = new Route($route_name, ['path' => $parameters]);
+	// 	}
+    // 
+	// 	$this->collection->add($route_name, $route);
+	// }
+    
+    /**
+	 * Adiciona uma nova rota à coleção de rotas do sistema
+	 *
+	 * Os parametros podem ser somente uma string contendo nome do controlador e método da rota no padrão
+	 * controller::method ou pode ser um array cujo a primeira posição seja o controlador e método enquanto as demais
+	 * posições, todas opcionais, podem ser arrays cujo as chaves seriam:
+	 *
+	 * - requirements
+	 * - options
+	 * - hosts
+	 * - schemes
+	 * - methods
+	 *
+	 * @see https://symfony.com/doc/current/components/routing/introduction.html
+	 *
+	 * @param string $route_name
+	 * @param mixed $parameters
+	 */
+	public function add($route_name, $path, $parameters = [])
     {
-		if (is_array($parameters)) {
-			$path = $parameters[0];
-			$requirements = isset($parameters[1]['requirements']) ? $parameters[1]['requirements'] : [];
-			$options = 	isset($parameters[1]['options']) ? $parameters[1]['options'] : [];
-			$hosts = isset($parameters[1]['host']) ? $parameters[1]['host'] : null;
-			$schemes = isset($parameters[1]['schemes']) ? $parameters[1]['schemes'] : [];
-			$methods = isset($parameters[1]['methods']) ? $parameters[1]['methods'] : [];
+		if (count($parameters) > 0) {
+			$requirements = isset($parameters['mask']) ? $parameters['mask'] : [];
+			$options = 	isset($parameters['options']) ? $parameters['options'] : [];
+			$hosts = isset($parameters['host']) ? $parameters['host'] : null;
+			$schemes = isset($parameters['schemes']) ? $parameters['schemes'] : [];
+			$methods = isset($parameters['methods']) ? $parameters['methods'] : [];
 			$route = new Route($route_name, ['path' => $path], $requirements, $options, $hosts, $schemes, $methods);
-
 		} else {
-			$route = new Route($route_name, ['path' => $parameters]);
+			$route = new Route($route_name, ['path' => $path]);
 		}
 
 		$this->collection->add($route_name, $route);
 	}
 
+    public function post($route_name, $path, $parameters = [])
+    {
+        $this->addEspecifcMethod($route_name, $path, 'POST', $parameters);
+    }
+
+    public function get($route_name, $path, $parameters = [])
+    {
+        $this->addEspecifcMethod($route_name, $path, 'GET', $parameters);
+    }
+
+    public function put($route_name, $path, $parameters = [])
+    {
+        $this->addEspecifcMethod($route_name, $path, 'PUT', $parameters);
+    }
+
+    public function delete($route_name, $path, $parameters = [])
+    {
+        $this->addEspecifcMethod($route_name, $path, 'DELETE', $parameters);
+    }
+    
+    private function addEspecifcMethod($route_name, $path, $method, $parameters = []){
+        if(isset($parameters['methods']) && is_array($parameters['methods'])){
+            array_push($parameters['methods'], $method);
+        } else {
+            $parameters['methods'] = [$method];
+        }
+
+        $this->add($route_name, $path, $parameters); 
+    }
+    
 	/**
 	 * Adiciona um prefixo às url's das rotas que são registradas através do método anônimo $config
 	 *
@@ -137,8 +200,8 @@ trait RouterTrait
 			$sub_collection->addDefaults($config['defaults']);
 		}
 
-		if (isset($config['requirements'])) {
-			$sub_collection->addRequirements($config['requirements']);
+		if (isset($config['mask'])) {
+			$sub_collection->addRequirements($config['mask']);
 		}
 
 		if (isset($config['options'])) {

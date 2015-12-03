@@ -169,7 +169,10 @@ class Application
 
 		$parameters['method_params'] = $method_params;
 
-		list($controller, $method) = explode('::', $parameters['path']);
+        $explode = explode('::', $parameters['path']);
+        $controller = $explode[0];
+        $method = (isset($explode['1']) && $explode[1] != '') ? $explode[1] : 'index';
+
 		$parameters['controller'] = $controller;
 		$parameters['method'] = $method;
 
