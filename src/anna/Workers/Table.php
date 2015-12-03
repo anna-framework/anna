@@ -2,22 +2,19 @@
 
 namespace Anna\Workers;
 
-use Anna\Helpers\LogHelper;
-
 /**
  * -------------------------------------------------------------
  * Table
- * -------------------------------------------------------------
+ * -------------------------------------------------------------.
  *
  * Classe do Serviço de workers, responsável pela leitura e escrita do arquivo table.json
  *
  * @author Cristiano Gomes <cmgomes.es@gmail.com>
+ *
  * @since 23, Novembro 2015
- * @package Anna\Workers
  */
 class Table
 {
-
     private static $instance;
 
     private $information;
@@ -25,14 +22,14 @@ class Table
     private $changed = false;
 
     /**
-     * Retorna uma instância de Table
+     * Retorna uma instância de Table.
      *
      * @return Anna\Workers\TableTable
      */
     public static function getInstance()
     {
         if (!self::$instance) {
-            self::$instance = new Table();
+            self::$instance = new self();
         }
 
         return self::$instance;
@@ -45,7 +42,7 @@ class Table
 
     public function loadInformation()
     {
-        $file = file_get_contents(__DIR__ . DS . 'table.json');
+        $file = file_get_contents(__DIR__.DS.'table.json');
         $this->information = json_decode($file, true);
     }
 
@@ -95,7 +92,6 @@ class Table
 
     public function registerWorkers($workers)
     {
-
         foreach ($workers as $worker) {
             $this->registerWorker($worker);
         }
@@ -145,8 +141,8 @@ class Table
     public function save()
     {
         if ($this->changed) {
-            $json = json_encode($this->information, JSON_HEX_QUOT|JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_PRETTY_PRINT);
-            $handler = fopen(__DIR__ . DS . 'table.json', 'w+');
+            $json = json_encode($this->information, JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_PRETTY_PRINT);
+            $handler = fopen(__DIR__.DS.'table.json', 'w+');
             fwrite($handler, $json);
             fclose($handler);
             $this->changed = false;
@@ -154,7 +150,8 @@ class Table
     }
 
     /**
-     * Retorna os dados de configuração do observer
+     * Retorna os dados de configuração do observer.
+     *
      * @return array
      */
     public function getConfig()
@@ -162,27 +159,28 @@ class Table
         return $this->information['config'];
     }
 
-    /**
-     * Retorna uma instancia do worker encontrado ou retorna null
-     *
-     * @param  string $name
-     * @return Worker
-     */
-	 public function getWorkerByName($name)
+     /**
+      * Retorna uma instancia do worker encontrado ou retorna null.
+      *
+      * @param  string $name
+      *
+      * @return Worker
+      */
+     public function getWorkerByName($name)
      {
          foreach ($this->information['workers'] as $worker) {
-             if($worker['name'] == $name){
- 	            $reflection = new \ReflectionClass($worker['class_name']);
- 	            $worker = $reflection->newInstance();
- 	            $worker->configure();
+             if ($worker['name'] == $name) {
+                 $reflection = new \ReflectionClass($worker['class_name']);
+                 $worker = $reflection->newInstance();
+                 $worker->configure();
 
- 	            if ($worker->getWorkerName() == $name) {
- 	                return $worker;
- 	            }
+                 if ($worker->getWorkerName() == $name) {
+                     return $worker;
+                 }
              }
          }
 
-         return null;
+         return;
      }
 
     public function getWorkers()
@@ -199,9 +197,9 @@ class Table
 
     public function escreve($text)
     {
-        $file = SYS_ROOT . 'logs' . DS . 'teste.txt';
+        $file = SYS_ROOT.'logs'.DS.'teste.txt';
         $a = fopen($file, 'a+');
-        fwrite($a, $text . EOL . EOL);
+        fwrite($a, $text.EOL.EOL);
         fclose($a);
     }
 
@@ -225,5 +223,4 @@ class Table
         $this->changed = true;
         $this->save();
     }
-
 }

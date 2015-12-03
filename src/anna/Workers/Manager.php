@@ -2,27 +2,24 @@
 
 namespace Anna\Workers;
 
-use Anna\Workers\Table;
+use Anna\Error;
 use Anna\Helpers\LogHelper;
 use Anna\Workers\Abstracts\Worker;
-use Anna\Error;
-
-use \Symfony\Component\Finder\Iterator\RecursiveDirectoryIterator;
+use Symfony\Component\Finder\Iterator\RecursiveDirectoryIterator;
 
 /**
  * -------------------------------------------------------------
  * Manager
- * -------------------------------------------------------------
+ * -------------------------------------------------------------.
  *
  * Classe gerenciador do serviço de workers, efetua as consultas à tabela e invoca os workers quando for a hora
  *
  * @author Cristiano Gomes <cmgomes.es@gmail.com>
+ *
  * @since 23, Novembro 2015
- * @package Anna\Workers
  */
 final class Manager
 {
-
     private $workers = [];
 
     public function run()
@@ -31,7 +28,7 @@ final class Manager
     }
 
     /**
-     * Teste de documentação do método para exibição no prompt
+     * Teste de documentação do método para exibição no prompt.
      */
     public function registerWorkers()
     {
@@ -59,12 +56,10 @@ final class Manager
 
         foreach ($workers as $worker) {
             if ($worker['active'] == true) {
-
                 $exec_time = strtotime($worker['next_run']);
                 $active_in = strtotime($worker['active_in']);
 
                 if ($now >= $exec_time && $now >= $active_in) {
-
                     $this->doWork($worker); //em outro processo em background;
 
                     $worker['times_performed'] = (int) $worker['times_performed'] + 1;
@@ -88,7 +83,7 @@ final class Manager
         }
     }
 
-    private function doWork($worker) 
+    private function doWork($worker)
     {
         $classname = $worker['class_name'];
 
@@ -97,6 +92,7 @@ final class Manager
         } catch (\ReflectionException $e) {
             $error = new Error();
             $error->logProduction($e);
+
             return;
         }
 
@@ -107,7 +103,7 @@ final class Manager
 
     private function loadWorkers()
     {
-        $path = SYS_ROOT . 'App' . DS . 'Workers' . DS;
+        $path = SYS_ROOT.'App'.DS.'Workers'.DS;
 
         if (!is_dir($path)) {
             throw new \Exception("A pasta App\Workers nao existe.");
@@ -116,7 +112,6 @@ final class Manager
         $class_workers = $this->loadAppWorkers($path);
 
         foreach ($class_workers as $worker) {
-
             try {
                 $reflection = new \ReflectionClass($worker);
             } catch (\ReflectionException $e) {
@@ -132,9 +127,10 @@ final class Manager
     }
 
     /**
-     * Pega a configuração do do worker para registro
+     * Pega a configuração do do worker para registro.
      * 
-     * @param  Worker $worker 
+     * @param Worker $worker
+     *
      * @return array
      */
     private function getWorkerConfig(Worker $worker)
@@ -152,7 +148,7 @@ final class Manager
     }
 
     /**
-     * Carrega os comandos criandos pelos desenvolvedores inicialização
+     * Carrega os comandos criandos pelos desenvolvedores inicialização.
      *
      * @return array
      */
@@ -187,18 +183,19 @@ final class Manager
             }
         }
 
-        $lista_final = array_filter ($fqcns, function ($item) {
+        $lista_final = array_filter($fqcns, function ($item) {
             preg_match('~Worker~', $item, $teste);
+
             return (count($teste)) ? true : false;
         });
 
         return $lista_final;
     }
-    
+
     private function getNextExecutionTime($string_timed, \DateTime $start_to_work_time)
     {
         if (!$string_timed) {
-            throw new \Exception("Não há tempo de ativação configurado.");
+            throw new \Exception('Não há tempo de ativação configurado.');
         }
 
         preg_match_all('/([0-9]+\w{1})/', $string_timed, $results);
@@ -210,14 +207,14 @@ final class Manager
             foreach ($results[1] as $time) {
                 preg_match('/\d+/', $time, $testDigit);
                 if (!is_array($testDigit) || count($testDigit) <= 0 || empty($testDigit[0])) {
-                    throw new \Exception("String de periodicidade mal configurada.");
+                    throw new \Exception('String de periodicidade mal configurada.');
                 }
 
                 $amount = $testDigit[0];
 
                 preg_match('/[a-zA-Z]/', $time, $testChar);
                 if (!is_array($testDigit) || count($testDigit) <= 0 || empty($testDigit[0] || !in_array($testChar[0], ['y', 'M', 'w', 'd', 'h', 'm', 's']))) {
-                    throw new \Exception("String de periodicidade mal configurada.");
+                    throw new \Exception('String de periodicidade mal configurada.');
                 }
 
                 $periodicity = $testChar[0];
@@ -253,7 +250,7 @@ final class Manager
                         break;
 
                     default:
-                    throw new \Exception("String de periodicidade mal configurada.");
+                    throw new \Exception('String de periodicidade mal configurada.');
                 }
 
                 $add_string = "+$amount $period";
@@ -261,11 +258,8 @@ final class Manager
             }
 
             return new \DateTime(date('Y-m-d H:i:s', $next_time));
-            
         } else {
-            throw new \Exception("String de periodicidade mal configurada.");
+            throw new \Exception('String de periodicidade mal configurada.');
         }
     }
-
-
 }

@@ -1,17 +1,18 @@
 <?php
 
-use Anna\View;
 use Anna\Response;
+use Anna\View;
 
 /**
- * Método utilizado internamente para exibição de excessões não capturadas durante o desenvolvimento
+ * Método utilizado internamente para exibição de excessões não capturadas durante o desenvolvimento.
  *
  * @param Exception $e
  */
-function uncaughtExceptionHandler($e){
-	$trace = str_replace('#', '<br /><br />', $e->getTraceAsString());
+function uncaughtExceptionHandler($e)
+{
+    $trace = str_replace('#', '<br /><br />', $e->getTraceAsString());
 
-	$html = "<html>
+    $html = "<html>
 				<head>
 					<title>F4M: Deu ruim</title>
 					<link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css' />
@@ -41,96 +42,111 @@ function uncaughtExceptionHandler($e){
 					</div>
 				</body>
 			</html>";
-	$response = new Response($html, 200, ['chaset' => 'utf-8']);
-	$response->send();
+    $response = new Response($html, 200, ['chaset' => 'utf-8']);
+    $response->send();
 }
 
 /**
- * Gera uma url completa com base nos parametros recebidos
+ * Gera uma url completa com base nos parametros recebidos.
  *
  * @param string $string
+ *
  * @return string
  */
-function path($string){
-	$url = \Anna\Config::getInstance()->get('app.url') . $string;
-	return $url;
+function path($string)
+{
+    $url = \Anna\Config::getInstance()->get('app.url').$string;
+
+    return $url;
 }
 
 /**
- * Invoca um helper
+ * Invoca um helper.
  *
  * @param $helper
+ *
  * @return mixed
  */
-function helper($helper){
-	$helper = ucfirst($helper) . 'Helper';
-	$helper = implode('\\', ['App', 'Helpers']) . '\\' . $helper;
-	return new $helper();
+function helper($helper)
+{
+    $helper = ucfirst($helper).'Helper';
+    $helper = implode('\\', ['App', 'Helpers']).'\\'.$helper;
+
+    return new $helper();
 }
 
 /**
- * Monta nome completo de uma classe a partir do nome da mesma e um array contendo os podaços que compõe o namespace
+ * Monta nome completo de uma classe a partir do nome da mesma e um array contendo os podaços que compõe o namespace.
  *
  * @example Para montar o nome completo App\Controllers\HomeController:
  * mountCtrlFullname('HomeController', ['App', 'Controllers']);
  *
  * @param string $ctrl
- * @param array $array
+ * @param array  $array
+ *
  * @return string
  */
-function mountCtrlFullName($ctrl, $array){
-	return '\\' . implode('\\', $array) . '\\' . $ctrl;
+function mountCtrlFullName($ctrl, $array)
+{
+    return '\\'.implode('\\', $array).'\\'.$ctrl;
 }
 
 /**
- * Converte o nome informado pelo desenvolvedor para um nome padronizado para classes
+ * Converte o nome informado pelo desenvolvedor para um nome padronizado para classes.
  *
  * @param string $name
+ *
  * @return string
  */
-function nameToClassName($name){
-	$name = str_replace('-', '_', $name);
-	$name = str_replace('.', '_', $name);
-	$name = str_replace(':', '_', $name);
+function nameToClassName($name)
+{
+    $name = str_replace('-', '_', $name);
+    $name = str_replace('.', '_', $name);
+    $name = str_replace(':', '_', $name);
 
-	$part_names = explode('_', $name);
-	$class_name = '';
+    $part_names = explode('_', $name);
+    $class_name = '';
 
-	foreach($part_names as $pn){
-		$pn = strtolower($pn);
-		$class_name .= ucfirst($pn);
-	}
+    foreach ($part_names as $pn) {
+        $pn = strtolower($pn);
+        $class_name .= ucfirst($pn);
+    }
 
-	return $class_name;
+    return $class_name;
 }
 
-function bcrypt($string){
-	$custo = 8;
-	$salt = "fbhaeliflaefhb2387r237";
-	$hash = crypt($string, '$2a$' . $custo . '$' . $salt . '$');
+function bcrypt($string)
+{
+    $custo = 8;
+    $salt = 'fbhaeliflaefhb2387r237';
+    $hash = crypt($string, '$2a$'.$custo.'$'.$salt.'$');
 
-	return $hash;
+    return $hash;
 }
 
 /**
- * Atalho para retornar a view com o template configurado
+ * Atalho para retornar a view com o template configurado.
+ *
  * @return View
  */
-function view($template){
-	$view = View::getInstance();
-	$view->setView($template);
-	return $view;
+function view($template)
+{
+    $view = View::getInstance();
+    $view->setView($template);
+
+    return $view;
 }
 
 /**
  * Função de log rápido, utilizado registrar o funcionamento de workers em seus subprocesso, muito útil para desenvolvimento
- * de novos workers
+ * de novos workers.
  * 
- * @param  string $message 
+ * @param string $message
  */
-function logi($message){
-    $file = SYS_ROOT . 'errors' . DS . 'errors.log';
+function logi($message)
+{
+    $file = SYS_ROOT.'errors'.DS.'errors.log';
     $h = fopen($file, 'a+');
-    fwrite($h, $message . EOL);
+    fwrite($h, $message.EOL);
     fclose($h);
 }

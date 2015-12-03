@@ -1,23 +1,21 @@
 <?php
+
 namespace Anna\Console;
 
-use \Symfony\Component\Console\Application;
-use \Symfony\Component\Finder\Iterator\RecursiveDirectoryIterator;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Finder\Iterator\RecursiveDirectoryIterator;
 
 /**
  * ------------------------------------------
  * Class Initializer
- * ------------------------------------------
+ * ------------------------------------------.
  *
  * Inicializa o sistena ANNA para uso de ferramentas por linha de commando
- *
- * @package Anna\Console
  */
-class Initializer 
+class Initializer
 {
-
     /**
-     * Inicializa a aplicação
+     * Inicializa a aplicação.
      *
      * @throws \Exception
      */
@@ -26,24 +24,24 @@ class Initializer
         $application = new Application();
 
         $commands = [];
-        
+
         /* Carregando os comandos internos */
-        $anna_commands = __DIR__ . DS . 'Commands' . DS;
+        $anna_commands = __DIR__.DS.'Commands'.DS;
         $anna_commands = $this->loadAppCommands($anna_commands);
-        
+
         /* Carregandos os comandos criados pelos desenvolvedores */
-        $app_commands = SYS_ROOT . 'App' . DS . 'Console' . DS;
+        $app_commands = SYS_ROOT.'App'.DS.'Console'.DS;
         $app_commands = $this->loadAppCommands($app_commands);
 
         /* Registra todos os comandos encontrados */
         foreach ($app_commands as $cmd) {
             $commands[] = new $cmd();
         }
-        
+
         foreach ($anna_commands as $cmd) {
             $class = new \ReflectionClass($cmd);
-            
-            if(!$class->isAbstract()){
+
+            if (!$class->isAbstract()) {
                 $commands[] = new $cmd();
             }
         }
@@ -53,11 +51,11 @@ class Initializer
     }
 
     /**
-     * Carrega os comandos criandos pelos desenvolvedores inicialização
+     * Carrega os comandos criandos pelos desenvolvedores inicialização.
      *
      * @return array
      */
-    function loadAppCommands($path) 
+    public function loadAppCommands($path)
     {
         $fqcns = [];
 
@@ -88,12 +86,12 @@ class Initializer
             }
         }
 
-        $lista_final = array_filter($fqcns, function($item) {
+        $lista_final = array_filter($fqcns, function ($item) {
             preg_match('~Command~', $item, $teste);
+
             return (count($teste)) ? true : false;
         });
 
         return $lista_final;
     }
-
 }

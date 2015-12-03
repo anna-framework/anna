@@ -5,7 +5,7 @@ namespace Anna\Workers\Interfaces;
 /**
  * -------------------------------------------------------------
  * WorkerInterface
- * -------------------------------------------------------------
+ * -------------------------------------------------------------.
  *
  * Interface indicadora para utilização de workers.
  *
@@ -13,11 +13,12 @@ namespace Anna\Workers\Interfaces;
  * Para por os workers para trabalhar basta rodar o comando anna: php anna job:up
  * 
  * @author Cristiano Gomes <cmgomes.es@gmail.com>
+ *
  * @since 23, Novembro 2015
- * @package Anna\Workers\Interfaces
  */
 interface WorkerInterface
 {
-    function configure();
-    function execute();
+    public function configure();
+
+    public function execute();
 }

@@ -1,69 +1,72 @@
 <?php
+
 namespace Anna\Repositories;
 
-use Anna\Error;
 use Anna\Config;
-use Anna\Request;
 use Anna\Databases\Model;
-
-use \Doctrine\ORM\EntityManager;
-use \Doctrine\ORM\Tools\Pagination\Paginator;
+use Anna\Error;
+use Anna\Request;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * -----------------------------------------------------------
  * Repository
- * -----------------------------------------------------------
+ * -----------------------------------------------------------.
  *
  * Repositório padrão, fornecido pelo sistema para trabalhar com o adaptador original do Doctrine2 ORM cadastrado
  * nas configurações
  *
  * @author Cristiano Gomes <cmgomes.es@gmail.com>
+ *
  * @since 06, novembro 2015
- * @package Anna\Databases\Adapters
  */
-class Repository extends \Anna\Repositories\Abstracts\Repository 
-{    
-	/**
-	 * Quantidade de items por página
-	 * @var integer
-	 */
-	public $per_page = 15;
+class Repository extends \Anna\Repositories\Abstracts\Repository
+{
+    /**
+     * Quantidade de items por página.
+     *
+     * @var int
+     */
+    public $per_page = 15;
 
     /**
-     * Nome do modelo utilizado por este repositório
+     * Nome do modelo utilizado por este repositório.
      *
      * @var Model
      */
     protected $model;
 
     /**
-     * Não é necessário esta declaração, é apenas para gerar autocomplete nas IDE's
+     * Não é necessário esta declaração, é apenas para gerar autocomplete nas IDE's.
      *
      * @var EntityManager
      */
     protected $manager;
 
     /**
-     * Função que persiste os dados da entidade informada no banco de dados
+     * Função que persiste os dados da entidade informada no banco de dados.
      *
-     * @param mixed $model  Qualquer entidade válida do Doctrine
+     * @param mixed $model Qualquer entidade válida do Doctrine
+     *
      * @return bool
      */
     public function save($model = null)
     {
-		$this->model = $model ? $model : $this->model;
+        $this->model = $model ? $model : $this->model;
 
-		if ($this->model->id) { 
-			return $this->edit();
-		}
-        
-		$this->model->created_at = new \DateTime( 'now');
-        
+        if ($this->model->id) {
+            return $this->edit();
+        }
+
+        $this->model->created_at = new \DateTime('now');
+
         try {
             $this->manager->persist($this->model);
             $this->manager->flush();
         } catch (\Exception $e) {
             Error::log($e);
+
             return false;
         }
 
@@ -73,26 +76,28 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
     /**
      * Remove o registro no banco de dados referente ao nome do modelo recebido como parâmetro
      * Caso as opções de soft delete estejam configuradas o campo buscará por a data atual no campo informado
-     * como delflag nas configurações do aplicativo
+     * como delflag nas configurações do aplicativo.
      *
      * @param string $model Nome de um model existente
-     * @param integer $id   valor da chave primária do registro
+     * @param int    $id    valor da chave primária do registro
+     *
      * @return bool
      */
     public function remove($modelname, $id)
     {
         $modelname = get_class($this->model);
         $table_name = $this->manager->getClassMetadata($modelname)->getTableName();
-        $this->model = $this->search([$table_name .'_id' => $id], true);
+        $this->model = $this->search([$table_name.'_id' => $id], true);
 
         if (!$this->model instanceof Model) {
-            Error::log(new \Exception('Não foi encontrado registro na tabela: ' . $table_name));
+            Error::log(new \Exception('Não foi encontrado registro na tabela: '.$table_name));
+
             return false;
         }
 
         if (Config::getInstance()->get('database.softdelete')) {
             $delflag = Config::getInstance()->get('database.delflag');
-            $bin_field = $table_name . $delflag;
+            $bin_field = $table_name.$delflag;
             $model->$bin_field = date('Y-m-d H:i:s');
 
             try {
@@ -100,37 +105,38 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
                 $this->manager->flush();
             } catch (\Exception $e) {
                 Error::log($exc);
+
                 return false;
             }
-
         } else {
             try {
                 $this->manager->remove($this->model);
                 $this->manager->flush();
             } catch (\Exception $e) {
                 Error::log($e);
+
                 return false;
             }
         }
-
     }
 
     /**
-     * Função editar dados já persistidos no banco de dados
+     * Função editar dados já persistidos no banco de dados.
      *
-     * @param mixed $model  Qualquer entidade válida do Doctrine
+     * @param mixed $model Qualquer entidade válida do Doctrine
+     *
      * @return bool
      */
     public function edit($model = null)
     {
-		$model = $model ? $model : $this->model;
+        $model = $model ? $model : $this->model;
 
         try {
             $this->manager->merge($model);
             $this->manager->flush();
-
         } catch (\Exception  $e) {
             Error::log($e);
+
             return false;
         }
 
@@ -139,13 +145,13 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
 
     /**
      * Função para buscas simples no banco de dados, para buscas mais complexas
-     * utilizar o QueryBuilder do Doctrine
+     * utilizar o QueryBuilder do Doctrine.
      *
-     * @param array $filters    formato do array: ['campo_da_tabela' => 'valor para filtro']
-     * @param bool $one         true retorna apenas 1 registro
+     * @param array $filters formato do array: ['campo_da_tabela' => 'valor para filtro']
+     * @param bool  $one     true retorna apenas 1 registro
      *
-     * @return mixed            True se os dados foram encontrados e on estiver setado, neste caso a propriedade model
-     *                          deste repositório irá ser atualizada com os dados encontrados.
+     * @return mixed True se os dados foram encontrados e on estiver setado, neste caso a propriedade model
+     *               deste repositório irá ser atualizada com os dados encontrados.
      *
      *                          Array se one for false (padrão), neste caso retorna um collecion com as entidades
      *                          encontradas.
@@ -159,21 +165,25 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
         try {
             if ($one) {
                 $this->model = $this->manager->getRepository($modelname)->findOneBy($filters);
+
                 return true;
             } else {
                 $entities = $this->manager->getRepository($modelname)->findBy($filters);
+
                 return $entities;
             }
         } catch (\Exception  $e) {
             Error::log($e);
+
             return false;
         }
     }
 
     /**
-     * Efetua a persistencia dos dados em banco
+     * Efetua a persistencia dos dados em banco.
      *
      * @param Model $model
+     *
      * @return bool
      */
     public function persist(Model $model)
@@ -182,6 +192,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
             $this->entity_manager->persist($model);
         } catch (\Exception  $e) {
             Error::log($e);
+
             return false;
         }
 
@@ -189,7 +200,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
     }
 
     /**
-     * Efetua o merge do model atual com o banco de dados persistindo os dados editados
+     * Efetua o merge do model atual com o banco de dados persistindo os dados editados.
      *
      * @param Model $model
      */
@@ -199,16 +210,17 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
             $this->manager->merge($model);
         } catch (\Exception  $e) {
             Error::log($e);
+
             return false;
         }
 
         return true;
     }
 
-	public function find($id) 
+    public function find($id)
     {
-		return $this->manager->find(get_class($this->model), $id);
-	}
+        return $this->manager->find(get_class($this->model), $id);
+    }
 
     /**
      * Comita as alterações/inserções para o banco de dados.
@@ -224,6 +236,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
         } catch (\Exception $e) {
             $this->manager->rollback();
             Error::log($e);
+
             return false;
         }
 
@@ -231,7 +244,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
     }
 
     /**
-     * Entrega a ferramenta QueryBuider do Doctrine2 para construção de queries customizadas utilizando DQL
+     * Entrega a ferramenta QueryBuider do Doctrine2 para construção de queries customizadas utilizando DQL.
      *
      * @return QueryBuilder
      */
@@ -241,7 +254,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
     }
 
     /**
-     * Retorna um objeto PDO para uso de SQL's manuais
+     * Retorna um objeto PDO para uso de SQL's manuais.
      *
      * @return \Doctrine\DBAL\Driver\Connection
      */
@@ -252,71 +265,74 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
 
     /**
      * Busca registros nos parametros POST de entrada com o mesmo nome das propriedades do modelo registrado e
-     * preenche automaticamente seus valores
+     * preenche automaticamente seus valores.
      */
     public function autoFill()
     {
         $r = new Request();
         $fields = $this->manager->getClassMetadata(get_class($this->model))->getFieldNames();
 
-        foreach($fields as $field){
+        foreach ($fields as $field) {
             $value = $r->post($field);
             $this->model->$field = $value;
         }
-
     }
 
-	/**
-	 * registra o model específico para persistência
-	 * @param Model $model
-	 * @return  Anna\Repositories\Repository
-	 */
-	public function setModel(Model $model)
+    /**
+     * registra o model específico para persistência.
+     *
+     * @param Model $model
+     *
+     * @return Anna\Repositories\Repository
+     */
+    public function setModel(Model $model)
     {
-		$this->model = $model;
-		return $this;
-	}
+        $this->model = $model;
 
-	/**
-	 * Paginador padrão, efetua a busca com base nos filtros recebidos e retorna componente de paginação
-	 *
-	 * @param  integer $page
-	 * @param  array  $filters
-	 * @return Paginator
-	 */
-	public function paginate($page = 1, $filters = null)
+        return $this;
+    }
+
+    /**
+     * Paginador padrão, efetua a busca com base nos filtros recebidos e retorna componente de paginação.
+     *
+     * @param int   $page
+     * @param array $filters
+     *
+     * @return Paginator
+     */
+    public function paginate($page = 1, $filters = null)
     {
-		$offset = ($page == 1) ? 0 : $page * $this->per_page;
+        $offset = ($page == 1) ? 0 : $page * $this->per_page;
 
-		$qb = $this->manager->createQueryBuilder();
-		$qb->select('a')->from(get_class($this->model), 'a');
+        $qb = $this->manager->createQueryBuilder();
+        $qb->select('a')->from(get_class($this->model), 'a');
 
-		if (is_array($filters)) {
-			foreach ($filters as $field => $value ) {
-				if ($value !== null) {
-					$qb->where("a.$field = :$field")->setParameter($field, $value);
-				} else {
-					$qb->where("a.$field IS NULL");
-				}
-			}
-		}
+        if (is_array($filters)) {
+            foreach ($filters as $field => $value) {
+                if ($value !== null) {
+                    $qb->where("a.$field = :$field")->setParameter($field, $value);
+                } else {
+                    $qb->where("a.$field IS NULL");
+                }
+            }
+        }
 
-		$query = $qb->getQuery();
-		unset($qb);
+        $query = $qb->getQuery();
+        unset($qb);
 
-		$query->setFirstResult($offset); //offset
-		$query->setMaxResults($this->per_page); //Limit
+        $query->setFirstResult($offset); //offset
+        $query->setMaxResults($this->per_page); //Limit
 
         try {
             $paginator = new Paginator($query);
         } catch (\Exception  $e) {
             Error::log($e);
+
             return false;
         }
 
-		$paginator = new \Anna\Paginator($paginator, $this->per_page, $page);
+        $paginator = new \Anna\Paginator($paginator, $this->per_page, $page);
 
-		return $paginator;
+        return $paginator;
     }
-
 }
