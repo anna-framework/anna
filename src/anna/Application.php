@@ -3,7 +3,7 @@
 namespace Anna;
 
 use Anna\Routers\Router;
-use DI\ContainerBuilder;
+use \DI\ContainerBuilder;
 
 /**
  * -------------------------------------------------------------
@@ -13,7 +13,6 @@ use DI\ContainerBuilder;
  * Classe principal do Anna, coordena os eventos e os processos
  *
  * @author Cristiano Gomes <cmgomes.es@gmail.com>
- *
  * @since 03, Novembro 2015
  */
 class Application
@@ -117,7 +116,6 @@ class Application
     private function wakeUpController($url_params)
     {
         $controller = $url_params['controller'];
-        //die($this->app_root_namespace);
         $ctrl_full_name = mountCtrlFullName($controller, [$this->app_root_namespace, 'Controllers']);
 
         $controller = $this->di->get($ctrl_full_name);

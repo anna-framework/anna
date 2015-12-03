@@ -36,7 +36,7 @@ class MakeCommand extends Command
     {
         $cmd_name = $input->getArgument('name');
         $cmd_description = ($input->hasArgument('description')) ? $input->getArgument('description') : '';
-        $class_name = $this->nameToClassName($cmd_name);
+        $class_name = nameToClassName($cmd_name);
         $dev_name = Config::getInstance()->get('app.developer');
         $data = date('d/m/Y');
         $root_ns = Config::getInstance()->get('root-namespace');
@@ -58,29 +58,5 @@ class MakeCommand extends Command
         fclose($hand);
 
         $output->writeln('Comando '.$class_name.'Command criado com sucesso.');
-    }
-
-    /**
-     * Converte o nome do comando informado pelo desenvolvedor para um nome padronizado para classes.
-     *
-     * @param string $command_name
-     *
-     * @return string
-     */
-    private function nameToClassName($command_name)
-    {
-        $command_name = str_replace('-', '_', $command_name);
-        $command_name = str_replace('.', '_', $command_name);
-        $command_name = str_replace(':', '_', $command_name);
-
-        $part_names = explode('_', $command_name);
-        $class_name = '';
-
-        foreach ($part_names as $pn) {
-            $pn = strtolower($pn);
-            $class_name .= ucfirst($pn);
-        }
-
-        return $class_name;
     }
 }

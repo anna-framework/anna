@@ -69,7 +69,6 @@ class AppNameCommand extends Command
     private function changeComposerRoots($name, $output)
     {
         $file = SYS_ROOT.'composer.json';
-        $root_name = Config::getInstance()->get('root-namespace');
 
         if (is_file($file)) {
             $content = file_get_contents($file);

@@ -37,7 +37,7 @@ class DbDropTablesCommand extends Command
         $driver->init();
         $em = $driver->getManager();
 
-        $classes = $this->loadAppModels();
+        $classes = loadAppModels();
         $schema = new SchemaTool($em);
         $models = [];
 
@@ -49,7 +49,7 @@ class DbDropTablesCommand extends Command
                 $table_name = $metadata->getTableName();
 
                 if ($schemaManager->tablesExist([$table_name]) == true) {
-                    $models[] = $metadata;
+                    array_push($models, $metadata);
                 }
             }
 
@@ -66,51 +66,5 @@ class DbDropTablesCommand extends Command
         }
 
         $output->writeln('Tabelas removidas com sucesso.');
-    }
-
-    /**
-     * Carrega os models criados pelo desenvolvedor.
-     *
-     * @return array
-     */
-    private function loadAppModels()
-    {
-        $fqcns = [];
-        $path = SYS_ROOT.'App'.DS.'Models'.DS;
-
-        $all_files = new \RecursiveIteratorIterator(new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS), \RecursiveIteratorIterator::SELF_FIRST);
-        $php_files = new \RegexIterator($all_files, '/\.php$/');
-
-        foreach ($php_files as $php_file) {
-            $content = file_get_contents($php_file->getRealPath());
-            $tokens = token_get_all($content);
-            $namespace = '';
-
-            for ($index = 0; isset($tokens[$index]); $index++) {
-                if (!isset($tokens[$index][0])) {
-                    continue;
-                }
-
-                if (T_NAMESPACE === $tokens[$index][0]) {
-                    $index += 2; // Pula namespace e espaรงos em branco
-                    while (isset($tokens[$index]) && is_array($tokens[$index])) {
-                        $namespace .= $tokens[$index++][1];
-                    }
-                }
-
-                if (T_CLASS === $tokens[$index][0]) {
-                    $index += 2; // Pula palavra chave 'class' e espaรงos em branco
-                    $fqcns[] = $namespace.'\\'.$tokens[$index][1];
-                }
-            }
-        }
-
-        $lista_final = array_filter($fqcns, function ($item) {
-            preg_match('~Model~', $item, $teste);
-
-            return (count($teste)) ? true : false;
-        });
-
-        return $lista_final;
     }
 }
