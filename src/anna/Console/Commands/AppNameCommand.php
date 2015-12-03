@@ -3,30 +3,25 @@
 namespace Anna\Console\Commands;
 
 use Anna\Config;
-use Anna\Console\Helpers\TemplateHelper;
 use Anna\Console\Commands\Abstracts\Command;
-
-use \Symfony\Component\Console\Input\ArrayInput;
-use \Symfony\Component\Console\Input\InputOption;
-use \Symfony\Component\Console\Input\InputArgument;
-use \Symfony\Component\Console\Input\InputInterface;
-use \Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Iterator\RecursiveDirectoryIterator;
 
 /**
  * ---------------------------------------
  * MakeRepositoryCommand
- * ---------------------------------------
+ * ---------------------------------------.
  *
  * Classe responsável por executar o comando ANNA para criar um novo repositorio na aplicação do desenvolvedor
  *
  * @author Cristiano Gomes <cmgomes.es@gmail.com>
+ *
  * @since 10, novembro 2015
- * @package Anna\Console\Commands
  */
 class AppNameCommand extends Command
 {
-
     protected function configure()
     {
         $this->setName('app:name');
@@ -36,25 +31,25 @@ class AppNameCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-		$name = $input->getArgument('name');
+        $name = $input->getArgument('name');
         $root_name = Config::getInstance()->get('root-namespace');
 
-        $path = SYS_ROOT . 'App';
-        
+        $path = SYS_ROOT.'App';
+
         $classes = $this->loadAppCommands($path);
         $trocou = false;
-        
+
         foreach ($classes as $class) {
             $initname = explode('\\', $class)[0];
             $class = str_replace($initname, 'App', $class);
-            $fpath = SYS_ROOT . $class . '.php';
+            $fpath = SYS_ROOT.$class.'.php';
 
             if (is_file($fpath)) {
                 $content = file_get_contents($fpath);
-                $content = str_replace($root_name . '\\', $name . '\\', $content);
+                $content = str_replace($root_name.'\\', $name.'\\', $content);
 
                 $h = fopen($fpath, 'w+');
-                fwrite($h,$content);
+                fwrite($h, $content);
                 fclose($h);
                 $trocou = true;
             }
@@ -67,40 +62,40 @@ class AppNameCommand extends Command
         exec('php composer dump-autoload');
         $output->writeln('Namespace raiz trocado com sucesso.');
     }
-    
+
     private function changeComposerRoots($name, $output)
     {
-        $file = SYS_ROOT . 'composer.json';
+        $file = SYS_ROOT.'composer.json';
         $root_name = Config::getInstance()->get('root-namespace');
 
-        if(is_file($file)){
+        if (is_file($file)) {
             $content = file_get_contents($file);
             $json = json_decode($content, true);
 
-            foreach($json['autoload']['psr-4'] as $key => $value){
-                if($value == 'App/'){
+            foreach ($json['autoload']['psr-4'] as $key => $value) {
+                if ($value == 'App/') {
                     unset($json['autoload']['psr-4'][$key]);
                     $json['autoload']['psr-4'][$name] = $value;
                     break;
                 }
             }
 
-            $content = json_encode($json, JSON_HEX_QUOT|JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_PRETTY_PRINT);
+            $content = json_encode($json, JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_PRETTY_PRINT);
 
             $h = fopen($file, 'w+');
             fwrite($h, $content);
             fclose($h);
-        }else{
+        } else {
             $output->writeln('Arquivo composer.json nao encontrado, troque o novo namespace do autoload manualmente.');
         }
     }
-    
+
     /**
-     * Carrega os comandos criandos pelos desenvolvedores inicialização
+     * Carrega os comandos criandos pelos desenvolvedores inicialização.
      *
      * @return array
      */
-    private function loadAppCommands($path) 
+    private function loadAppCommands($path)
     {
         $fqcns = [];
 
@@ -133,5 +128,4 @@ class AppNameCommand extends Command
 
         return $fqcns;
     }
-    
 }

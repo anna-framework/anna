@@ -3,156 +3,157 @@
 namespace Anna\Console\Commands;
 
 use Anna\Config;
-use Anna\Console\Helpers\TemplateHelper;
 use Anna\Console\Commands\Abstracts\Command;
-
-use \Symfony\Component\Console\Input\ArrayInput;
-use \Symfony\Component\Console\Input\InputOption;
-use \Symfony\Component\Console\Input\InputArgument;
-use \Symfony\Component\Console\Input\InputInterface;
-use \Symfony\Component\Console\Output\OutputInterface;
+use Anna\Console\Helpers\TemplateHelper;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * ---------------------------------------
  * MakeRepositoryCommand
- * ---------------------------------------
+ * ---------------------------------------.
  *
  * Classe responsável por executar o comando ANNA para criar um novo repositorio na aplicação do desenvolvedor
  *
  * @author Cristiano Gomes <cmgomes.es@gmail.com>
+ *
  * @since 10, novembro 2015
- * @package Anna\Console\Commands
  */
 class MakeRepositoryCommand extends Command
 {
-
     protected function configure()
     {
         $this->setName('make:repository');
         $this->setDescription('Cria um novo repositorio');
         $this->addArgument('name', InputArgument::REQUIRED, 'Qual o nome do seu repositorio?');
-		$this->addOption('model', 'm', InputOption::VALUE_NONE, 'Caso passado cria um model com mesmo nome do repositorio.');
-		$this->addOption('abstract', 'a', InputOption::VALUE_NONE, 'Cria o respositório diretamente da classe abstrata, para utilizar com outros drivers.');
+        $this->addOption('model', 'm', InputOption::VALUE_NONE, 'Caso passado cria um model com mesmo nome do repositorio.');
+        $this->addOption('abstract', 'a', InputOption::VALUE_NONE, 'Cria o respositório diretamente da classe abstrata, para utilizar com outros drivers.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-		$name = $input->getArgument('name');
-		$parts = explode('\\', $name);
-		$class_name = end($parts);
-		$folder_name = $this->nameToFolderName($name);
-		$root_ns = Config::getInstance()->get('root-namespace');
+        $name = $input->getArgument('name');
+        $parts = explode('\\', $name);
+        $class_name = end($parts);
+        $folder_name = $this->nameToFolderName($name);
+        $root_ns = Config::getInstance()->get('root-namespace');
 
-		$params = [
-			'repository_name' => nameToClassName($class_name),
-			'dev_name' => Config::getInstance()->get('app.developer'),
-			'data' => date('d/m/Y'),
-			'namespace' => $root_ns . '\\Repositories' . $folder_name
-		];
+        $params = [
+            'repository_name' => nameToClassName($class_name),
+            'dev_name'        => Config::getInstance()->get('app.developer'),
+            'data'            => date('d/m/Y'),
+            'namespace'       => $root_ns.'\\Repositories'.$folder_name,
+        ];
 
-		if ($input->getOption('model'))
-        {
-			$model = nameToClassName($class_name);
+        if ($input->getOption('model')) {
+            $model = nameToClassName($class_name);
 
-			if (!$this->callMakeModel($model, $output))
-            {
-				$output->writeln('Anna: Nao foi possivel criar o modelo ' . $model . 'Model');
-				$params['construct'] = '';
-				$params['use_model'] = '';
-			} else {
-				$n = EOL;
-				$model .= 'Model';
-				$declaration = "/**" . EOL;
-				$declaration .= "\t * @inject " . $model . EOL;
-				$declaration .= "\t * @var " . $model . EOL;
-				$declaration .= "\t */" . EOL;
-				$declaration .= "\t" . 'public $model;' . EOL;
+            if (!$this->callMakeModel($model, $output)) {
+                $output->writeln('Anna: Nao foi possivel criar o modelo '.$model.'Model');
+                $params['construct'] = '';
+                $params['use_model'] = '';
+            } else {
+                $n = EOL;
+                $model .= 'Model';
+                $declaration = '/**'.EOL;
+                $declaration .= "\t * @inject ".$model.EOL;
+                $declaration .= "\t * @var ".$model.EOL;
+                $declaration .= "\t */".EOL;
+                $declaration .= "\t".'public $model;'.EOL;
 
-				$params['construct'] = $declaration;
-				$params['use_model'] = 'use ' . $root_ns . '\\Models\\' . $model . ';';
-			}
-		} else {
-			$params['construct'] = '';
-			$params['use_model'] = '';
-		}
+                $params['construct'] = $declaration;
+                $params['use_model'] = 'use '.$root_ns.'\\Models\\'.$model.';';
+            }
+        } else {
+            $params['construct'] = '';
+            $params['use_model'] = '';
+        }
 
-		if ($input->getOption('abstract')) {
-			$params['use_suberclass'] = 'use Anna\Repositories\Abstracts\Repository;';
-		} else {
-			$params['use_suberclass'] = 'use Anna\Repositories\Repository;';
-		}
+        if ($input->getOption('abstract')) {
+            $params['use_suberclass'] = 'use Anna\Repositories\Abstracts\Repository;';
+        } else {
+            $params['use_suberclass'] = 'use Anna\Repositories\Repository;';
+        }
 
-		$template = TemplateHelper::getInstance()->render('repository_template', $params);
-        $cmd_file_path = SYS_ROOT . 'App' . DS . 'Repositories' . $folder_name . DS . $class_name . 'Repository.php';
+        $template = TemplateHelper::getInstance()->render('repository_template', $params);
+        $cmd_file_path = SYS_ROOT.'App'.DS.'Repositories'.$folder_name.DS.$class_name.'Repository.php';
 
-		if (is_file($cmd_file_path)) {
-			$output->writeln('O Repositorio ' . $class_name . 'Repository ja existe.');
-			return true;
-		}
+        if (is_file($cmd_file_path)) {
+            $output->writeln('O Repositorio '.$class_name.'Repository ja existe.');
+
+            return true;
+        }
 
         $hand = fopen($cmd_file_path, 'a+');
         fwrite($hand, $template);
         fclose($hand);
 
-        $output->writeln('Anna: Repositorio ' . $class_name . 'Repository criado com sucesso.');
+        $output->writeln('Anna: Repositorio '.$class_name.'Repository criado com sucesso.');
     }
 
-	/**
-	 * Extrai o nome da pasta a partir do possível namespace recebido
-	 */
-	private function nameToFolderName($name){
-		$name = str_replace('/', '_', $name);
-		$name = str_replace('\\', '_', $name);
-		$parts = explode('_', $name);
+    /**
+     * Extrai o nome da pasta a partir do possível namespace recebido.
+     */
+    private function nameToFolderName($name)
+    {
+        $name = str_replace('/', '_', $name);
+        $name = str_replace('\\', '_', $name);
+        $parts = explode('_', $name);
 
-		$base_path = SYS_ROOT . 'App' . DS . 'Controllers';
-		$controller_name = array_pop($parts);
-		$folder_name = '';
+        $base_path = SYS_ROOT.'App'.DS.'Controllers';
+        $controller_name = array_pop($parts);
+        $folder_name = '';
 
-		foreach($parts as $subfolder){
-			$folder_name .= DS . $subfolder;
-		}
+        foreach ($parts as $subfolder) {
+            $folder_name .= DS.$subfolder;
+        }
 
-		if(!is_dir($base_path . $folder_name)){
-			return (mkdir($base_path . $folder_name)) ? $folder_name : false;
-		}else{
-			return $folder_name;
-		}
-	}
+        if (!is_dir($base_path.$folder_name)) {
+            return (mkdir($base_path.$folder_name)) ? $folder_name : false;
+        } else {
+            return $folder_name;
+        }
+    }
 
-	/**
-	 * Caso o comando receba a opção -view este método irá gerar a view index e suas possíveis subpastas
-	 */
-	private function generateView($class_name){
-		$view_folder = strtolower($class_name);
-		$filename = (Config::getInstance()->get('view.view-engine') == 'blade') ? 'index.blade.php' : 'index.php';
+    /**
+     * Caso o comando receba a opção -view este método irá gerar a view index e suas possíveis subpastas.
+     */
+    private function generateView($class_name)
+    {
+        $view_folder = strtolower($class_name);
+        $filename = (Config::getInstance()->get('view.view-engine') == 'blade') ? 'index.blade.php' : 'index.php';
 
-		$path = SYS_ROOT . 'App' . DS . 'Views' . DS . $view_folder;
+        $path = SYS_ROOT.'App'.DS.'Views'.DS.$view_folder;
 
-		if(!is_dir($path)){
-			if(!mkdir($path))
-				return false;
-		}
+        if (!is_dir($path)) {
+            if (!mkdir($path)) {
+                return false;
+            }
+        }
 
-		$path .= DS . $filename;
-		$hand = fopen($path, 'a+');
+        $path .= DS.$filename;
+        $hand = fopen($path, 'a+');
 
-		fwrite($hand, "<div>Olá mundo!</div>");
-		fclose($hand);
-	}
+        fwrite($hand, '<div>Olá mundo!</div>');
+        fclose($hand);
+    }
 
-	private function callMakeModel($class_name, $output){
-		$cmd = 'make:model';
-		$command = $this->getApplication()->find($cmd);
+    private function callMakeModel($class_name, $output)
+    {
+        $cmd = 'make:model';
+        $command = $this->getApplication()->find($cmd);
 
-	    $arguments = array(
-	        'command' => $cmd,
-	        'name'    => $class_name
-	    );
+        $arguments = [
+            'command' => $cmd,
+            'name'    => $class_name,
+        ];
 
-		$greetInput = new ArrayInput($arguments);
-	    $command->run($greetInput, $output);
-		return true;
-	}
+        $greetInput = new ArrayInput($arguments);
+        $command->run($greetInput, $output);
 
+        return true;
+    }
 }

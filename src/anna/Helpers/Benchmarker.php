@@ -1,46 +1,46 @@
 <?php
+
 namespace Anna\Helpers;
 
 /**
  * -------------------------------------------------------------
  * Benchmarker
- * -------------------------------------------------------------
+ * -------------------------------------------------------------.
  *
  * Classe simples de benchmark para verificar performance de algoritmos
  *
  * @author Cristiano Gomes <cmgomes.es@gmail.com>
+ *
  * @since 03, Novembro 2015
- * @package Anna
  */
-class Benchmarker 
+class Benchmarker
 {
+    private $registers = [];
 
-	private $registers = [];
+    private static $instance;
 
-	private static $instance;
-
-	public static function getInstance()
+    public static function getInstance()
     {
-		if (!self::$instance){
-			self::$instance = new Benchmarker();
+        if (!self::$instance) {
+            self::$instance = new self();
         }
-        
-		return self::$instance;
-	}
 
-	public function start($label)
-    {
-		$this->registers[$label] = ['start' => microtime()];
-	}
+        return self::$instance;
+    }
 
-	public function end($label)
+    public function start($label)
     {
-		$this->registers[$label]['end'] = microtime();
-	}
+        $this->registers[$label] = ['start' => microtime()];
+    }
 
-	public function calc()
+    public function end($label)
     {
-		$result = '<table cellspacing="0">
+        $this->registers[$label]['end'] = microtime();
+    }
+
+    public function calc()
+    {
+        $result = '<table cellspacing="0">
 						<thead>
 							<tr style="background: #5E8FA7; color: white;">
 								<td style="padding: 5px; width: 100px;">Label</td>
@@ -49,13 +49,13 @@ class Benchmarker
 						</thead>
 						<tbody>';
 
-		foreach ($this->registers as $label => $values) {
-			$lapse = $values['end'] - $values['start'];
-			$result .= "<tr><td>$label</td><td style=\"text-align: right\">{$lapse}s</td></tr>";
-		}
+        foreach ($this->registers as $label => $values) {
+            $lapse = $values['end'] - $values['start'];
+            $result .= "<tr><td>$label</td><td style=\"text-align: right\">{$lapse}s</td></tr>";
+        }
 
-		$result .= '</tbody></table>';
-		return $result;
-	}
+        $result .= '</tbody></table>';
 
+        return $result;
+    }
 }
