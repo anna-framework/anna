@@ -152,7 +152,8 @@ trait RouterTrait
         if (is_callable($config)) {
             $config($router);
         } else {
-            die('Você não passou uma função anônima no Router::addPrefix() seu animal.');
+            Error::log(new \Exception('O segundo parâmetro deve ser um callable'));
+            return;
         }
 
         $sub_collection = $router->getCollection();

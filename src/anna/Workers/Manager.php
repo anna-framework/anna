@@ -3,7 +3,6 @@
 namespace Anna\Workers;
 
 use Anna\Error;
-use Anna\Helpers\LogHelper;
 use Anna\Workers\Abstracts\Worker;
 use Symfony\Component\Finder\Iterator\RecursiveDirectoryIterator;
 
@@ -115,9 +114,8 @@ final class Manager
             try {
                 $reflection = new \ReflectionClass($worker);
             } catch (\ReflectionException $e) {
-                $logHelper = new LogHelper();
-                $logHelper->writeln($e->getMessage());
-                die();
+                Error::log($e);
+                return;
             }
 
             $worker = $reflection->newInstance();

@@ -41,7 +41,10 @@ class JobObserverCommand extends Command
             $time = time();
 
             if ($time - $lapse >= 2) {
-                $this->inspect();
+                if ($this->inspect() == false) {
+                    return;
+                }
+
                 $lapse = time();
             }
 
@@ -57,7 +60,7 @@ class JobObserverCommand extends Command
     /**
      * Inspeciona o arquivo de configuração do work manager para atualizar algumas configurações.
      * 
-     * @return void
+     * @return bool
      */
     private function inspect()
     {
@@ -66,7 +69,7 @@ class JobObserverCommand extends Command
         $config = $table->getConfig();
 
         if ($config['active'] == false) {
-            die();
+            return false;
         }
 
         $amount = memory_get_usage(true);
@@ -89,6 +92,7 @@ class JobObserverCommand extends Command
         unset($config);
         unset($table);
         unset($amount);
+        return true;
     }
 
     /**
