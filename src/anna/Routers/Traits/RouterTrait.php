@@ -223,10 +223,10 @@ trait RouterTrait
         }
     }
 
-    abstract public function getSubRouter()
-    {
-        // --
-    }
+    /**
+     * Método deve ser implementado nas classes que utilizam essa trait
+     */
+    abstract public function getSubRouter();
     
     /**
      * Adiciona wildcards padrões para serem utilizados na detecção de rotas por regex.
