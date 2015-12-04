@@ -1,0 +1,69 @@
+<h3>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Criando Models
+</h3>
+
+<p>
+	Os models são exclusicamente representações das tabelas do banco de dados, não tendo funções auxiliares ou herdadas
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+	/**
+	 * @Entity
+	 * @Table(name="user")
+	 */
+	class UserModel extends \Anna\Databases\Model
+	{
+		/**
+		 * @Id
+		 * @Column(type="integer")
+		 * @GeneratedValue
+		 */
+		public $id;
+	}
+</pre>
+<p>&nbsp;</p>
+
+<p>
+	A mas então por quê ele extende <i>Anna\Database\Model</i> se ele não faz nada?
+</p>
+
+<p>
+	A classe Abstrata <i>Anna\Database\Model</i> tem como finalidade única, adicionar 2 campos que são utilizados juntamente com o repositório 
+	padrão fornecido pelo framework, são eles created_at e deleted_at, com esses campos o respositório controla principalmente se um registro
+	foi deletado ou não, apenas isso.
+</p>
+
+<p>
+	Sinta-se a vontade para não extender a classe abstrata Model caso você queria construir um repositório novo. 
+</p>
+
+<h4>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Anotações do Doctrine
+</h4>
+
+<p>
+	O Doctrine ORM foi a engine escolhida para cuidar da camada de acesso ao banco de dados. Ao abrir mão de utilizar um ORM mais fácil e 
+	intuitivo como o Eloquent do Laravel, temos um ganho recursos, uma vez que os models são apenas models, não carregam cada um, um inteiro
+	mecanismo de comunicação com banco de dados, deixamos esse trabalho com os repositórios.
+</p>
+
+<p>
+	Unity of Work é outra característica que chama a atenção quando se utiliza Doctrine, basicamente, ele atraza toda comunicação com o banco de
+	dados até que você utilize o comando <i>EntityManager::flush()</i>.
+</p>
+
+<p>
+	Para se utilizar o Doctrine PHP deve-se antes ter conhecimento sobre as <i>annotations</i>, pois são assim que o doctrine conseguirá mapear cada
+	propriedade do seu model na sua tabela correspondente, para isso 
+	<a href="http://doctrine-orm.readthedocs.org/projects/doctrine-orm/en/latest/reference/annotations-reference.html" target="_target">clique aqui</a> 
+	e tenha sempre em mãos o manual das annotations do Doctrine.
+</p>
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;&amp;lang=js&amp;skin=desert"></script>
