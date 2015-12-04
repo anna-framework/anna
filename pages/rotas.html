@@ -6,15 +6,253 @@
 </h3>
 
 <p>
-    O esqueleto do controlador de página é simples, não foge ao padrão do mercado.
+    Todas as rotas do sistema são mapeadas através do arquivo <b>App\Config\routes.php</b>. Veja o código abaixo. 
 </p>
 
 <!--?prettify lang=php-->
-<!-- <pre class="prettyprint">
-    class HomeController extends Anna\Controller{
-    	public function index(){
-            return view('home');
-    	}
-    }
+<pre class="prettyprint">
+    $router = Anna\Routers\Router::getInstance();
+    $router->add("/", "HomeController::index");
 </pre>
-<p>&nbsp;</p> -->
+<p>&nbsp;</p>
+<p>
+    O método Router::add() habilita o método informado para qualquer method html de entrada.
+</p>
+
+<p>
+    Pode-se utilizar também wildcards para limitação do escopo de entrada de paramâmetros da seguinte maneira:
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    //habilitando
+    $router->add("/index/[0-9]", "HomeController::index");
+</pre>
+<p>&nbsp;</p>
+
+
+<h4>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Limitando rotas a métodos http
+</h4>
+<p>
+    Caso deseje limitar os métodos de http, pode-de passar como parametro da seguinte maneira:
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    //limitando os métodos GET e POST
+    $router->add("/index/[0-9]", "HomeController::index", [
+    	'methods' => ['GET', 'POST']
+    ]);
+</pre>
+<p>&nbsp;</p>
+
+<p>
+    Existem também os atalhos para criar entradas de rotas limitando apenas 1 método http:
+</p>
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    //limitando rota ao metodo GET
+    $router->get('/', 'HomeController::index');
+
+    //limitando rota ao método POST
+    $router->post('/new', 'HomeController::new');
+
+    //limitando rota ao método PUT
+    $router->put('/edit', 'HomeController::edit');
+
+    //limitando rota ao método DELETE
+    $router->delete('/remove/{id}', 'HomeController::remove');
+</pre>
+<p>&nbsp;</p>
+
+<h4>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Restfull - Registrando Resource
+</h4>
+
+<p>
+    Você pode registrar os métodos basicos RestFull (GET, POST, PUT, DELETE) com apenas um registro de rota, utilizando Route::addResource();
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+    //Registrando rotas mapeadas para Resource controller
+    $router->addResource('/member', 'UserController');
+</pre>
+<p>&nbsp;</p>
+
+<p>
+	Neste caso, ele irá mapear rotas para o <i>UserController</i> com a seguinte configuração:
+</p>
+
+
+<pre class=code>
++------------------+---------+----------+---------------------------+
+|Routes            | Methods | Watchers | Controllers               |
++------------------+---------+----------+---------------------------+
+| /member          | GET     |          | UserController::read      |
+| /member/{any}    | GET     |          | UserController::read      |
+| /member/{any}    | POST    |          | UserController::create    |
+| /member/{any}    | PUT     |          | UserController::update    |
+| /member/{any}    | DELETE  |          | UserController::delete    |
++------------------+---------+----------+---------------------------+
+</pre>
+<p>&nbsp;</p>
+
+<p>
+	Lembrando que, criando resource através da linha de comando, a Anna cria o controller com os métodos, e adiciona entrada automaticamente
+	nas rotas, efetue o comando abaixo no console/bash e depois verifique na pasta App/Controllers e App/Config/routes.php
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+	php anna make:resource User
+</pre>
+<p>&nbsp;</p>
+
+<p>
+	Para verificar como ficou o mapeamento das suas rotas, dê o comando route:list.
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+	php anna route:list
+</pre>
+<p>&nbsp;</p>
+
+<h4>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Agrupando rotas
+</h4>
+
+<p>
+    Você pode agrupar diversas rotas sob um prefixo padrão na url:
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+	//App/route.php
+
+	$router->addPrefix('frutas/', function($router){
+		$router->get('banana', 'FrutasController::banana');
+		$router->post('laranja', 'FrutasController::laranja');
+		$router->get('uva', 'FrutasController::uva');
+	});
+
+</pre>
+<p>&nbsp;</p>
+<p>Rode o comando <i>php anna route:list</i> e você terá:</p>
+
+<pre class="code">
++------------------+---------+----------+---------------------------+
+|Routes            | Methods | Watchers | Controllers               |
++------------------+---------+----------+---------------------------+
+| /frutas/banana   | GET     |          | FrutasController::banana  |
+| /frutas/laranja  | POST    |          | FrutasController::laranja |
+| /frutas/uva      | GET     |          | FrutasController::uva     |
++------------------+---------+----------+---------------------------+
+</pre>
+<p>&nbsp;</p>
+<p>Lembrando que todos os comandos ROUTERS podem ser acionado de dentro do agrupamento, inclusive outros agrupamentos.</p>
+
+<h4>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Protegendo suas rotas
+</h4>
+
+<p>
+	Você pode proteger suas rotas com classes denominadas Watchers, essas classes são invocadas e executam uma verificação pré configurada
+	sempre que houver registro delas nas rotas. Por exemplo, pode-se proteger rotas com acesso restrito a pessoas logadas, ou com determinados
+	perfis de acesso nesses watchers a fim de que o controller não se preocupe com isso.
+</p>
+<p>Você pode adicionar watchers em qualquer lugar mesmo dentro de grupos, veja como:</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+
+	//Rota sem watcher
+	$router->get('banana', 'FrutasController::banana');
+
+	//rotas com watcher
+	$router->addWatcher('Auth', function($router){
+		$router->get('laranja', 'FrutasController::laranja');
+		$router->get('uva', 'FrutasController::uva');
+	});
+</pre>
+<p>&nbsp;</p>
+
+<p>A configuração acima irá gerar as seguintes rotas:</p>
+<pre class="code">
++----------+---------+----------+---------------------------+
+|Routes    | Methods | Watchers | Controllers               |
++----------+---------+----------+---------------------------+
+| /banana  | GET     |          | FrutasController::banana  |
+| /laranja | GET     | Auth     | FrutasController::laranja |
+| /uva     | GET     | Auth     | FrutasController::uva     |
++----------+---------+----------+---------------------------+
+</pre>
+
+<p>
+	Para mais informações sobre Watchers, o que são e como cria-los, acesse <a href="?page=watchers"></a>
+</p>
+
+
+<h4>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Agrupamentos genéricos
+</h4>
+
+<p>
+	Você pode agrupar rotas de maneira genéricas, informando não apenas métodos, como máscaras para serem utilizada, schemas http ou https...
+</p>
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+
+	//Agrupando rotas de forma genérica
+
+	/* Este array de exemplo, pode ser usado nos métodos Router::add(), Router::get(), 
+	 * Router::post(), Router::put(), Router::delete() como terceiro parâmetro
+	 */
+	$config= [
+		//limitando ao esquema https
+		'schemes' => [
+			'HTTPS'
+		],
+
+		//e apenas o método http get
+		'methods' => [
+			'GET'
+		],
+
+		//fixando o formato de alguns parametros de entrada
+		'mask' => [
+			'id' => '\d+'
+			'codProduct' => '(\d{3}\-\d{2}\-\d{4})' //exemplo: 888-33-4444
+		]
+	];
+
+	$router->addGroup($config, function($router){
+		$router->get('laranja', 'FrutasController::laranja');
+		$router->get('uva', 'FrutasController::uva');
+		$router->get('uva/{codProduct}', 'FrutasController::uva');
+		
+		//como você limitou o grupo a métodos GET, essa rota nunca será acessível:
+		$router->post('/posta-uva', 'FrutasController::postaUva');
+	});
+</pre>
+<p>&nbsp;</p>
+
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;&amp;lang=js&amp;skin=desert"></script>
