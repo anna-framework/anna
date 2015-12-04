@@ -1,0 +1,60 @@
+<h3>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Criando Watchers
+</h3>
+
+<p>
+    Os Watchers, são componentes muito simples, que requerem apenas que você implemente o método público <i>run()</i> que deve retornar um valor boleano 
+    indicando se será permitida a execução do controller ou não.
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+
+    class TesteWatcher extends Anna\Watchers\Abstracts\WatcherAbstract
+	{
+	    public function run()
+	    {
+	        return false;
+	    }
+	}
+</pre>
+<p>&nbsp;</p>
+
+<p>
+	Você pode acessar a instância a ser executada do controller a partir da propriedade <i>controller</i> a fim de buscar ou enviar alguma informação
+	necessária para ele executar o trabalho
+</p>
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+
+	//método run()
+	
+	//...
+
+	if (!$userCanDoThat) {
+		$this->controller->makeSomethingElse();
+	}
+
+	//...
+
+</pre>
+<p>&nbsp;</p>
+
+<p>
+	Recomendo sempre criar watchers a partir da linha de comando, pois a Anna escreve as dependências e deixa uma bela documentação pronta
+	para ser escrita. Lembrando que lugar de wacther é na pasta App/Watchers
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+	php anna make:watcher 'Auth'
+</pre>
+<p>&nbsp;</p>
+
+
+
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;&amp;lang=js&amp;skin=desert"></script>
