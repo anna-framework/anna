@@ -3,7 +3,7 @@
 namespace Anna;
 
 use Anna\Routers\Router;
-use \DI\ContainerBuilder;
+use DI\ContainerBuilder;
 
 /**
  * -------------------------------------------------------------

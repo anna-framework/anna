@@ -137,7 +137,7 @@ function view($template)
 /**
  * Extrai o nome da pasta a partir do possível namespace recebido.
  */
-private function nameToFolderName($name, $folder_base)
+function nameToFolderName($name, $folder_base)
 {
     $name = str_replace('/', '_', $name);
     $name = str_replace('\\', '_', $name);

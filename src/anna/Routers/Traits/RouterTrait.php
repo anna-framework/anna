@@ -225,7 +225,7 @@ trait RouterTrait
 
     abstract public function getSubRouter()
     {
-        return new SubRouter();
+        // --
     }
     
     /**
