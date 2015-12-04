@@ -1,19 +1,18 @@
 <?php
-use Anna\Config;
 
-class ApplicationTest extends PHPUnit_Framework_TestCase
-{
-    /**
-     * @covers \Anna\Application::run
-     */
-    public function testAssert()
-    {
-        try {
-            $config = Config::getInstance();
-        } catch (Exception $e) {
-            $this->assertTrue(true); //só que nao
-        }
+use Anna\Application;
 
-        $this->assertTrue(true);
-    }
+class ApplicationTest extends PHPUnit_Framework_TestCase{
+	
+	/**
+	 * @cover Anna\Application
+	 */
+	public function testApplication(){
+		$app = new Application();
+
+		$this->assertEquals(Anna\Application::class, get_class($app), 'Nao conseguiu instaciar Application');
+
+	}
+	
+	
 }
