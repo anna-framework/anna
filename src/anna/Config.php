@@ -24,15 +24,16 @@ class Config
 
     public function __construct()
     {
+    	
+    	if (!defined('DS')) {
+    		define('DS', DIRECTORY_SEPARATOR);
+    	}
+    	
         if (!defined('SYS_ROOT')) {
             define('SYS_ROOT', dirname(dirname(dirname(dirname(dirname(__DIR__))))).DS);
         }
 
         chdir(SYS_ROOT);
-
-        if (!defined('DS')) {
-            define('DS', DIRECTORY_SEPARATOR);
-        }
 
         if (!defined('PS')) {
             define('PS', PATH_SEPARATOR);
