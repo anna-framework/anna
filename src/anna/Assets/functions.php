@@ -1,4 +1,5 @@
 <?php
+
 use Anna\View;
 
 /**
@@ -93,6 +94,7 @@ function mountCtrlFullName($ctrl, $array)
  * Converte o nome informado pelo desenvolvedor para um nome padronizado para classes.
  *
  * @param string $name
+ *
  * @return string
  */
 function nameToClassName($name)
@@ -194,7 +196,7 @@ function loadAppModels()
         }
     }
 
-    $lista_final = array_filter($fqcns, function($item) {
+    $lista_final = array_filter($fqcns, function ($item) {
         preg_match('~Model~', $item, $teste);
 
         return (count($teste)) ? true : false;

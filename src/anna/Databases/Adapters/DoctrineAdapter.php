@@ -78,7 +78,6 @@ class DoctrineAdapter implements AdaptersInterface
         } else {
             $this->entityManager = EntityManager::create($conn_params, $doctrine_config);
         }
-
     }
 
     /**

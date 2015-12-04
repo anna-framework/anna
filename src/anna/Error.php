@@ -71,7 +71,6 @@ class Error
 
     /**
      * Registra os erros em arquivo enquanto direciona o usuário para uma página genérica de erro.
-     *
      */
     public static function logFile($text)
     {

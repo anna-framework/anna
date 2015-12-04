@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Anna\Workers\Abstracts;
 
 use Anna\Workers\Interfaces\WorkerInterface;

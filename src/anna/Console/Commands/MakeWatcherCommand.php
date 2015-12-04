@@ -68,5 +68,4 @@ class MakeWatcherCommand extends Command
 
         $output->writeln('Watcher '.$class_name.'Watcher criado com sucesso.');
     }
-
 }

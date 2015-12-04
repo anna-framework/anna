@@ -1,7 +1,9 @@
 <?php
+
 namespace Anna\Console\Helpers;
 
 use Anna\Error;
+
 /**
  * ------------------------------------------------
  * TemplateHelper
@@ -10,6 +12,7 @@ use Anna\Error;
  * Classe para auxilio aos comandos 'make' a carregarem os templates das classes que eles devem criar
  *
  * @author Cristiano Gomes <cmgomes.es@gmail.com>
+ *
  * @since 03, dezembro 2015
  */
 class TemplateHelper
@@ -17,7 +20,7 @@ class TemplateHelper
     private static $instance;
 
     private $templates_path;
-    
+
     public function __construct()
     {
         $this->templates_path = ANNA_ROOT.'Assets'.DS;

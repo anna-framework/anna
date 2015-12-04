@@ -96,6 +96,7 @@ class AppNameCommand extends Command
      * Carrega os comandos criandos pelos desenvolvedores inicialização.
      *
      * @param string $path
+     *
      * @return array
      */
     private function loadAppCommands($path)

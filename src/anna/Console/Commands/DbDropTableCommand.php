@@ -9,7 +9,6 @@ use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Finder\Iterator\RecursiveDirectoryIterator;
 
 /**
  * ---------------------------------------
@@ -41,7 +40,7 @@ class DbDropTableCommand extends Command
         $em = $driver->getManager();
         $schema = new SchemaTool($em);
         $models = [];
-        
+
         $model_name = $input->getArgument('model_name');
         $full_name = Config::getInstance()->get('root-namespace').'\\Models'.'\\'.$model_name.'Model';
 
@@ -68,5 +67,4 @@ class DbDropTableCommand extends Command
 
         $output->writeln('Tabela '.$table_name.' removida com sucesso.');
     }
-
 }
