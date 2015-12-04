@@ -115,6 +115,7 @@ final class Manager
                 $reflection = new \ReflectionClass($worker);
             } catch (\ReflectionException $e) {
                 Error::log($e);
+
                 return;
             }
 
@@ -149,6 +150,7 @@ final class Manager
      * Carrega os comandos criandos pelos desenvolvedores inicialização.
      *
      * @param string $path
+     *
      * @return array
      */
     private function loadAppWorkers($path)

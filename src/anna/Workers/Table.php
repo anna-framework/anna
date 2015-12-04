@@ -41,7 +41,8 @@ class Table
     }
 
     /**
-     * Carrega a informação da tabela de workers
+     * Carrega a informação da tabela de workers.
+     *
      * @return void
      */
     public function loadInformation()
@@ -51,8 +52,10 @@ class Table
     }
 
     /**
-     * Registra um worker worker na tabela
-     * @param  array $worker    conjunto de informações sobre um worker
+     * Registra um worker worker na tabela.
+     *
+     * @param array $worker conjunto de informações sobre um worker
+     *
      * @return void
      */
     public function registerWorker($worker)
@@ -100,9 +103,10 @@ class Table
     }
 
     /**
-     * Registra um conjunto de workers de uma vez
+     * Registra um conjunto de workers de uma vez.
      * 
-     * @param  array $workers 
+     * @param array $workers
+     *
      * @return void
      */
     public function registerWorkers($workers)
@@ -114,8 +118,10 @@ class Table
     }
 
     /**
-     * Retira um worker da tabela
-     * @param  string $name
+     * Retira um worker da tabela.
+     *
+     * @param string $name
+     *
      * @return void
      */
     public function unregisterWorker($name)
@@ -129,9 +135,10 @@ class Table
     }
 
     /**
-     * Atualiza um determinado worker na tabela
+     * Atualiza um determinado worker na tabela.
      * 
-     * @param  array $worker 
+     * @param array $worker
+     *
      * @return void
      */
     public function updateWorker($worker)
@@ -150,9 +157,10 @@ class Table
     }
 
     /**
-     * Atualiza um conjunto de workers de uma vez
+     * Atualiza um conjunto de workers de uma vez.
      * 
-     * @param  array $workers 
+     * @param array $workers
+     *
      * @return void
      */
     public function updateWorkers($workers)
@@ -172,7 +180,7 @@ class Table
     }
 
     /**
-     * Salva a tabela em disco
+     * Salva a tabela em disco.
      * 
      * @return void
      */
@@ -200,7 +208,7 @@ class Table
         /**
          * Retorna uma instancia do worker encontrado ou retorna null.
          *
-         * @param  string $name
+         * @param string $name
          *
          * @return Worker
          */
@@ -222,7 +230,8 @@ class Table
         }
 
     /**
-     * Retorna a lista de workers
+     * Retorna a lista de workers.
+     *
      * @return array
      */
     public function getWorkers()
@@ -231,7 +240,7 @@ class Table
     }
 
     /**
-     * Remote todos os workers da tabela
+     * Remote todos os workers da tabela.
      * 
      * @return void
      */
@@ -243,7 +252,7 @@ class Table
     }
 
     /**
-     * Altera a configuração da tabela para desligada, nesse caso os job observer irá parar de rodar
+     * Altera a configuração da tabela para desligada, nesse caso os job observer irá parar de rodar.
      * 
      * @return void
      */
@@ -255,7 +264,8 @@ class Table
     }
 
     /**
-     * Seta a configura da tabela para ligada, o job observer ao ler continuará rodando
+     * Seta a configura da tabela para ligada, o job observer ao ler continuará rodando.
+     *
      * @return void
      */
     public function turnOn()
@@ -266,8 +276,10 @@ class Table
     }
 
     /**
-     * Atualiza a quantidade de memória gasta pelo observer
-     * @param  floatval $amount 
+     * Atualiza a quantidade de memória gasta pelo observer.
+     *
+     * @param floatval $amount
+     *
      * @return void
      */
     public function updateMemoryUsage($amount)

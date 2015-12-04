@@ -2,8 +2,8 @@
 
 namespace Anna\Console\Commands;
 
-use Anna\Workers\Manager;
 use Anna\Console\Commands\Abstracts\Command;
+use Anna\Workers\Manager;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 

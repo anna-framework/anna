@@ -82,5 +82,4 @@ class MakeModelCommand extends Command
 
         $output->writeln('Model '.$class_name.'Model criado com sucesso.');
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 use Anna\Config;
 
 class ApplicationTest extends PHPUnit_Framework_TestCase

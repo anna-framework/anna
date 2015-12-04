@@ -92,6 +92,7 @@ class JobObserverCommand extends Command
         unset($config);
         unset($table);
         unset($amount);
+
         return true;
     }
 
