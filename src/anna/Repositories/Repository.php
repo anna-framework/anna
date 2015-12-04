@@ -78,7 +78,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
      * Caso as opções de soft delete estejam configuradas o campo buscará por a data atual no campo informado
      * como delflag nas configurações do aplicativo.
      *
-     * @param int    $id    valor da chave primária do registro
+     * @param int $id valor da chave primária do registro
      *
      * @return false|null
      */
@@ -320,7 +320,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
         unset($qb);
 
         $query->setFirstResult($offset);
-        $query->setMaxResults($this->per_page); 
+        $query->setMaxResults($this->per_page);
 
         try {
             $paginator = new Paginator($query);

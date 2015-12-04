@@ -13,6 +13,7 @@ use DI\ContainerBuilder;
  * Classe principal do Anna, coordena os eventos e os processos
  *
  * @author Cristiano Gomes <cmgomes.es@gmail.com>
+ *
  * @since 03, Novembro 2015
  */
 class Application

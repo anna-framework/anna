@@ -118,6 +118,7 @@ trait RouterTrait
             $config($router);
         } else {
             Error::log(new \Exception('O segundo parâmetro deve ser um callable'));
+
             return;
         }
 
@@ -224,10 +225,10 @@ trait RouterTrait
     }
 
     /**
-     * Método deve ser implementado nas classes que utilizam essa trait
+     * Método deve ser implementado nas classes que utilizam essa trait.
      */
     abstract public function getSubRouter();
-    
+
     /**
      * Adiciona wildcards padrões para serem utilizados na detecção de rotas por regex.
      */

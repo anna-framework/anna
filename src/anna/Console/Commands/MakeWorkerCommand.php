@@ -68,5 +68,4 @@ class MakeWorkerCommand extends Command
 
         $output->writeln('Worker '.$class_name.'Worker criado com sucesso.');
     }
-
 }

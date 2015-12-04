@@ -117,7 +117,7 @@ class MakeRepositoryCommand extends Command
     }
 
     /**
-     * @param string $class_name
+     * @param string          $class_name
      * @param OutputInterface $output
      */
     private function callMakeModel($class_name, $output)
