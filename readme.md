@@ -1,9 +1,9 @@
 ## Anna PHP
 
-[![StyleCI](https://styleci.io/repos/46992617/shield)](https://styleci.io/repos/46992617) 
-[![Build Status](https://travis-ci.org/anna-framework/anna.svg?branch=master)](https://travis-ci.org/anna-framework/anna) 
-[![codecov.io](https://codecov.io/github/anna-framework/anna/coverage.svg?branch=master)](https://codecov.io/github/anna-framework/anna?branch=master) 
-[![Total Downloads](https://img.shields.io/packagist/dt/anna-framework/anna.svg?style=flat-square)](https://packagist.org/packages/anna-framework/anna) 
+[![StyleCI](https://styleci.io/repos/46992617/shield)](https://styleci.io/repos/46992617)
+[![Build Status](https://travis-ci.org/anna-framework/anna.svg?branch=master)](https://travis-ci.org/anna-framework/anna)
+[![codecov.io](https://codecov.io/github/anna-framework/anna/coverage.svg?branch=master)](https://codecov.io/github/anna-framework/anna?branch=master)
+[![Total Downloads](https://img.shields.io/packagist/dt/anna-framework/anna.svg?style=flat-square)](https://packagist.org/packages/anna-framework/anna)
 
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/anna-framework/anna.svg)](http://isitmaintained.com/project/anna-framework/anna "Average time to resolve an issue")
 [![Percentage of issues still open](http://isitmaintained.com/badge/open/anna-framework/anna.svg)](http://isitmaintained.com/project/anna-framework/anna "Percentage of issues still open")
@@ -35,5 +35,5 @@ php anna list
 ```
 
 ## Contribuição
-Fique a vontade para participar do projeto, caso tenha alguma idéia para componente ou algo que torne a Anna ainda mais simples, basta clonar!
-Alterações também podem ser realizadas no instalador do framework, acessar em: https://github.com/anna-framework/installer
+Fique a vontade para participar do projeto, caso tenha alguma idéia para componente ou algo que torne a Anna ainda mais simples, basta fazer um fork e mandar o seu pull request!
+Alterações também podem ser realizadas no instalador do framework (aplicação esqueleto), acessar em: https://github.com/anna-framework/installer
