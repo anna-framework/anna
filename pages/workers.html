@@ -1,0 +1,117 @@
+<h3>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Criando Workers
+</h3>
+
+<p>
+    Workers são um mecanismo que visa facilitar a maneira como se cria jobs agendados para trabalharem automaticamente.
+</p>
+
+<p>
+	Basta configurar o worker extendendo a classe certa para que a anna gerencie automaticamente o que deve ou não ser executado. 
+	E como se não bastasse você ativa e desativa quando quizer pela linha de comando.
+</p>
+
+<p>
+	Exemplo de worker
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+namespace App\Workers;
+
+use Anna\Workers\Abstracts\Worker;
+
+class TesteWorker extends Worker
+{
+    public function configure()
+    {
+        $this->setActivationTime('10s', \DateTime::createFromFormat('d/m/Y H:i:s', '24/12/2015 19:00:00'));
+        $this->setWorkerName('Trabalhador de exemplo');
+        $this->setActive(true);
+    }
+
+    public function execute()
+    {
+        //do the thing
+    }
+}
+</pre>
+<p>&nbsp;</p>
+
+<p>
+	No exemplo acima, o trabalhador TesteWorker registrado com nome de "Trabalhador de exemplo" irá executar o código presente no método <i>execute()</i> 
+	a cada 10 segundos a partir de 24/12/215 as 19 horas. Caso queira que seu worker inicie o trabalho imediatamente basta ocultar o segundo parametro 
+	em <i>Worker::setActivationTime()</i>. logo em seguida, configura-se o status de ativação para true a fim de que o observer já fique de olho neste worker.
+</p>
+
+<h4>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    O Job Observer
+</h4>
+
+<p>
+	Como o nome sugere, o trabalho desse carinha é observar o trabalho ser executado, ele aciona uma entidade interna o Worker Manager que é quem efetivamente
+	irá gerenciar os trabalhadores e executa-los caso seja a hora.
+</p>
+
+<p>
+	Para ativar o Observer basta executar o comando:
+</p>
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+php anna job:up
+</pre>
+<p>&nbsp;</p>
+
+<p>
+	Este comando, irá ativar o observer em um processo paralelo. Este processo é autogerenciavel e sempre reiniciará automaticamente quando atingir o limite
+	de memória especificado em 'work-limit-memory' no arquivo App/Config/app.php evitando assim problemas de loop infinito e consumo de memória. 
+</p>
+
+<p>
+	Para parar o observer basta dar o comando abaixo, ele irá finalizar o processo de observer enquanto que os workers que por acaso estiverem rocando irão
+	finalizar seus trabalhos antes de parar.
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+	php anna job:down
+</pre>
+<p>&nbsp;</p>
+
+<p>
+	Uma vez que o observer esteja rodando, você pode registrar novos workers digitando o comando a baixo:
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+	php anna job:register
+</pre>
+<p>&nbsp;</p>
+
+<p>
+	Este comando irá verificar se há workers novos na pasta App\Workers e irá registra-los na tabela da Anna.
+</p>
+
+<p>
+	Para atualizar workers que já estejam operando não é necessário efetuar nada, o proprio observer irá acionar o Worker Manager e manda-lo atualizar
+	a tabela em caso de alteração, por exemplo você pode parar um worker simplesmente setando o método <i>Worker::setActive()</i> para falso.
+</p>
+
+<p>
+	Importante, você sempre poderá criar seus workers a partir da linha de comando, bastando digitar:
+</p>
+
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+	php anna make:worker [WorkerName]
+</pre>
+<p>&nbsp;</p>
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;&amp;lang=js&amp;skin=desert"></script>
