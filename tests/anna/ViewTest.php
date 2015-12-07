@@ -1,63 +1,60 @@
 <?php
 
 use Anna\View;
-use Anna\Config;
 
 class ViewTest extends PHPUnit_Framework_TestCase
 {
+    public function setUp()
+    {
+        define('DS', DIRECTORY_SEPARATOR);
 
-	public function setUp()
-	{
-		define('DS', DIRECTORY_SEPARATOR);
+        define('SYS_ROOT', dirname(dirname(__DIR__)).DS);
 
-		define('SYS_ROOT', dirname(dirname(__DIR__)).DS);
+        chdir(SYS_ROOT);
 
-		chdir(SYS_ROOT);
+        if (!defined('PS')) {
+            define('PS', PATH_SEPARATOR);
+        }
 
-		if (!defined('PS')) {
-			define('PS', PATH_SEPARATOR);
-		}
-		
-		if (!defined('EOL')) {
-			define('EOL', PHP_EOL);
-		}
-		
-		if (!defined('ANNA_ROOT')) {
-			define('ANNA_ROOT', __DIR__.DS);
-		}
-	}
+        if (!defined('EOL')) {
+            define('EOL', PHP_EOL);
+        }
 
-	/**
-	 * @cover \Anna\View
-	 */
-	public function testView(){
-		try {
-			$view = new View();
-		} catch (Exception $e){
-			$this->assertTrue(false, $e->getMessage());
-		}
+        if (!defined('ANNA_ROOT')) {
+            define('ANNA_ROOT', __DIR__.DS);
+        }
+    }
 
-		//instance test
-		$this->assertEquals(View::class, get_class($view));
+    /**
+     * @cover \Anna\View
+     */
+    public function testView()
+    {
+        try {
+            $view = new View();
+        } catch (Exception $e) {
+            $this->assertTrue(false, $e->getMessage());
+        }
 
-		//addParam test
-		$error = false;
-		try {
-			$view->addParam('testeParam', 'testeValue');
-		} catch (Exception $e){
-			$error = true;
-		}
+        //instance test
+        $this->assertEquals(View::class, get_class($view));
 
-		$this->assertFalse($error, 'Falha na hora de adicionar parametro ao view');
+        //addParam test
+        $error = false;
+        try {
+            $view->addParam('testeParam', 'testeValue');
+        } catch (Exception $e) {
+            $error = true;
+        }
 
-		try {
-			$teste = $view->getParam('testeParam');
-		} catch (Exception $e){
-			$teste = false;
-		}
+        $this->assertFalse($error, 'Falha na hora de adicionar parametro ao view');
 
-		$this->assertEquals('testeValue', $teste, 'Falha na recuperacao de parametro da view');
+        try {
+            $teste = $view->getParam('testeParam');
+        } catch (Exception $e) {
+            $teste = false;
+        }
 
-	}
-
+        $this->assertEquals('testeValue', $teste, 'Falha na recuperacao de parametro da view');
+    }
 }
