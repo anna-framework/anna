@@ -1,5 +1,6 @@
 <?php
 
+use Anna\Response;
 use Anna\View;
 
 /**
@@ -41,7 +42,7 @@ function uncaughtExceptionHandler($e)
 					</div>
 				</body>
 			</html>";
-    $response = new Anna\Response($html, 200, ['chaset' => 'utf-8']);
+    $response = new Response($html, 200, ['chaset' => 'utf-8']);
     $response->send();
 }
 
@@ -114,6 +115,29 @@ function nameToClassName($name)
     return $class_name;
 }
 
+/**
+ * Extrai o nome da pasta a partir do possível namespace recebido
+ */
+function nameToFolderName($name, $base_folder){
+	$name = str_replace('/', '_', $name);
+	$name = str_replace('\\', '_', $name);
+	$parts = explode('_', $name);
+
+	$base_path = SYS_ROOT . 'App' . DS . $base_folder;
+	$controller_name = array_pop($parts);
+	$folder_name = '';
+
+	foreach($parts as $subfolder){
+		$folder_name .= DS . $subfolder;
+	}
+
+	if(!is_dir($base_path . $folder_name)){
+		return (mkdir($base_path . $folder_name)) ? $folder_name : false;
+	}else{
+		return $folder_name;
+	}
+}
+
 function bcrypt($string)
 {
     $custo = 8;
@@ -136,71 +160,3 @@ function view($template)
     return $view;
 }
 
-/**
- * Extrai o nome da pasta a partir do possível namespace recebido.
- */
-function nameToFolderName($name, $folder_base)
-{
-    $name = str_replace('/', '_', $name);
-    $name = str_replace('\\', '_', $name);
-    $parts = explode('_', $name);
-
-    $base_path = SYS_ROOT.'App'.DS.$folder_base;
-    $folder_name = '';
-
-    foreach ($parts as $subfolder) {
-        $folder_name .= DS.$subfolder;
-    }
-
-    if (!is_dir($base_path.$folder_name)) {
-        return (mkdir($base_path.$folder_name)) ? $folder_name : false;
-    } else {
-        return $folder_name;
-    }
-}
-
-/**
- * Carrega os models criados pelo desenvolvedor.
- *
- * @return array
- */
-function loadAppModels()
-{
-    $fqcns = [];
-    $path = SYS_ROOT.'App'.DS.'Models'.DS;
-
-    $all_files = new \RecursiveIteratorIterator(new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS), \RecursiveIteratorIterator::SELF_FIRST);
-    $php_files = new \RegexIterator($all_files, '/\.php$/');
-
-    foreach ($php_files as $php_file) {
-        $content = file_get_contents($php_file->getRealPath());
-        $tokens = token_get_all($content);
-        $namespace = '';
-
-        for ($index = 0; isset($tokens[$index]); $index++) {
-            if (!isset($tokens[$index][0])) {
-                continue;
-            }
-
-            if (T_NAMESPACE === $tokens[$index][0]) {
-                $index += 2; // Pula namespace e espaà¸£à¸‡os em branco
-                while (isset($tokens[$index]) && is_array($tokens[$index])) {
-                    $namespace .= $tokens[$index++][1];
-                }
-            }
-
-            if (T_CLASS === $tokens[$index][0]) {
-                $index += 2; // Pula palavra chave 'class' e espaà¸£à¸‡os em branco
-                $fqcns[] = $namespace.'\\'.$tokens[$index][1];
-            }
-        }
-    }
-
-    $lista_final = array_filter($fqcns, function ($item) {
-        preg_match('~Model~', $item, $teste);
-
-        return (count($teste)) ? true : false;
-    });
-
-    return $lista_final;
-}

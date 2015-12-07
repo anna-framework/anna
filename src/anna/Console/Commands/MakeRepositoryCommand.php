@@ -47,7 +47,7 @@ class MakeRepositoryCommand extends Command
             'data'            => date('d/m/Y'),
             'namespace'       => $root_ns.'\\Repositories'.$folder_name,
         ];
-
+ 
         if ($input->getOption('model')) {
             $model = nameToClassName($class_name);
 
@@ -57,11 +57,12 @@ class MakeRepositoryCommand extends Command
                 $params['use_model'] = '';
             } else {
                 $model .= 'Model';
-                $declaration = '/**'.EOL;
-                $declaration .= "\t * @inject ".$model.EOL;
-                $declaration .= "\t * @var ".$model.EOL;
-                $declaration .= "\t */".EOL;
-                $declaration .= "\t".'public $model;'.EOL;
+
+                $declaration = "public function __construct()" . EOL;
+                $declaration .= "\t{" . EOL;
+                $declaration .= "\t\t" . '$this->model = new ' . $model . '();' . EOL;
+                $declaration .= "\t\t" . 'parent::__construct();' . EOL;
+                $declaration .= "\t}" . EOL;
 
                 $params['construct'] = $declaration;
                 $params['use_model'] = 'use '.$root_ns.'\\Models\\'.$model.';';
