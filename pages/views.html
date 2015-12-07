@@ -1,0 +1,103 @@
+<h3>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Views
+</h3>
+
+<p>
+	As views são parte importante de todo framework PHP, elas podem ser uma benção ou uma maldição.
+</p>
+
+<p>
+	Para facilitar a vida dos desenvolvedores já acostumados com as novas engines, a Anna disponibiliza 3 engines modernas disponíveis no
+	mercado e já com grande aceitação, são eles <i>Blade</i>, <i>Mustache</i> e <i>Twig</i>.
+</p>
+
+<p>
+	Para escolher qual dessas engines deseja utilizar, basta ir em App\Config\view.php e alterar as configurações, e informar na propriedade 'view-engine'.
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+/**
+ * Para renderizar suas views, você pode utilizar as engines: blade, twig ou mustache
+ */
+'view-engine' => 'blade',
+</pre>
+<p>&nbsp;</p>
+
+<p>
+	A partir daí, é só criar seus templates de acordo com a engine especificada.
+</p>
+
+
+<p>
+	No controller, você irá acessar a view, enviar ou buscar parametros dela da mesma forma independente da engine selecionada:
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+//controller
+
+...
+
+public function index()
+{
+	$setFruta = ['nome' => 'laranja'];
+	$this->view->addParam('fruta', $setFruta);
+
+	$getFruta = $this->view->getParam('fruta');
+
+	$setFrutas = ['citrica' => 'laranja', 'passa' => 'uva', 'tropical' => 'banana'];
+
+	//adiciona índice por índice aos parâmetros
+	$this->view->addParams('frutas', $setFrutas);
+
+	$tropical = $this->view->getParam('tropical');
+}
+...
+</pre>
+<p>&nbsp;</p>
+
+<p>
+	Você pode configurar a view manualmente para renderizar seu template:
+</p>
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+//controller
+
+public function index()
+{
+	...
+	
+	//exibe por exemplo o arquivo App\Views\teste.blade.php
+	$this->view->setTemplate('teste');
+	
+	return $this->view;
+}
+</pre>
+<p>&nbsp;</p>
+
+<p>
+	Ou você pode utilizar o helper <i>view()</i> para poupar linhas
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+//controller
+
+public function index()
+{
+	...
+	
+	return view('teste');
+	
+	...
+}
+
+</pre>
+<p>&nbsp;</p>
+
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;&amp;lang=js&amp;skin=desert"></script>
