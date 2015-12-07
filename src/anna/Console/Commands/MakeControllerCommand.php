@@ -55,7 +55,7 @@ class MakeControllerCommand extends Command
                 $params['show_view'] = '';
             } else {
                 $view_folder = strtolower($class_name);
-                $params['show_view'] = 'return $this->show("'.$view_folder.'.index");';
+                $params['show_view'] = 'return view("'.$view_folder.'.index");';
             }
         } else {
             $params['show_view'] = '//do the thing';
