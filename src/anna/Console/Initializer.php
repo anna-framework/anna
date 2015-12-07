@@ -2,9 +2,9 @@
 
 namespace Anna\Console;
 
+use Anna\Config;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Finder\Iterator\RecursiveDirectoryIterator;
-use Anna\Config;
 
 /**
  * ------------------------------------------
