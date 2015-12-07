@@ -1,0 +1,51 @@
+<h3>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Response
+</h3>
+
+<p>
+	A classe <i>Response</i> é apenas uma interface para utilização da biblioteca symfony/http-foundation. Ela foi escrita
+	apenas com o intuito de poupar códigos.
+</p>
+
+<p>
+	Response serve para quando você deseja padronizar o retorno de dados para o navegador, alterando os cabeçalhos de maneira fácil 
+	com poucas linhas, por exemplo:
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+	//controller
+	
+	...
+	return new Response('string de conteúdo', 200, ['content-type' => 'text/html]);
+	
+</pre>
+<p>&nbsp;</p>
+
+<p>
+	A Anna fornece um atalho quando se deseja enviar json para o navegador, bastando para isso retornar seu array ou objeto diretamente
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+	//controller
+	
+	$array = ['frutas' => [
+		'maçã',
+		'laranja',
+		'banana'
+	]];
+	
+	return $array;
+
+</pre>
+<p>&nbsp;</p>
+
+<p>
+	Nesse caso, a Anna automaticamente recebe o array ou objeto e empacota em json através da classe response
+</p>
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;&amp;lang=js&amp;skin=desert"></script>

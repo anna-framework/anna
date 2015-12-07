@@ -1,0 +1,38 @@
+<h3>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Request
+</h3>
+
+<p>
+	A classe <i>Request</i> assim como a Response, é apenas uma interface para utilização da biblioteca symfony/http-foundation.
+</p>
+
+<p>
+	<i>Request/i> é um facilitador para que se recupere os dados de entrada de forma mais segura e rápida, bastando um comando para
+	recuper os parametros desejados de maneira simples e já segura:
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+	//controller
+
+	$req = new Request();
+
+	//buscando parâmetros recebidos via GET
+	$param = $re->get('fruta');
+	
+	//buscando parâmetros recebidos via POST
+	$param = $req->post('fruta');
+	
+	//buscando FILES
+	$file = $req->file->get('fileName');
+</pre>
+<p>&nbsp;</p>
+
+<p>
+	Você pode facilitar ainda mais injetando o Request via dependence injection.
+</p>
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;&amp;lang=js&amp;skin=desert"></script>
