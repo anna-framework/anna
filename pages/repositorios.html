@@ -1,0 +1,81 @@
+<h3>
+    <a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true">
+        <span class="octicon octicon-link"></span>
+    </a>
+    Criando Repositórios
+</h3>
+
+<p>
+	Repositório é o padrão adotado pela Anna para camada de acesso ao banco de dados. É um padrão que visa organizar os códigos ao mesmo tempo que
+    remove algumas lógicas do controller deixando-o mais limpo.
+</p>
+
+<p>
+    Anna oferece um repositório simples, porém funcional, pronto para ser extendido e utilizado. Este repositório é genérico e aceita qualquer model. Para torna-lo
+    específico para um determinado model, basta extendê-lo e informar o nome do model pela propriedade <i>Repository::model</i>.
+</p>
+
+<p>
+    Para criar um repositório basta dar o comando:
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+	php anna make:repository Teste
+</pre>
+<p>&nbsp;</p>
+
+<p>
+    Este comando cria o respositório TesteRepository na pasta App/Repositories
+</p>
+
+<p>
+    Você pode também ao criar o repositório já criar também um model com mesmo nome:
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+	php anna make:repository Teste -m
+</pre>
+<p>&nbsp;</p>
+
+<p>
+	O comando acima irá criar além do repositório TesteRepository na pasta App\Repositories, o TesteModel na pasta App\Models.
+</p>
+
+<p>
+	A partir daí, você pode utilizar o repositório no seu controller
+</p>
+
+<!--?prettify lang=php-->
+<pre class="prettyprint">
+namespace App\Controllers;
+
+use Anna\Controller;
+use App\Models\TesteModel;
+use App\Repositories\TesteRepository;
+
+class TesteController extends Controller
+{
+	/**
+	 * Injetando o repository através do dependence injection
+	 * @inject TesteRepository
+	 */
+	private $repo;
+	
+	public function index()
+	{
+		$teste = new TesteModel();
+		$this->repo->save($teste);
+
+		$testeFind = $this->repo->search(['id' => 1]);
+		return $testeFind;
+	}
+}
+
+</pre>
+<p>&nbsp;</p>
+
+
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js?lang=css&amp;&amp;lang=js&amp;skin=desert"></script>
