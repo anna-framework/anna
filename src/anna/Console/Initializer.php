@@ -2,9 +2,9 @@
 
 namespace Anna\Console;
 
+use Anna\Config;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Finder\Iterator\RecursiveDirectoryIterator;
-use Anna\Config;
 
 /**
  * ------------------------------------------
@@ -22,8 +22,8 @@ class Initializer
      */
     public function run()
     {
-    	//apenas para inicializar
-    	$conf = Config::getInstance();
+        //apenas para inicializar
+        $conf = Config::getInstance();
         $application = new Application();
 
         $commands = [];

@@ -116,26 +116,29 @@ function nameToClassName($name)
 }
 
 /**
- * Extrai o nome da pasta a partir do possível namespace recebido
+ * Extrai o nome da pasta a partir do possível namespace recebido.
+ *
+ * @param string $base_folder
  */
-function nameToFolderName($name, $base_folder){
-	$name = str_replace('/', '_', $name);
-	$name = str_replace('\\', '_', $name);
-	$parts = explode('_', $name);
+function nameToFolderName($name, $base_folder)
+{
+    $name = str_replace('/', '_', $name);
+    $name = str_replace('\\', '_', $name);
+    $parts = explode('_', $name);
 
-	$base_path = SYS_ROOT . 'App' . DS . $base_folder;
-	$controller_name = array_pop($parts);
-	$folder_name = '';
+    $base_path = SYS_ROOT.'App'.DS.$base_folder;
+    $controller_name = array_pop($parts);
+    $folder_name = '';
 
-	foreach($parts as $subfolder){
-		$folder_name .= DS . $subfolder;
-	}
+    foreach ($parts as $subfolder) {
+        $folder_name .= DS.$subfolder;
+    }
 
-	if(!is_dir($base_path . $folder_name)){
-		return (mkdir($base_path . $folder_name)) ? $folder_name : false;
-	}else{
-		return $folder_name;
-	}
+    if (!is_dir($base_path.$folder_name)) {
+        return (mkdir($base_path.$folder_name)) ? $folder_name : false;
+    } else {
+        return $folder_name;
+    }
 }
 
 function bcrypt($string)
@@ -159,4 +162,3 @@ function view($template)
 
     return $view;
 }
-
