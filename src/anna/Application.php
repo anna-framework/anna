@@ -18,9 +18,9 @@ use DI\ContainerBuilder;
  */
 class Application
 {
-	const WATCHER = 'watcher';
-	const METHOD_PARAMS = 'method_params';
-	
+    const WATCHER = 'watcher';
+    const METHOD_PARAMS = 'method_params';
+
     private $app_root_namespace;
 
     /**
