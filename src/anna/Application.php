@@ -36,11 +36,11 @@ class Application
      */
     public static function getInstance()
     {
-        if (!self::$instance) {
-            self::$instance = new self();
+        if (!static::$instance) {
+            static::$instance = new static();
         }
 
-        return self::$instance;
+        return static::$instance;
     }
 
     public function run()
@@ -89,7 +89,7 @@ class Application
 
     /**
      * Processa o resultado recebido do controller e envia para a home.
-     * 
+     *
      * @return mixed
      */
     private function processResult($result)
