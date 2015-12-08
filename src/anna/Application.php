@@ -71,8 +71,8 @@ class Application
 
         $method = $url_params['method'];
 
-        if (isset($url_params[static:METHOD_PARAMS])) {
-            $result = call_user_func_array([$controller, $method], $url_params[static:METHOD_PARAMS]);
+        if (isset($url_params[static::METHOD_PARAMS])) {
+            $result = call_user_func_array([$controller, $method], $url_params[static::METHOD_PARAMS]);
         } else {
             $result = call_user_func([$controller, $method]);
         }
@@ -169,7 +169,7 @@ class Application
             }
         }
 
-        $parameters[static:METHOD_PARAMS] = $method_params;
+        $parameters[static::METHOD_PARAMS] = $method_params;
 
         $explode = explode('::', $parameters['path']);
         $controller = $explode[0];

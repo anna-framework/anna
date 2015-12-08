@@ -8,3 +8,4 @@ vendor/
 .project
 .settings
 .buildpath
+.sonar-project.properties
