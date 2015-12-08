@@ -18,6 +18,9 @@ use DI\ContainerBuilder;
  */
 class Application
 {
+	const WATCHER = 'watcher';
+	const METHOD_PARAMS = 'method_params';
+	
     private $app_root_namespace;
 
     /**
@@ -55,8 +58,8 @@ class Application
 
         $controller = $this->wakeUpController($url_params);
 
-        if (isset($url_params['watcher'])) {
-            $watcher_result = $this->runWatcher($url_params['watcher'], $controller);
+        if (isset($url_params[static::WATCHER])) {
+            $watcher_result = $this->runWatcher($url_params[static::WATCHER], $controller);
 
             if (!$watcher_result) {
                 $response = new Response('acesso_negado', 404);
@@ -68,8 +71,8 @@ class Application
 
         $method = $url_params['method'];
 
-        if (isset($url_params['method_params'])) {
-            $result = call_user_func_array([$controller, $method], $url_params['method_params']);
+        if (isset($url_params[static:METHOD_PARAMS])) {
+            $result = call_user_func_array([$controller, $method], $url_params[static:METHOD_PARAMS]);
         } else {
             $result = call_user_func([$controller, $method]);
         }
@@ -161,12 +164,12 @@ class Application
 
         $method_params = [];
         foreach ($parameters as $k => $v) {
-            if (!in_array($k, ['path', '_route', 'watcher'])) {
+            if (!in_array($k, ['path', '_route', static::WATCHER])) {
                 $method_params[$k] = $v;
             }
         }
 
-        $parameters['method_params'] = $method_params;
+        $parameters[static:METHOD_PARAMS] = $method_params;
 
         $explode = explode('::', $parameters['path']);
         $controller = $explode[0];
