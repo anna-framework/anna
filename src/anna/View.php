@@ -126,7 +126,7 @@ class View
 
         return;
     }
-    
+
     /**
      * Adiciona algumas variáveis padrão na lista de parametros da view
      */
@@ -134,11 +134,14 @@ class View
     {
 		$router = Router::getInstance();
 		$parameters = $router->match();
-		$paths = explode('::', $parameters['path']);
 
-		$this->addParam('_controller', $paths[0]);
-		$this->addParam('_method', $paths[1]);
-		$this->addParam('_route', $parameters['_route']);
+		if(is_array($parameters)){
+			$paths = explode('::', $parameters['path']);
+			
+			$this->addParam('_controller', $paths[0]);
+			$this->addParam('_method', $paths[1]);
+			$this->addParam('_route', $parameters['_route']);
+		}
     }
 
 }
