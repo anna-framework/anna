@@ -2,10 +2,10 @@
 
 namespace Anna;
 
-use Windwalker\Renderer\MustacheRenderer;
-use Windwalker\Renderer\BladeRenderer;
-use Windwalker\Renderer\TwigRenderer;
 use Anna\Routers\Router;
+use Windwalker\Renderer\BladeRenderer;
+use Windwalker\Renderer\MustacheRenderer;
+use Windwalker\Renderer\TwigRenderer;
 
 /**
  * -------------------------------------------------------------
@@ -27,7 +27,7 @@ class View
     private static $intance;
 
     /**
-     * Retorna a instância da classe
+     * Retorna a instância da classe.
      */
     public static function getInstance()
     {
@@ -41,7 +41,7 @@ class View
     public function __construct()
     {
         $config = Config::getInstance();
-		$this->addDefaultParams();
+        $this->addDefaultParams();
 
         $view_engine = $config->get('view.view-engine');
         $view_folder = SYS_ROOT.$config->get('view.view-folder');
@@ -67,7 +67,7 @@ class View
     }
 
     /**
-     * Renderiza a view especificada
+     * Renderiza a view especificada.
      * 
      * @param string $view
      */
@@ -79,7 +79,7 @@ class View
     }
 
     /**
-     * Configura o arquivo de view a ser renderizado
+     * Configura o arquivo de view a ser renderizado.
      * 
      * @param string $template
      */
@@ -89,10 +89,10 @@ class View
     }
 
     /**
-     * Adiciona um parametro na view
+     * Adiciona um parametro na view.
      * 
      * @param string $name
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function addParam($name, $value)
     {
@@ -101,7 +101,7 @@ class View
 
     /**
      * Adiciona array de parâmetros na view, cada posição do array se tornará uma variável
-     * disponível na view
+     * disponível na view.
      * 
      * @param array $array
      */
@@ -113,9 +113,10 @@ class View
     }
 
     /**
-     * Retorna o parâmetro especificado
+     * Retorna o parâmetro especificado.
      *
      * @param string $name
+     *
      * @return void|multitype:
      */
     public function getParam($name)
@@ -128,20 +129,19 @@ class View
     }
 
     /**
-     * Adiciona algumas variáveis padrão na lista de parametros da view
+     * Adiciona algumas variáveis padrão na lista de parametros da view.
      */
     private function addDefaultParams()
     {
-		$router = Router::getInstance();
-		$parameters = $router->match();
+        $router = Router::getInstance();
+        $parameters = $router->match();
 
-		if(is_array($parameters)){
-			$paths = explode('::', $parameters['path']);
-			
-			$this->addParam('_controller', $paths[0]);
-			$this->addParam('_method', $paths[1]);
-			$this->addParam('_route', $parameters['_route']);
-		}
+        if (is_array($parameters)) {
+            $paths = explode('::', $parameters['path']);
+
+            $this->addParam('_controller', $paths[0]);
+            $this->addParam('_method', $paths[1]);
+            $this->addParam('_route', $parameters['_route']);
+        }
     }
-
 }
