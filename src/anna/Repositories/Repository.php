@@ -85,8 +85,11 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
     public function remove($id)
     {
         $modelname = get_class($this->model);
-        $table_name = $this->manager->getClassMetadata($modelname)->getTableName();
-        $this->model = $this->search([$table_name.'_id' => $id], true);
+        $metadata =  $this->manager->getClassMetadata($modelname);
+        $table_name = $metadata->getTableName();
+        $primary_key = $metadata->getSingleIdentifierFieldName();
+
+        $this->model = $this->search([$primary_key => $id], true);
 
         if (!$this->model instanceof Model) {
             Error::log(new \Exception('Não foi encontrado registro na tabela: '.$table_name));
@@ -96,8 +99,8 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
 
         if (Config::getInstance()->get('database.softdelete')) {
             $delflag = Config::getInstance()->get('database.delflag');
-            $bin_field = $table_name.$delflag;
-            $this->model->$bin_field = date('Y-m-d H:i:s');
+            $bin_field = $delflag;
+            $this->model->$bin_field = new \Datetime('now');
 
             try {
                 $this->manager->merge($this->model);
