@@ -15,16 +15,17 @@ namespace Anna;
  */
 class Request extends \Symfony\Component\HttpFoundation\Request
 {
+
     /**
      * Constructor.
      */
     public function __construct()
     {
-    	$get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
-    	$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-    	$cookie = filter_input_array(INPUT_COOKIE, FILTER_SANITIZE_STRING);
-    	$files = $_FILES;
-    	$server = filter_input_array(INPUT_SERVER, FILTER_SANITIZE_STRING);
+    	$get = filter_input_array(INPUT_GET);
+    	$post = filter_input_array(INPUT_POST);
+    	$cookie = filter_input_array(INPUT_COOKIE);
+    	$files = $this->getInputFiles();
+    	$server = filter_input_array(INPUT_SERVER);
 
         $this->initialize($get, $post, [], $cookie, $files, $server, null);
     }
@@ -48,4 +49,9 @@ class Request extends \Symfony\Component\HttpFoundation\Request
     {
         return $this->request->get($param);
     }
+    
+    private function getInputFiles(){
+    	return $_FILES;
+    }
+
 }

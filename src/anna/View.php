@@ -47,21 +47,24 @@ class View
         $view_folder = SYS_ROOT.$config->get('view.view-folder');
         $view_cache = $config->get('view.cache-folder');
 
+        $paths = new \SplPriorityQueue();
+        $paths->insert($view_folder, 1);
+
         switch ($view_engine) {
             case 'blade':
-                $this->renderer = new BladeRenderer([$view_folder], ['cache_path' => $view_cache]);
+                $this->renderer = new BladeRenderer($paths, ['cache_path' => $view_cache]);
                 break;
 
             case 'twig':
-                $this->renderer = new TwigRenderer($view_folder);
+                $this->renderer = new TwigRenderer($paths);
                 break;
 
             case 'mustache':
-                $this->renderer = new MustacheRenderer($view_folder);
+                $this->renderer = new MustacheRenderer($paths);
                 break;
 
             default:
-                $this->renderer = new BladeRenderer([$view_folder], $view_cache);
+                $this->renderer = new BladeRenderer($paths, $view_cache);
                 break;
         }
     }
@@ -117,7 +120,7 @@ class View
      *
      * @param string $name
      *
-     * @return void|multitype:
+     * @return void|mixed
      */
     public function getParam($name)
     {
