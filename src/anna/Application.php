@@ -39,11 +39,11 @@ class Application
      */
     public static function getInstance()
     {
-        if (!static::$instance) {
-            static::$instance = new static();
+        if (!self::$instance) {
+            self::$instance = new static();
         }
 
-        return static::$instance;
+        return self::$instance;
     }
 
     public function run()

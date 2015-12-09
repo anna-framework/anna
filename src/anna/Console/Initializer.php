@@ -23,7 +23,7 @@ class Initializer
     public function run()
     {
         //apenas para inicializar
-        $conf = Config::getInstance();
+        Config::getInstance();
         $application = new Application();
 
         $commands = [];

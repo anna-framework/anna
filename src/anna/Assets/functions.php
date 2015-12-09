@@ -1,9 +1,7 @@
 <?php
 
-use \Symfony\Component\Finder\Iterator\RecursiveDirectoryIterator;
-use Anna\Response;
-use Anna\View;
-
+use \Symfony\Component\Finder\Iterator\RecursiveDirectoryIterator as RecursiveDir;
+ 
 /**
  * Método utilizado internamente para exibição de excessões não capturadas durante o desenvolvimento.
  *
@@ -43,7 +41,7 @@ function uncaughtExceptionHandler($e)
 					</div>
 				</body>
 			</html>";
-    $response = new Response($html, 200, ['chaset' => 'utf-8']);
+    $response = new Anna\Response($html, 200, ['chaset' => 'utf-8']);
     $response->send();
 }
 
@@ -128,7 +126,6 @@ function nameToFolderName($name, $base_folder)
     $parts = explode('_', $name);
 
     $base_path = SYS_ROOT.'App'.DS.$base_folder;
-    $controller_name = array_pop($parts);
     $folder_name = '';
 
     foreach ($parts as $subfolder) {
@@ -152,7 +149,7 @@ function loadAppModels()
     $fqcns = [];
     $path = SYS_ROOT.'App'.DS.'Models'.DS;
 
-    $all_files = new \RecursiveIteratorIterator(new RecursiveDirectoryIterator($path, RecursiveDirectoryIterator::SKIP_DOTS), \RecursiveIteratorIterator::SELF_FIRST);
+    $all_files = new \RecursiveIteratorIterator(new RecursiveDir($path, RecursiveDir::SKIP_DOTS), \RecursiveIteratorIterator::SELF_FIRST);
     $php_files = new \RegexIterator($all_files, '/\.php$/');
 
     foreach ($php_files as $php_file) {
@@ -204,7 +201,7 @@ function bcrypt($string)
  */
 function view($template)
 {
-    $view = View::getInstance();
+    $view = Anna\View::getInstance();
     $view->setView($template);
 
     return $view;

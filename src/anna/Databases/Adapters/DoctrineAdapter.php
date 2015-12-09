@@ -192,7 +192,6 @@ class DoctrineAdapter implements AdaptersInterface
 
             default:
                 throw new \Exception("Erro na configuração do banco de dados, verifique o arquivo Config\database.php");
-                break;
         }
 
         return $conn_params;

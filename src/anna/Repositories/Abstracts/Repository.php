@@ -37,7 +37,6 @@ abstract class Repository implements RepositoryInterface
 
         $adapter = new $adapter_name();
         $adapter->init();
-        //pr($adapter->getManager());
 
         $this->manager = $adapter->getManager();
     }
