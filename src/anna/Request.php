@@ -20,7 +20,13 @@ class Request extends \Symfony\Component\HttpFoundation\Request
      */
     public function __construct()
     {
-        $this->initialize($_GET, $_REQUEST, [], $_COOKIE, $_FILES, $_SERVER, null);
+    	$get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
+    	$post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+    	$cookie = filter_input_array(INPUT_COOKIE, FILTER_SANITIZE_STRING);
+    	$files = $_FILES;
+    	$server = filter_input_array(INPUT_SERVER, FILTER_SANITIZE_STRING);
+
+        $this->initialize($get, $post, [], $cookie, $files, $server, null);
     }
 
     /**
