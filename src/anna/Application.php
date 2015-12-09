@@ -87,10 +87,10 @@ class Application
      */
     public function getInjector()
     {
-    	if (!$this->di) {
-    		$this->config();
-    	}
-    	
+        if (!$this->di) {
+            $this->config();
+        }
+
         return $this->di;
     }
 
@@ -193,7 +193,7 @@ class Application
         Config::getInstance()->set('ANNA_PATH', __DIR__.DS);
 
         if (is_callable('uncaughtExceptionHandler')) {
-        	set_exception_handler('uncaughtExceptionHandler');
+            set_exception_handler('uncaughtExceptionHandler');
         }
 
         //Implementando o Dependence Injection automatizado
