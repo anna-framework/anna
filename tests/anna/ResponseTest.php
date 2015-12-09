@@ -35,12 +35,12 @@ class ResponseTest extends PHPUnit_Framework_TestCase
     public function testResponse()
     {
         try {
-            $request = new Response();
+            $response = new Response();
         } catch (Exception $e) {
             $this->assertTrue(false, $e->getMessage());
         }
 
         //instance test
-        $this->assertEquals(Response::class, get_class($request));
+        $this->assertEquals(Response::class, get_class($response));
     }
 }

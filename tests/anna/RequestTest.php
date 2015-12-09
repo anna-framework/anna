@@ -42,5 +42,13 @@ class RequestTest extends PHPUnit_Framework_TestCase
 
         //instance test
         $this->assertEquals(Request::class, get_class($request));
+
+        $teste = $request->get('teste');
+
+        $this->assertEquals(null, $teste);
+
+        $testePost = $request->post('testePost');
+
+        $this->assertEquals(null, $testePost);
     }
 }
