@@ -27,6 +27,11 @@ class Request extends \Symfony\Component\HttpFoundation\Request
     	$files = $this->getInputFiles();
     	$server = filter_input_array(INPUT_SERVER);
 
+    	$get = $get ? $get : [];
+    	$post = $post ? $post : [];
+    	$cookie = $cookie ? $cookie : [];
+    	$server = $server ? $server : [];
+
         $this->initialize($get, $post, [], $cookie, $files, $server, null);
     }
 
