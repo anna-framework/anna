@@ -1,3 +1,17 @@
+<<<<<<< HEAD
 .settings
 .buildpath
 .project
+=======
+composer.phar
+composer.lock
+vendor/
+.idea
+# Commit your application's lock file http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file
+# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
+# composer.lock
+.project
+.settings
+.buildpath
+.sonar
+>>>>>>> 3e00f7424e6ebafcc64d70cb856f74d1e878dad7

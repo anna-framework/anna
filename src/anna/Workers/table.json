@@ -1,0 +1,9 @@
+{
+    "config": {
+        "limit": 25,
+        "execution_task_count": 0,
+        "active": false,
+        "memory_usage": 0
+    },
+    "workers": []
+}

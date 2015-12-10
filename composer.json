@@ -1,0 +1,29 @@
+{
+    "name": "anna-framework/anna",
+    "description": "framework",
+    "authors": [
+        {
+            "name": "Cristiano Gomes",
+            "email": "cmgomes.es@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "windwalker\/renderer": "2.1.4",
+        "illuminate\/view": "5.1.*",
+        "symfony\/filesystem": "3.*",
+        "symfony\/routing": "3.*",
+        "doctrine\/orm": "2.5.*",
+        "php-di\/php-di": "5.1.*",
+        "symfony\/http-foundation": "2.8",
+        "psy\/psysh": "0.6.*",
+        "phpunit/phpunit": "4.6.*"
+    },
+    
+    "autoload":{
+        "psr-4":{
+            "Anna\\": "src/anna/"
+        }
+    }
+
+}

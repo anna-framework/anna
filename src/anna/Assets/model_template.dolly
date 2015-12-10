@@ -1,0 +1,25 @@
+namespace {{namespace}};
+
+/**
+ * ------------------------------------------------------
+ * {{model_name}}Model
+ * ------------------------------------------------------
+ *
+ * Modelo gerado automaticamente pela Anna
+ *
+ * @author {{dev_name}}
+ * @since {{data}}
+ * @package {{namespace}};
+ * @Entity
+ * @Table(name="{{table_name}}")
+ */
+class {{model_name}}Model extends \Anna\Databases\Model
+{
+
+	/**
+	 * @Id
+	 * @Column(type="integer")
+	 * @GeneratedValue
+	 */
+	public $id;
+}

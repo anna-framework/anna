@@ -1,0 +1,37 @@
+namespace {{namespace}};
+
+use Anna\Workers\Abstracts\Worker;
+
+/**
+ * ------------------------------------------------------
+ * {{worker_name}}Worker
+ * ------------------------------------------------------
+ *
+ * Worker gerado automaticamente pela Anna
+ *
+ * @author {{dev_name}}
+ * @since {{data}}
+ * @package {{namespace}};
+ */
+class {{worker_name}}Worker extends Worker
+{
+
+    /**
+     * Configura o worker
+     */
+    public function configure()
+    {
+        $this->setActivationTime('10s');
+        $this->setWorkerName('Trabalhador gerado automaticamente.');
+        $this->setActive(true);
+    }
+
+    /**
+     * Executa o trabalho destinado
+     */
+    public function execute()
+    {
+        //do the thing
+    }
+
+}
