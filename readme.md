@@ -31,7 +31,7 @@ composer create-project anna-framework/installer
 
 Ela vem com uma série de facilitadores que podem ser acessado através da linha de comando, bastando para isso digitar:
 ```
-php anna list
+anna list
 ```
 
 ## Contribuição
