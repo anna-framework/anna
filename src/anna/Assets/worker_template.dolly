@@ -33,5 +33,4 @@ class {{worker_name}}Worker extends Worker
     {
         //do the thing
     }
-
 }

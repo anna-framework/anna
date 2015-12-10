@@ -16,10 +16,12 @@ namespace {{namespace}};
 class {{model_name}}Model extends \Anna\Databases\Model
 {
 
-	/**
-	 * @Id
-	 * @Column(type="integer")
-	 * @GeneratedValue
-	 */
-	public $id;
+    /**
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue
+     */
+    public $id;
+
 }
+    
