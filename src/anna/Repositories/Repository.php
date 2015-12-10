@@ -85,7 +85,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
     public function remove($id)
     {
         $modelname = get_class($this->model);
-        $metadata =  $this->manager->getClassMetadata($modelname);
+        $metadata = $this->manager->getClassMetadata($modelname);
         $table_name = $metadata->getTableName();
         $primary_key = $metadata->getSingleIdentifierFieldName();
 
