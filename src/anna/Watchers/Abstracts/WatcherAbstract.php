@@ -1,8 +1,10 @@
 <?php
+
 namespace Anna\Watchers\Abstracts;
 
 use Anna\Controller;
 use Anna\Watchers\Interfaces\WatcherInterface;
+
 /**
  * -------------------------------------------------------------
  * WatcherAbstract
@@ -13,12 +15,11 @@ use Anna\Watchers\Interfaces\WatcherInterface;
  * deixando para o desenvolvedor apenas a lógica das verificações que ele deseja realizar
  *
  * @author Cristiano Gomes <cmgomes.es@gmail.com>
- * @package Anna\Watchers\Abstracts
+ *
  * @since 10, dezembro 2015
  */
 abstract class WatcherAbstract implements WatcherInterface
 {
-
     protected $controller;
 
     private $url_params;
@@ -39,7 +40,7 @@ abstract class WatcherAbstract implements WatcherInterface
             return $this->url_params[$param_name];
         }
 
-        return null;
+        return;
     }
 
     protected function getParams()
