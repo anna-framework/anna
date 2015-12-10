@@ -1,5 +1,4 @@
 <?php
-
 namespace Anna;
 
 use Anna\Routers\Router;
@@ -13,12 +12,14 @@ use DI\ContainerBuilder;
  * Classe principal do Anna, coordena os eventos e os processos
  *
  * @author Cristiano Gomes <cmgomes.es@gmail.com>
- *
+ *        
  * @since 03, Novembro 2015
  */
 class Application
 {
+
     const WATCHER = 'watcher';
+
     const METHOD_PARAMS = 'method_params';
 
     private $app_root_namespace;
@@ -39,10 +40,10 @@ class Application
      */
     public static function getInstance()
     {
-        if (!self::$instance) {
+        if (! self::$instance) {
             self::$instance = new static();
         }
-
+        
         return self::$instance;
     }
 
@@ -50,33 +51,39 @@ class Application
     {
         $this->config();
         $this->app_root_namespace = Config::getInstance()->get('root-namespace');
-
+        
         $url_params = $this->doRoute();
-        if (!$url_params) {
+        if (! $url_params) {
             return;
         }
-
+        
         $controller = $this->wakeUpController($url_params);
-
+        
         if (isset($url_params[static::WATCHER])) {
-            $watcher_result = $this->runWatcher($url_params[static::WATCHER], $controller);
-
-            if (!$watcher_result) {
+            $watcher_result = $this->runWatcher($url_params[static::WATCHER], $controller, $url_params['method_params']);
+            
+            if (! $watcher_result) {
                 $response = new Response('acesso_negado', 404);
                 $response->display();
-
+                
                 return;
             }
         }
-
+        
         $method = $url_params['method'];
-
+        
         if (isset($url_params[static::METHOD_PARAMS])) {
-            $result = call_user_func_array([$controller, $method], $url_params[static::METHOD_PARAMS]);
+            $result = call_user_func_array([
+                $controller,
+                $method
+            ], $url_params[static::METHOD_PARAMS]);
         } else {
-            $result = call_user_func([$controller, $method]);
+            $result = call_user_func([
+                $controller,
+                $method
+            ]);
         }
-
+        
         $this->processResult($result);
     }
 
@@ -87,10 +94,10 @@ class Application
      */
     public function getInjector()
     {
-        if (!$this->di) {
+        if (! $this->di) {
             $this->config();
         }
-
+        
         return $this->di;
     }
 
@@ -119,33 +126,40 @@ class Application
     /**
      * Instancia o controller e prepara-o para ser executado.
      *
-     * @param array $url_params
+     * @param array $url_params            
      */
     private function wakeUpController($url_params)
     {
         $controller = $url_params['controller'];
-        $ctrl_full_name = mountCtrlFullName($controller, [$this->app_root_namespace, 'Controllers']);
-
+        $ctrl_full_name = mountCtrlFullName($controller, [
+            $this->app_root_namespace,
+            'Controllers'
+        ]);
+        
         $controller = $this->di->get($ctrl_full_name);
         $controller->init();
-
+        
         return $controller;
     }
 
     /**
      * Executa o watcher determinado para a rota encontrada.
      *
-     * @param string $watcher_name
+     * @param string $watcher_name            
      */
-    private function runWatcher($watcher_name, $controller)
+    private function runWatcher($watcher_name, $controller, $params = [])
     {
-        $watcher_name = ucfirst($watcher_name).'Watcher';
-
-        $full_name_watcher = mountCtrlFullName($watcher_name, [$this->app_root_namespace, 'Watchers']);
-        $watcher = new $full_name_watcher();
-
+        $watcher_name = ucfirst($watcher_name) . 'Watcher';
+        
+        $full_name_watcher = mountCtrlFullName($watcher_name, [
+            $this->app_root_namespace,
+            'Watchers'
+        ]);
+        $watcher = $this->di->get($full_name_watcher); // new $full_name_watcher();
+        
         $watcher->setController($controller);
-
+        $watcher->setUrlParams($params);
+        
         return $watcher->run();
     }
 
@@ -159,29 +173,33 @@ class Application
     {
         $router = Router::getInstance();
         $parameters = $router->match();
-
+        
         if ($parameters instanceof Response) {
             $parameters->display();
-
+            
             return false;
         }
-
+        
         $method_params = [];
         foreach ($parameters as $k => $v) {
-            if (!in_array($k, ['path', '_route', static::WATCHER])) {
+            if (! in_array($k, [
+                'path',
+                '_route',
+                static::WATCHER
+            ])) {
                 $method_params[$k] = $v;
             }
         }
-
+        
         $parameters[static::METHOD_PARAMS] = $method_params;
-
+        
         $explode = explode('::', $parameters['path']);
         $controller = $explode[0];
         $method = (isset($explode['1']) && $explode[1] != '') ? $explode[1] : 'index';
-
+        
         $parameters['controller'] = $controller;
         $parameters['method'] = $method;
-
+        
         return $parameters;
     }
 
@@ -190,16 +208,16 @@ class Application
      */
     private function config()
     {
-        Config::getInstance()->set('ANNA_PATH', __DIR__.DS);
-
+        Config::getInstance()->set('ANNA_PATH', __DIR__ . DS);
+        
         if (is_callable('uncaughtExceptionHandler')) {
             set_exception_handler('uncaughtExceptionHandler');
         }
-
-        //Implementando o Dependence Injection automatizado
+        
+        // Implementando o Dependence Injection automatizado
         $di_builder = new ContainerBuilder();
         $di_builder->useAnnotations(true);
-
+        
         $this->di = $di_builder->build();
     }
 }
