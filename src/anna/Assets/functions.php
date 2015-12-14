@@ -176,7 +176,7 @@ function loadAppModels()
         }
     }
 
-    $lista_final = array_filter($fqcns, function ($item) {
+    $lista_final = array_filter($fqcns, function($item) {
         preg_match('~Model~', $item, $teste);
 
         return (count($teste)) ? true : false;
@@ -238,7 +238,6 @@ function message($message, $type = 'success', $content = null)
  * status e conteúdo configurado em formato json
  *
  * @param string $message
- * @param string $status
  * @param string $content
  *
  * @return \Anna\Response
