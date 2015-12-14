@@ -206,3 +206,56 @@ function view($template)
 
     return $view;
 }
+
+/**
+ * Registra mensagem codificada em json na view com o nome de 'sys_message'
+ *
+ * @param string $message
+ *            string contento a mensagem a ser exibida para o usuário de tela
+ * @param string $type
+ *            define a maneira como a mensagem será exibida, e varia de acordo
+ *            com o gosto do desenvolvedor o padrão é 'success'
+ * @param mixed $content
+ *            conteúdo opcional a ser enviado para ser processado pelo view engine
+ *            ou javascript, caso array ou objeto será convertido para json
+ */
+function message($message, $type = 'success', $content = null)
+{
+    if (is_array($content) || is_object($content)) {
+        $content = json_encode($content);
+    }
+
+    $message = json_encode([
+        'message' => $message,
+        'type' => $type,
+        'content' => $content
+    ]);
+    View::getInstance()->addParam('sys_message', $message);
+}
+
+/**
+ * Retorna uma instância de response com os valores de data,
+ * status e conteúdo configurado em formato json
+ *
+ * @param string $message
+ * @param string $status
+ * @param string $content
+ *
+ * @return \Anna\Response
+ */
+function jsonMessage($message, $type = 'success', $content = null)
+{
+    if (is_array($content) || is_object($content)) {
+        $content = json_encode($content);
+    }
+
+    $msg = json_encode([
+        'message' => $message,
+        'type' => $type,
+        'content' => $content
+    ]);
+
+    return new \Anna\Response($msg, 200, [
+        'content-type' => 'application/json'
+    ]);
+}

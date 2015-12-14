@@ -167,9 +167,11 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
         try {
             if ($one) {
                 $this->model = $this->manager->getRepository($modelname)->findOneBy($filters);
+                
                 return $this->model;
             } else {
                 $entities = $this->manager->getRepository($modelname)->findBy($filters);
+                
                 return $entities;
             }
         } catch (\Exception  $e) {
