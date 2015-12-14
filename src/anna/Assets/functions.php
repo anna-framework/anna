@@ -176,7 +176,7 @@ function loadAppModels()
         }
     }
 
-    $lista_final = array_filter($fqcns, function($item) {
+    $lista_final = array_filter($fqcns, function ($item) {
         preg_match('~Model~', $item, $teste);
 
         return (count($teste)) ? true : false;
@@ -208,16 +208,16 @@ function view($template)
 }
 
 /**
- * Registra mensagem codificada em json na view com o nome de 'sys_message'
+ * Registra mensagem codificada em json na view com o nome de 'sys_message'.
  *
  * @param string $message
- *            string contento a mensagem a ser exibida para o usuário de tela
+ *                        string contento a mensagem a ser exibida para o usuário de tela
  * @param string $type
- *            define a maneira como a mensagem será exibida, e varia de acordo
- *            com o gosto do desenvolvedor o padrão é 'success'
- * @param mixed $content
- *            conteúdo opcional a ser enviado para ser processado pelo view engine
- *            ou javascript, caso array ou objeto será convertido para json
+ *                        define a maneira como a mensagem será exibida, e varia de acordo
+ *                        com o gosto do desenvolvedor o padrão é 'success'
+ * @param mixed  $content
+ *                        conteúdo opcional a ser enviado para ser processado pelo view engine
+ *                        ou javascript, caso array ou objeto será convertido para json
  */
 function message($message, $type = 'success', $content = null)
 {
@@ -227,15 +227,15 @@ function message($message, $type = 'success', $content = null)
 
     $message = json_encode([
         'message' => $message,
-        'type' => $type,
-        'content' => $content
+        'type'    => $type,
+        'content' => $content,
     ]);
     View::getInstance()->addParam('sys_message', $message);
 }
 
 /**
  * Retorna uma instância de response com os valores de data,
- * status e conteúdo configurado em formato json
+ * status e conteúdo configurado em formato json.
  *
  * @param string $message
  * @param string $content
@@ -250,11 +250,11 @@ function jsonMessage($message, $type = 'success', $content = null)
 
     $msg = json_encode([
         'message' => $message,
-        'type' => $type,
-        'content' => $content
+        'type'    => $type,
+        'content' => $content,
     ]);
 
     return new \Anna\Response($msg, 200, [
-        'content-type' => 'application/json'
+        'content-type' => 'application/json',
     ]);
 }
