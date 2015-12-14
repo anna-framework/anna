@@ -114,7 +114,7 @@ class Application
                 $response->display();
             } elseif ($result instanceof Response) {
                 $result->display();
-            } elseif (is_array($result)) {
+            } else {
                 $response = new Response('');
                 $response->displayJson($result);
             }
