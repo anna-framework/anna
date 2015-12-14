@@ -152,7 +152,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
      * @param array $filters formato do array: ['campo_da_tabela' => 'valor para filtro']
      * @param bool  $one     true retorna apenas 1 registro
      *
-     * @return mixed True se os dados foram encontrados e on estiver setado, neste caso a propriedade model
+     * @return mixed Instância do Model se os dados foram encontrados e on estiver setado, neste caso a propriedade model
      *               deste repositório irá ser atualizada com os dados encontrados.
      *
      *                          Array se one for false (padrão), neste caso retorna um collecion com as entidades
@@ -167,11 +167,9 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
         try {
             if ($one) {
                 $this->model = $this->manager->getRepository($modelname)->findOneBy($filters);
-
-                return true;
+                return $this->model;
             } else {
                 $entities = $this->manager->getRepository($modelname)->findBy($filters);
-
                 return $entities;
             }
         } catch (\Exception  $e) {
