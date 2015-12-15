@@ -61,13 +61,15 @@ class Application
 
         if (isset($url_params[static::WATCHER])) {
             $watcher_result = $this->runWatcher($url_params[static::WATCHER], $controller, $url_params['method_params']);
-        
-            if ($watcher_result instanceof Response){
+
+            if ($watcher_result instanceof Response) {
                 $watcher_result->display();
+
                 return;
             } elseif ($watcher_result == false) {
                 $response = new Response('acesso_negado', 404);
                 $response->display();
+
                 return;
             }
         }
