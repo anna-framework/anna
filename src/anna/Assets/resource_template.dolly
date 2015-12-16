@@ -16,23 +16,23 @@ use Anna\Controller;
 class {{controller_name}}Controller extends Controller
 {
 
-	public function create()
+    public function create()
     {
-		//do the thing
-	}
+        //do the thing
+    }
 
-	public function read()
-    {
-
-	}
-
-	public function update()
+    public function read()
     {
 
-	}
+    }
 
-	public function delete()
+    public function update()
     {
 
-	}
+    }
+
+    public function delete()
+    {
+
+    }
 }

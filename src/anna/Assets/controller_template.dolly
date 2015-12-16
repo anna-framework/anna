@@ -16,9 +16,9 @@ use Anna\Controller;
 class {{controller_name}}Controller extends Controller
 {
 
-	public function index()
+    public function index()
     {
-		{{show_view}}
-	}
+        {{show_view}}
+    }
 
 }

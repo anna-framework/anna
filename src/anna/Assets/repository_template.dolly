@@ -16,7 +16,5 @@ namespace {{namespace}};
  */
  class {{repository_name}}Repository extends Repository
  {
-
-	{{construct}}
-
+    {{construct}}
  }
