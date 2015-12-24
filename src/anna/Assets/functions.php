@@ -134,15 +134,19 @@ function nameToFolderName($name, $base_folder)
     $base_path = SYS_ROOT.'App'.DS.$base_folder;
     $folder_name = '';
 
-    foreach ($parts as $subfolder) {
-        $folder_name .= DS.$subfolder;
+    if (count($parts) > 1) {
+        foreach ($parts as $subfolder) {
+            $folder_name .= DS.$subfolder;
+        }
+        
+        if (!is_dir($base_path.$folder_name)) {
+            return (mkdir($base_path.$folder_name)) ? $folder_name : false;
+        } else {
+            return $folder_name;
+        }
     }
-
-    if (!is_dir($base_path.$folder_name)) {
-        return (mkdir($base_path.$folder_name)) ? $folder_name : false;
-    } else {
-        return $folder_name;
-    }
+    
+    return '';
 }
 
 /**
