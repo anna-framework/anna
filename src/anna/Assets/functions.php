@@ -138,14 +138,14 @@ function nameToFolderName($name, $base_folder)
         foreach ($parts as $subfolder) {
             $folder_name .= DS.$subfolder;
         }
-        
+
         if (!is_dir($base_path.$folder_name)) {
             return (mkdir($base_path.$folder_name)) ? $folder_name : false;
         } else {
             return $folder_name;
         }
     }
-    
+
     return '';
 }
 
