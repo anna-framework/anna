@@ -46,11 +46,12 @@ class MakeWatcherCommand extends Command
         $folder_name = nameToFolderName($name, 'Watchers');
         $root_ns = Config::getInstance()->get('root-namespace');
 
+        $tmp_name_folder = str_replace('/', '\\', $folder_name);
         $params = [
             'watcher_name' => $class_name,
             'dev_name'     => Config::getInstance()->get('app.developer'),
             'data'         => date('d/m/Y'),
-            'namespace'    => $root_ns.'\\Watchers'.$folder_name,
+            'namespace'    => $root_ns.'\\Watchers'.$tmp_name_folder,
         ];
 
         $template = TemplateHelper::getInstance()->render('watcher_template', $params);

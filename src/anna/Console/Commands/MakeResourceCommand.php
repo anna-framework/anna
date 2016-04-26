@@ -40,11 +40,12 @@ class MakeResourceCommand extends Command
         $folder_name = nameToFolderName($name, 'Controllers');
         $root_ns = Config::getInstance()->get('root-namespace');
 
+        $tmp_name_folder = str_replace('/', '\\', $folder_name);
         $params = [
             'controller_name' => nameToClassName($class_name),
             'dev_name'        => Config::getInstance()->get('app.developer'),
             'data'            => date('d/m/Y'),
-            'namespace'       => $root_ns.'\\Controllers'.$folder_name,
+            'namespace'       => $root_ns.'\\Controllers'.$tmp_name_folder,
         ];
 
         $template = TemplateHelper::getInstance()->render('resource_template', $params);
@@ -85,7 +86,7 @@ class MakeResourceCommand extends Command
             return false;
         }
 
-        $new_route = '$router->addResource("/'.$url_name.'", "'.$class_name.'Controller");';
+        $new_route = '$router->addResource("/'.$url_name.'", "'.$url_name.'\\s'.$class_name.'Controller");';
 
         fwrite($file, EOL);
         fwrite($file, $new_route.EOL);

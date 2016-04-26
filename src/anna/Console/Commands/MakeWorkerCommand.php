@@ -46,11 +46,12 @@ class MakeWorkerCommand extends Command
         $folder_name = nameToFolderName($name, 'Workers');
         $root_ns = Config::getInstance()->get('root-namespace');
 
+        $tmp_name_folder = str_replace('/', '\\', $folder_name);
         $params = [
             'worker_name' => $class_name,
             'dev_name'    => Config::getInstance()->get('app.developer'),
             'data'        => date('d/m/Y'),
-            'namespace'   => $root_ns.'\\Workers'.$folder_name,
+            'namespace'   => $root_ns.'\\Workers'.$tmp_name_folder,
         ];
 
         $template = TemplateHelper::getInstance()->render('worker_template', $params);

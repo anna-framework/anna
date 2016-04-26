@@ -59,11 +59,12 @@ class MakeModelCommand extends Command
             $table_name = strtolower($table_name);
         }
 
+        $tmp_name_folder = str_replace('/', '\\', $folder_name);
         $params = [
             'model_name' => $class_name,
             'dev_name'   => Config::getInstance()->get('app.developer'),
             'data'       => date('d/m/Y'),
-            'namespace'  => $root_ns.'\\Models'.$folder_name,
+            'namespace'  => $root_ns.'\\Models'.$tmp_name_folder,
             'table_name' => $table_name,
         ];
 

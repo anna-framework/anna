@@ -41,11 +41,12 @@ class MakeRepositoryCommand extends Command
         $folder_name = nameToFolderName($name, 'Repositories');
         $root_ns = Config::getInstance()->get('root-namespace');
 
+        $tmp_name_folder = str_replace('/', '\\', $folder_name);
         $params = [
             'repository_name' => nameToClassName($class_name),
             'dev_name'        => Config::getInstance()->get('app.developer'),
             'data'            => date('d/m/Y'),
-            'namespace'       => $root_ns.'\\Repositories'.$folder_name,
+            'namespace'       => $root_ns.'\\Repositories'.$tmp_name_folder,
         ];
 
         if ($input->getOption('model')) {
