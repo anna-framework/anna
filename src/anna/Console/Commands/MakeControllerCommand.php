@@ -41,11 +41,12 @@ class MakeControllerCommand extends Command
         $view_folder = strtolower(str_replace(DS, '', $folder_name));
         $root_ns = Config::getInstance()->get('root-namespace');
 
+        $ns_foldername = str_replace('/', '\\', $folder_name);
         $params = [
             'controller_name' => nameToClassName($class_name),
             'dev_name'        => Config::getInstance()->get('app.developer'),
             'data'            => date('d/m/Y'),
-            'namespace'       => $root_ns.'\\Controllers'.$folder_name,
+            'namespace'       => $root_ns.'\\Controllers'.$ns_foldername,
             'view_folder'     => $view_folder ? $view_folder.'.' : '',
         ];
 
@@ -127,7 +128,7 @@ class MakeControllerCommand extends Command
             return false;
         }
 
-        $new_route = '$router->add("/'.$url_name.'", "'.$class_name.'Controller::index");';
+        $new_route = '$router->add("/'.$url_name.'", "'.$url_name.'\\'.$class_name.'Controller::index");';
 
         fwrite($file, EOL);
         fwrite($file, $new_route.EOL);
