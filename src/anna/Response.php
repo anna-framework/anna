@@ -2,7 +2,7 @@
 
 namespace Anna;
 
-use Anna\Helpers\Jsonhelper;
+use Anna\Helpers\JsonHelper;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 /**
@@ -29,7 +29,7 @@ class Response extends \Symfony\Component\HttpFoundation\Response
     public function displayJson($data)
     {
         if (is_array($data) || is_object($data)) {
-            $this->content = Jsonhelper::encode($data);
+            $this->content = JsonHelper::encode($data);
         }
 
         $this->headers = new ResponseHeaderBag(['Content-type' => 'application/json']);
