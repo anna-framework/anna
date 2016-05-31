@@ -46,7 +46,7 @@ class Request extends \Symfony\Component\HttpFoundation\Request
 
     /**
      * Retorna parametros recebidos via post.
-     * 
+     *
      * @param string $param
      */
     public function post($param)
@@ -54,8 +54,24 @@ class Request extends \Symfony\Component\HttpFoundation\Request
         return $this->request->get($param);
     }
 
+    /**
+     * @return mixed
+     */
     private function getInputFiles()
     {
         return $_FILES;
+    }
+
+    /**
+     * @param bool $asResource
+     * @return mixed|resource|string
+     */
+    public function getContent($asResource = false){
+        $params = parent::getContent($asResource);
+        if ($this->getContentType() == 'json') {
+            return json_decode($params);
+        } else {die("escapou");
+            return $params;
+        }
     }
 }

@@ -13,7 +13,7 @@ function uncaughtExceptionHandler($e)
 
     $html = "<html>
 				<head>
-					<title>F4M: Deu ruim</title>
+					<title>Anna: Erro</title>
 					<link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css' />
 					<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600' rel='stylesheet' type='text/css'>
 					<meta charset='utf-8' content='text/html' />

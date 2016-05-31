@@ -13,7 +13,7 @@ use DI\ContainerBuilder;
  * Classe principal do Anna, coordena os eventos e os processos
  *
  * @author Cristiano Gomes <cmgomes.es@gmail.com>
- *        
+ *
  * @since 03, Novembro 2015
  */
 class Application
@@ -51,6 +51,12 @@ class Application
     {
         $this->config();
         $this->app_root_namespace = Config::getInstance()->get('root-namespace');
+
+        $cors = $this->configureCors();
+        if ($cors instanceof Response) {
+            $cors->display();
+            return;
+        }
 
         $url_params = $this->doRoute();
         if (!$url_params) {
@@ -223,5 +229,21 @@ class Application
         $di_builder->useAnnotations(true);
 
         $this->di = $di_builder->build();
+    }
+
+    /**
+     * Configura acesso para chamadas cross-domain
+     */
+    private function configureCors()
+    {
+        $request = new Request();
+        $response = null;
+
+        if ($request->getMethod() == 'OPTIONS') {
+            $cors = new Cors();
+            $response = $cors->make();
+        }
+
+        return $response;
     }
 }

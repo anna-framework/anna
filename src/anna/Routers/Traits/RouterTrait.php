@@ -209,7 +209,7 @@ trait RouterTrait
         }
 
         if (!in_array('create', $except)) {
-            $route_create_any = new Route($route_name.'/{any}', ['path' => $resource.'::create'], [], [], '', [], ['POST']);
+            $route_create_any = new Route($route_name, ['path' => $resource.'::create'], [], [], '', [], ['POST']);
             $this->collection->add($route_name.'create_any', $route_create_any);
         }
 
