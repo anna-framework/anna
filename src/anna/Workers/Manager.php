@@ -127,7 +127,7 @@ final class Manager
 
     /**
      * Pega a configuração do do worker para registro.
-     * 
+     *
      * @param Worker $worker
      *
      * @return array

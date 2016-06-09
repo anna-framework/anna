@@ -39,8 +39,6 @@ abstract class WatcherAbstract implements WatcherInterface
         if (isset($this->url_params[$param_name])) {
             return $this->url_params[$param_name];
         }
-
-        return;
     }
 
     protected function getParams()

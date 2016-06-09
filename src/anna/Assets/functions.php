@@ -66,7 +66,7 @@ function path($string)
  *
  * @param
  *            $helper
- *            
+ *
  * @return mixed
  */
 function helper($helper)
@@ -85,7 +85,7 @@ function helper($helper)
  *
  * @example Para montar o nome completo App\Controllers\HomeController:
  *          mountCtrlFullname('HomeController', ['App', 'Controllers']);
- *         
+ *
  * @param string $ctrl
  * @param array  $array
  *

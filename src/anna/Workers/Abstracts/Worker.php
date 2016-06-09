@@ -11,7 +11,7 @@ use Anna\Workers\Interfaces\WorkerInterface;
  *
  * Classe abstrata worker, que fornece ao gerenciador ferramentas para utilização dos workers que obrigatóriamente
  * devem extender esta classe.
- * 
+ *
  * @author Cristiano Gomes <cmgomes.es@gmail.com>
  *
  * @since 23, Novembro 2015
@@ -36,7 +36,7 @@ abstract class Worker implements WorkerInterface
 
     /**
      * Ativa ou desativa o worker.
-     * 
+     *
      * @param bool $bool
      */
     public function setActive($bool = true)
@@ -97,7 +97,7 @@ abstract class Worker implements WorkerInterface
     /**
      * Informa a quantidade de vezes que este worker irá rodar, caso não seja informado, ele será rodado
      * sempre de acordo com sua periodicidade;.
-     * 
+     *
      * @param int $exec_number
      */
     protected function setExecNumber($exec_number)
@@ -107,7 +107,7 @@ abstract class Worker implements WorkerInterface
 
     /**
      * Informa qual será a periodicidade em que este worker irá executar e também uma data futura inicial.
-     * 
+     *
      * @param string   $string         string especial contendo os parametros para execução
      * @param Datetime $start_at       data inicial futura do worker, caso null ele começará imediatamente
      * @param int      $execution_time A quantidade de vezes que este worker será rodado, 0 para sem limites
