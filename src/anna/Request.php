@@ -70,7 +70,7 @@ class Request extends \Symfony\Component\HttpFoundation\Request
         $params = parent::getContent($asResource);
         if ($this->getContentType() == 'json') {
             return json_decode($params);
-        } else {die("escapou");
+        } else {
             return $params;
         }
     }
