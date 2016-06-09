@@ -71,7 +71,7 @@ class View
 
     /**
      * Renderiza a view especificada.
-     * 
+     *
      * @param string $view
      */
     public function render($view = null)
@@ -83,7 +83,7 @@ class View
 
     /**
      * Configura o arquivo de view a ser renderizado.
-     * 
+     *
      * @param string $template
      */
     public function setView($template)
@@ -93,7 +93,7 @@ class View
 
     /**
      * Adiciona um parametro na view.
-     * 
+     *
      * @param string $name
      * @param mixed  $value
      */
@@ -105,7 +105,7 @@ class View
     /**
      * Adiciona array de parâmetros na view, cada posição do array se tornará uma variável
      * disponível na view.
-     * 
+     *
      * @param array $array
      */
     public function addParams($array)
@@ -127,8 +127,6 @@ class View
         if (isset($this->params[$name])) {
             return $this->params[$name];
         }
-
-        return;
     }
 
     /**

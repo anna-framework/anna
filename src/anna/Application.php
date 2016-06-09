@@ -55,6 +55,7 @@ class Application
         $cors = $this->configureCors();
         if ($cors instanceof Response) {
             $cors->display();
+
             return;
         }
 
@@ -71,6 +72,7 @@ class Application
             if ($watcher_result == false) {
                 $response = new Response('acesso_negado', 401);
                 $response->display();
+
                 return;
             }
         }
@@ -227,7 +229,7 @@ class Application
     }
 
     /**
-     * Configura acesso para chamadas cross-domain
+     * Configura acesso para chamadas cross-domain.
      */
     private function configureCors()
     {

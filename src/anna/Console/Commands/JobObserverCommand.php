@@ -59,7 +59,7 @@ class JobObserverCommand extends Command
 
     /**
      * Inspeciona o arquivo de configuração do work manager para atualizar algumas configurações.
-     * 
+     *
      * @return bool
      */
     private function inspect()
