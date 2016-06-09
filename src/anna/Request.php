@@ -74,4 +74,20 @@ class Request extends \Symfony\Component\HttpFoundation\Request
             return $params;
         }
     }
+
+    /**
+     * Retorna o token presente em cabeçalho Authorization caso exista
+     */
+    public function getAuthToken(){
+        $headers = getallheaders();
+
+        if (!isset($headers['Authorization']) && !isset($headers['authorization'])) {
+            return null;
+        } else {
+            $header = isset($headers['Authorization']) ? $headers['Authorization'] : $headers['authorization'];
+        }
+
+        $tmp = explode(' ', $header);
+        return end($tmp);
+    }
 }
