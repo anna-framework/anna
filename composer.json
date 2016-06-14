@@ -16,8 +16,7 @@
         "doctrine\/orm": "2.5.*",
         "php-di\/php-di": "5.1.*",
         "symfony\/http-foundation": "2.8",
-        "psy\/psysh": "0.6.*",
-        "phpunit/phpunit": "4.6.*"
+        "psy\/psysh": "0.6.*"
     },
     
     "autoload":{
