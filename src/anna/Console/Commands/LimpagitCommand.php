@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console;
+namespace Anna\Console\Commands;
 
 use Anna\Console\Commands\Abstracts\Command;
 use \Symfony\Component\Console\Input\InputArgument;
