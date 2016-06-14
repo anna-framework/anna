@@ -13,7 +13,7 @@ use \Symfony\Component\Console\Output\OutputInterface;
  * Class LimpagitCommand
  * ---------------------------------------
  *
- * Comando criado para efetuar limpeza dos arquivos gits da pasta vendor 
+ * Comando criado para efetuar limpeza dos arquivos gits da pasta vendor
  * afim de subi-la para o servidor
  *
  * @package App\Console
@@ -23,12 +23,12 @@ use \Symfony\Component\Console\Output\OutputInterface;
 class LimpagitCommand extends Command
 {
 
-    private $blackList = array('.gitignore', '.travis.yml',  '.travis.yml', '.gitmodules', '.gitattributes', '.coveralls.yml');
-    
+    private $blackList = array('.gitignore', '.travis.yml', '.travis.yml', '.gitmodules', '.gitattributes', '.coveralls.yml');
+
     /**
      * configure your command here
      */
-    protected function configure() 
+    protected function configure()
     {
         $this->setName('LimpaGit');
         $this->setDescription('Remove todos arquivos e pastas git da pasta vendor');
@@ -37,13 +37,14 @@ class LimpagitCommand extends Command
     /**
      * do the thing here
      */
-    protected function execute(InputInterface $input, OutputInterface $output) 
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $baseDir = SYS_ROOT . 'vendor';
         $this->cleanFolders($output, $baseDir);
     }
 
-    private function cleanFolders($output, $baseDir) {
+    private function cleanFolders($output, $baseDir)
+    {
         $scan = $this->scanFolders($baseDir);
 
         if ($scan === false) {
@@ -71,20 +72,21 @@ class LimpagitCommand extends Command
             }
         }
     }
-    
+
     /**
      * Remove pastas . e .. da lista de pastas
      * @param string $dirs
      */
-    private function scanFolders($path) {
+    private function scanFolders($path)
+    {
         $dirs = scandir($path);
         $post = array();
         if ($dirs) {
             foreach ($dirs as $i => $folder) {
-                if (!in_array($folder, array('.', '..'))){
+                if (!in_array($folder, array('.', '..'))) {
                     $post[] = $folder;
                 }
-            }          
+            }
         }
 
         return $post;
@@ -93,7 +95,8 @@ class LimpagitCommand extends Command
     /**
      * Apaga arquivos e diretórios, no caso desse último recursivamente.
      */
-    private function remove($output, $path){
+    private function remove($output, $path)
+    {
 
         if (is_file($path)) {
             $output->writeln("removendo arquivo: " . $path);
