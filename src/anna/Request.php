@@ -64,9 +64,11 @@ class Request extends \Symfony\Component\HttpFoundation\Request
 
     /**
      * @param bool $asResource
+     *
      * @return mixed|resource|string
      */
-    public function getContent($asResource = false){
+    public function getContent($asResource = false)
+    {
         $params = parent::getContent($asResource);
         if ($this->getContentType() == 'json') {
             return json_decode($params);
@@ -76,18 +78,20 @@ class Request extends \Symfony\Component\HttpFoundation\Request
     }
 
     /**
-     * Retorna o token presente em cabeçalho Authorization caso exista
+     * Retorna o token presente em cabeçalho Authorization caso exista.
      */
-    public function getAuthToken(){
+    public function getAuthToken()
+    {
         $headers = getallheaders();
 
         if (!isset($headers['Authorization']) && !isset($headers['authorization'])) {
-            return null;
+            return;
         } else {
             $header = isset($headers['Authorization']) ? $headers['Authorization'] : $headers['authorization'];
         }
 
         $tmp = explode(' ', $header);
+
         return end($tmp);
     }
 }

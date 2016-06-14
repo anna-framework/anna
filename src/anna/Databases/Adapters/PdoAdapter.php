@@ -5,21 +5,20 @@ namespace Anna\Databases\Adapters;
 use Anna\Config;
 use Anna\Databases\Adapters\Interfaces\AdaptersInterface;
 use Anna\Error;
-use \PDO as PDO;
-use \PDOException as PDOException;
+use PDO as PDO;
+use PDOException as PDOException;
 
 /**
- * Class PdoAdapter
+ * Class PdoAdapter.
  *
  * Classe que efetiva a conexão com banco de dados utilizando-se da biblioteca PDO
  *
- * @package Anna\Databases\Adapters
  * @author Cristiano Gomes <cmgomes.es@gmail.com>
+ *
  * @since 24, maio 2016
  */
 class PdoAdapter implements AdaptersInterface
 {
-
     /**
      * @var \PDO
      */
@@ -29,16 +28,15 @@ class PdoAdapter implements AdaptersInterface
     {
         $connData = $this->loadConfiguration();
 
-         try {
-            $pdo = new PDO("mysql:host=" . $connData['host'] . ";dbname=" . $connData['dbname'], $connData['user'], $connData['password']);
+        try {
+            $pdo = new PDO('mysql:host='.$connData['host'].';dbname='.$connData['dbname'], $connData['user'], $connData['password']);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
-            $pdo->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND,'SET NAMES UTF8');
-
-         } catch (PDOException $e) {
-             $error = new Error();
-             $error->log($e);
-         }
+            $pdo->setAttribute(PDO::MYSQL_ATTR_INIT_COMMAND, 'SET NAMES UTF8');
+        } catch (PDOException $e) {
+            $error = new Error();
+            $error->log($e);
+        }
 
         $this->conn = $pdo;
     }

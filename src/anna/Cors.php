@@ -32,10 +32,10 @@ class Cors
             $headers = implode(', ', $this->config['headers']);
 
             $header = [
-                'Access-Control-Allow-Origin' => $origin,
+                'Access-Control-Allow-Origin'  => $origin,
                 'Access-Control-Allow-Methods' => $methods,
-                'Access-Control-Max-Age' => $this->config['max-age'],
-                'Access-Control-Allow-Headers' => $headers
+                'Access-Control-Max-Age'       => $this->config['max-age'],
+                'Access-Control-Allow-Headers' => $headers,
             ];
 
             $response = $this->sendResponse($header);
@@ -47,9 +47,10 @@ class Cors
     }
 
     /**
-     * Prepara o object Response para o retorno
+     * Prepara o object Response para o retorno.
      *
      * @param $headers
+     *
      * @return Response
      */
     private function sendResponse($headers = null)
@@ -59,7 +60,7 @@ class Cors
         } else {
             $header = new Response('cors_not_allowed', 405);
         }
+
         return $header;
     }
-
 }

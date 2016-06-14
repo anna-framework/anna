@@ -104,7 +104,7 @@ class Table
 
     /**
      * Registra um conjunto de workers de uma vez.
-     * 
+     *
      * @param array $workers
      *
      * @return void
@@ -136,7 +136,7 @@ class Table
 
     /**
      * Atualiza um determinado worker na tabela.
-     * 
+     *
      * @param array $worker
      *
      * @return void
@@ -158,7 +158,7 @@ class Table
 
     /**
      * Atualiza um conjunto de workers de uma vez.
-     * 
+     *
      * @param array $workers
      *
      * @return void
@@ -181,7 +181,7 @@ class Table
 
     /**
      * Salva a tabela em disco.
-     * 
+     *
      * @return void
      */
     public function save()
@@ -225,8 +225,6 @@ class Table
                     }
                 }
             }
-
-            return;
         }
 
     /**
@@ -241,7 +239,7 @@ class Table
 
     /**
      * Remote todos os workers da tabela.
-     * 
+     *
      * @return void
      */
     public function clearWorkers()
@@ -253,7 +251,7 @@ class Table
 
     /**
      * Altera a configuração da tabela para desligada, nesse caso os job observer irá parar de rodar.
-     * 
+     *
      * @return void
      */
     public function turnOff()

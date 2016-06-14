@@ -7,7 +7,7 @@ namespace Anna\Repositories\Interfaces;
  * RepositoryInterface
  * -----------------------------------------------------------.
  *
- * Força implementação do método init, utilizado para inicializar as configurações de conexão 
+ * Força implementação do método init, utilizado para inicializar as configurações de conexão
  *
  * @author Cristiano Gomes <cmgomes.es@gmail.com>
  *
