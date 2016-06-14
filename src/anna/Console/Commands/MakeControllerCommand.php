@@ -128,7 +128,7 @@ class MakeControllerCommand extends Command
             return false;
         }
 
-        $new_route = '$router->add("/'.$url_name.'", "'.$url_name.'\\'.$class_name.'Controller::index");';
+        $new_route = '$router->add(\'/'.$url_name.'\', \''.$class_name.'Controller::index\');';
 
         fwrite($file, EOL);
         fwrite($file, $new_route.EOL);
