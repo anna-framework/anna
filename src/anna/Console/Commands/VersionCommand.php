@@ -25,7 +25,7 @@ class VersionCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $name = Config::getInstance()->get('app.developer');
-        $text = 'Ola '.$name.', estou na versao 1.1';
+        $text = 'Ola '.$name.', estou na versao 1.20';
 
         $output->writeln($text);
     }
