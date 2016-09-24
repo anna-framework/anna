@@ -3,9 +3,6 @@
 namespace Anna\Repositories;
 
 use Anna\Config;
-use Anna\Databases\Model;
-use Anna\Error;
-use Anna\Request;
 
 /**
  * -----------------------------------------------------------
@@ -27,28 +24,32 @@ class PDORepository extends Abstracts\Repository
     protected $manager;
 
     /**
-     * Efetua a busca na base a partir da query informada
+     * Efetua a busca na base a partir da query informada.
      *
      * @param $sqlScript
      * @param array $params
-     * @param bool $fetch_one
+     * @param bool  $fetch_one
+     *
      * @return array|mixed
      */
-    public function query($sqlScript, array $params = [], $fetch_one = false) {
+    public function query($sqlScript, array $params = [], $fetch_one = false)
+    {
         $sql = $this->getScript($sqlScript);
 
         return $this->getResult($sql, $params, $fetch_one);
     }
 
     /**
-     * Efetua busca dinâmica pela tabela informada com os valores passados via parâmetros
+     * Efetua busca dinâmica pela tabela informada com os valores passados via parâmetros.
      *
      * @param $tableName
      * @param array $params
-     * @param bool $fetch_one
+     * @param bool  $fetch_one
+     *
      * @return array|mixed
      */
-    public function search($tableName, $params = [], $fetch_one = false) {
+    public function search($tableName, $params = [], $fetch_one = false)
+    {
         $sql = "SELECT * FROM $tableName WHERE 1=1 ";
 
         if (count($params) > 0) {
@@ -61,15 +62,17 @@ class PDORepository extends Abstracts\Repository
     }
 
     /**
-     * Busca registro a partir da chave primária, não funciona com chave composta
+     * Busca registro a partir da chave primária, não funciona com chave composta.
      *
      * @param $tablename    Nome da tabela
      * @param $id   Valor da chave primária
-     * @return array|mixed
+     *
      * @throws \DatabaseException
+     *
+     * @return array|mixed
      */
-    public function findOne($tablename, $id) {
-
+    public function findOne($tablename, $id)
+    {
         $sql = "SHOW KEYS FROM $tablename WHERE Key_name = 'PRIMARY'";
         $res = $this->getResult($sql, [], true);
         if (!count($res) > 0) {
@@ -83,14 +86,16 @@ class PDORepository extends Abstracts\Repository
     }
 
     /**
-     * Prerara, executa e retorna os resultados de queries
+     * Prerara, executa e retorna os resultados de queries.
      *
      * @param $sql
      * @param $params
      * @param bool $fetch_one
+     *
      * @return array|mixed
      */
-    private function getResult($sql, $params = [], $fetch_one = false){
+    private function getResult($sql, $params = [], $fetch_one = false)
+    {
         $query = $this->prepare($sql, $params);
         $query->execute();
 
@@ -104,14 +109,17 @@ class PDORepository extends Abstracts\Repository
     }
 
     /**
-     * Efetua a leitura do arquivo de script SQL
+     * Efetua a leitura do arquivo de script SQL.
      *
      * @param $fileScript
-     * @return mixed
+     *
      * @throws \DatabaseException
+     *
+     * @return mixed
      */
-    private function getScript($fileScript) {
-        $file = Config::getInstance()->get('database.queries_folder') . DS . $fileScript . '.php';
+    private function getScript($fileScript)
+    {
+        $file = Config::getInstance()->get('database.queries_folder').DS.$fileScript.'.php';
 
         if (!is_file($file)) {
             throw new \DatabaseException("Arquivo de query [$fileScript] não encontrado");
@@ -121,24 +129,26 @@ class PDORepository extends Abstracts\Repository
     }
 
     /**
-     * Adiciona os parametros recebidos na query
+     * Adiciona os parametros recebidos na query.
      *
      * @param $sql
      * @param $params
+     *
      * @return \PDOStatement
+     *
      * @internal param \PDOStatement $query
      */
-    private function prepare($sql, $params){
-
+    private function prepare($sql, $params)
+    {
         if (count($params) > 0) {
             foreach ($params as $key => $value) {
                 if (is_array($value)) {
                     if ($this->isNumericArray($value)) {
-                        $value = "(" . implode(".", $value) . ")";
+                        $value = '('.implode('.', $value).')';
                     } else {
-                        $value = "('" . implode("'.'", $value) . "')";
+                        $value = "('".implode("'.'", $value)."')";
                     }
-                    $sql = str_replace(':' . $key, $value, $sql);
+                    $sql = str_replace(':'.$key, $value, $sql);
                 }
             }
         }
@@ -153,17 +163,20 @@ class PDORepository extends Abstracts\Repository
     }
 
     /**
-     * Verifica se o array contém apenas valores numéricos
+     * Verifica se o array contém apenas valores numéricos.
      *
      * @param $array
+     *
      * @return bool
      */
-    private function isNumericArray($array){
+    private function isNumericArray($array)
+    {
         foreach ($array as $item) {
             if (!is_numeric($item)) {
                 return false;
             }
         }
+
         return true;
     }
 }

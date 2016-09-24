@@ -61,7 +61,7 @@ class PDOAdapter implements AdaptersInterface
             'password'         => $config->get('database.connection.password'),
             'dbname'           => $config->get('database.connection.db_name'),
             'charset'          => $config->get('database.connection.charset'),
-            'port'             => $config->get('database.connection.port')
+            'port'             => $config->get('database.connection.port'),
         ];
 
         switch ($driver) {
