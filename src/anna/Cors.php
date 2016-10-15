@@ -27,6 +27,24 @@ class Cors
     {
         $response = null;
         if ($this->config['is-active']) {
+            $headers = $this->genCorsHeaders();
+            $response = $this->sendResponse($headers);
+        } else {
+            $response = $this->sendResponse();
+        }
+
+        return $response;
+    }
+
+    /**
+     * Gera headers para requisições cors
+     *
+     * @return array
+     */
+    public function genCorsHeaders() {
+        $header = [];
+
+        if ($this->config['is-active']) {
             $origin = implode(', ', $this->config['origins']);
             $methods = implode(', ', $this->config['methods']);
             $headers = implode(', ', $this->config['headers']);
@@ -37,13 +55,9 @@ class Cors
                 'Access-Control-Max-Age'       => $this->config['max-age'],
                 'Access-Control-Allow-Headers' => $headers,
             ];
-
-            $response = $this->sendResponse($header);
-        } else {
-            $response = $this->sendResponse();
         }
 
-        return $response;
+        return $header;
     }
 
     /**

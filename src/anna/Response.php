@@ -18,6 +18,9 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
  */
 class Response extends \Symfony\Component\HttpFoundation\Response
 {
+    /**
+     * Exibe o conteúdo para o solicitante
+     */
     public function display()
     {
         $di = Application::getInstance()->getInjector();
@@ -26,13 +29,31 @@ class Response extends \Symfony\Component\HttpFoundation\Response
         $this->send();
     }
 
+    /**
+     * Exibe o conteúdo em formato json
+     *
+     * @param $data
+     */
     public function displayJson($data)
     {
         if (is_array($data) || is_object($data)) {
             $this->content = JsonHelper::encode($data);
         }
 
-        $this->headers = new ResponseHeaderBag(['Content-type' => 'application/json']);
+        $this->addHeaders(['Content-type' => 'application/json']);
         $this->display();
+    }
+
+    /**
+     * Adiciona headers
+     *
+     * @param $headers
+     */
+    public function addHeaders($headers) {
+        if (!$this->headers instanceof ResponseHeaderBag) {
+            $this->headers = new ResponseHeaderBag();
+        }
+
+        $this->headers->add($headers);
     }
 }

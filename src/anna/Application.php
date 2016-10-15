@@ -55,7 +55,6 @@ class Application
         $cors = $this->configureCors();
         if ($cors instanceof Response) {
             $cors->display();
-
             return;
         }
 
@@ -97,7 +96,7 @@ class Application
     /**
      * Retorna o container do Dependence Injector.
      *
-     * @return DI\Container
+     * @return \DI\Container
      */
     public function getInjector()
     {
@@ -111,18 +110,19 @@ class Application
     /**
      * Processa o resultado recebido do controller e envia para a home.
      *
-     * @return mixed
+     * @param $result
+     * @return void
      */
     private function processResult($result)
     {
         if (is_object($result) || is_array($result)) {
             if ($result instanceof View) {
-                $response = new Response($result->render());
+                $response = $this->addCorsHeaders(new Response($result->render()));
                 $response->display();
             } elseif ($result instanceof Response) {
-                $result->display();
+                $this->addCorsHeaders($result)->display();
             } else {
-                $response = new Response('');
+                $response = $this->addCorsHeaders(new Response(''));
                 $response->displayJson($result);
             }
         } else {
@@ -134,6 +134,7 @@ class Application
      * Instancia o controller e prepara-o para ser executado.
      *
      * @param array $url_params
+     * @return mixed
      */
     private function wakeUpController($url_params)
     {
@@ -153,6 +154,9 @@ class Application
      * Executa o watcher determinado para a rota encontrada.
      *
      * @param string $watcher_name
+     * @param $controller
+     * @param array $params
+     * @return
      */
     private function runWatcher($watcher_name, $controller, $params = [])
     {
@@ -162,7 +166,7 @@ class Application
             $this->app_root_namespace,
             'Watchers',
         ]);
-        $watcher = $this->di->get($full_name_watcher); // new $full_name_watcher();
+        $watcher = $this->di->get($full_name_watcher);
 
         $watcher->setController($controller);
         $watcher->setUrlParams($params);
@@ -174,7 +178,7 @@ class Application
      * Efetua a busca da rota compatível com a url recebida e préprocessa o resultado para utilização
      * posterior na classe.
      *
-     * @return array
+     * @return mixed
      */
     private function doRoute()
     {
@@ -233,12 +237,34 @@ class Application
      */
     private function configureCors()
     {
+
         $request = new Request();
         $response = null;
-
         if ($request->getMethod() == 'OPTIONS') {
             $cors = new Cors();
             $response = $cors->make();
+        }
+
+        return $response;
+    }
+
+    /**
+     * Se necessário adiciona cabeçalhos de cors para requisições externas posteriormente ao processamento
+     *
+     * @param Response $response
+     * @return Response
+     */
+    private function addCorsHeaders(Response $response) {
+        $request = new Request();
+        $corsHeaders = [];
+
+        if ($request->headers->get('Origin') != $request->getHost()) {
+            $cors = new Cors();
+            $corsHeaders = $cors->genCorsHeaders();
+        }
+
+        if (count($corsHeaders) > 0) {
+            $response->addHeaders($corsHeaders);
         }
 
         return $response;
