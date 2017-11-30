@@ -55,6 +55,7 @@ class Application
         $cors = $this->configureCors();
         if ($cors instanceof Response) {
             $cors->display();
+
             return;
         }
 
@@ -111,6 +112,7 @@ class Application
      * Processa o resultado recebido do controller e envia para a home.
      *
      * @param $result
+     *
      * @return void
      */
     private function processResult($result)
@@ -134,6 +136,7 @@ class Application
      * Instancia o controller e prepara-o para ser executado.
      *
      * @param array $url_params
+     *
      * @return mixed
      */
     private function wakeUpController($url_params)
@@ -156,6 +159,7 @@ class Application
      * @param string $watcher_name
      * @param $controller
      * @param array $params
+     *
      * @return
      */
     private function runWatcher($watcher_name, $controller, $params = [])
@@ -237,7 +241,6 @@ class Application
      */
     private function configureCors()
     {
-
         $request = new Request();
         $response = null;
         if ($request->getMethod() == 'OPTIONS') {
@@ -249,12 +252,14 @@ class Application
     }
 
     /**
-     * Se necessário adiciona cabeçalhos de cors para requisições externas posteriormente ao processamento
+     * Se necessário adiciona cabeçalhos de cors para requisições externas posteriormente ao processamento.
      *
      * @param Response $response
+     *
      * @return Response
      */
-    private function addCorsHeaders(Response $response) {
+    private function addCorsHeaders(Response $response)
+    {
         $request = new Request();
         $corsHeaders = [];
 
