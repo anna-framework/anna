@@ -11,7 +11,7 @@
         "preferred-install": "dist"
     },
     "require": {
-        "windwalker\/renderer": "2.1.4",
+        "windwalker\/renderer": "~3.0",
         "illuminate\/view": "5.1.*",
         "symfony\/filesystem": "3.*",
         "symfony\/routing": "3.*",

@@ -262,7 +262,7 @@ function message($message, $type = 'success', $content = null)
  *
  * @return \Anna\Response
  */
-function jsonMessage($message, $type = 'success', $content = null)
+function jsonMessage($message, $type = 'success', $content = null, $statusCode = 200)
 {
     if (is_array($content) || is_object($content)) {
         $content = json_encode($content);
@@ -274,7 +274,7 @@ function jsonMessage($message, $type = 'success', $content = null)
         'content' => $content,
     ]);
 
-    return new \Anna\Response($msg, 200, [
+    return new \Anna\Response($msg, $statusCode, [
         'content-type' => 'application/json',
     ]);
 }
