@@ -1,6 +1,6 @@
 <?php
 
-use \Symfony\Component\Finder\Iterator\RecursiveDirectoryIterator as RecursiveDir;
+use Symfony\Component\Finder\Iterator\RecursiveDirectoryIterator as RecursiveDir;
 
 /**
  * Método utilizado internamente para exibição de excessões não capturadas durante o desenvolvimento.

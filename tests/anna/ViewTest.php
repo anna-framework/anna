@@ -45,6 +45,7 @@ class ViewTest extends PHPUnit_Framework_TestCase
 
         //addParam test
         $error = false;
+
         try {
             $view->addParam('testeParam', 'testeValue');
         } catch (Exception $e) {
