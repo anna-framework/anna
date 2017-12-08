@@ -205,27 +205,27 @@ class Table
         return $this->information['config'];
     }
 
-        /**
-         * Retorna uma instancia do worker encontrado ou retorna null.
-         *
-         * @param string $name
-         *
-         * @return Worker
-         */
-        public function getWorkerByName($name)
-        {
-            foreach ($this->information['workers'] as $worker) {
-                if ($worker['name'] == $name) {
-                    $reflection = new \ReflectionClass($worker['class_name']);
-                    $worker = $reflection->newInstance();
-                    $worker->configure();
+    /**
+     * Retorna uma instancia do worker encontrado ou retorna null.
+     *
+     * @param string $name
+     *
+     * @return Worker
+     */
+    public function getWorkerByName($name)
+    {
+        foreach ($this->information['workers'] as $worker) {
+            if ($worker['name'] == $name) {
+                $reflection = new \ReflectionClass($worker['class_name']);
+                $worker = $reflection->newInstance();
+                $worker->configure();
 
-                    if ($worker->getWorkerName() == $name) {
-                        return $worker;
-                    }
+                if ($worker->getWorkerName() == $name) {
+                    return $worker;
                 }
             }
         }
+    }
 
     /**
      * Retorna a lista de workers.

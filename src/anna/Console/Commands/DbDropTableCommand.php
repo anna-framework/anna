@@ -45,6 +45,7 @@ class DbDropTableCommand extends Command
         $full_name = Config::getInstance()->get('root-namespace').'\\Models'.'\\'.$model_name.'Model';
 
         $schemaManager = $em->getConnection()->getSchemaManager();
+
         try {
             $metadata = $em->getClassMetadata($full_name);
             $table_name = $metadata->getTableName();

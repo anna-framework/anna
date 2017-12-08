@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 class Response extends \Symfony\Component\HttpFoundation\Response
 {
     /**
-     * Exibe o conteúdo para o solicitante
+     * Exibe o conteúdo para o solicitante.
      */
     public function display()
     {
@@ -30,7 +30,7 @@ class Response extends \Symfony\Component\HttpFoundation\Response
     }
 
     /**
-     * Exibe o conteúdo em formato json
+     * Exibe o conteúdo em formato json.
      *
      * @param $data
      */
@@ -45,11 +45,12 @@ class Response extends \Symfony\Component\HttpFoundation\Response
     }
 
     /**
-     * Adiciona headers
+     * Adiciona headers.
      *
      * @param $headers
      */
-    public function addHeaders($headers) {
+    public function addHeaders($headers)
+    {
         if (!$this->headers instanceof ResponseHeaderBag) {
             $this->headers = new ResponseHeaderBag();
         }
