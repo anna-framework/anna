@@ -253,8 +253,7 @@ function message($message, $type = 'success', $content = null)
 }
 
 /**
- * Retorna uma instância de response com os valores de data,
- * status e conteúdo configurado em formato json.
+ * Retorna uma instância de response com conteúdo e código status http configurado.
  *
  * @param string $message
  * @param string $type
@@ -262,19 +261,15 @@ function message($message, $type = 'success', $content = null)
  *
  * @return \Anna\Response
  */
-function jsonMessage($message, $type = 'success', $content = null, $statusCode = 200)
+function response($content = null, $statusCode = 200)
 {
     if (is_array($content) || is_object($content)) {
         $content = json_encode($content);
+    } else {
+        $content = json_encode([$content]);
     }
 
-    $msg = json_encode([
-        'message' => $message,
-        'type'    => $type,
-        'content' => $content,
-    ]);
-
-    return new \Anna\Response($msg, $statusCode, [
+    return new \Anna\Response($content, $statusCode, [
         'content-type' => 'application/json',
     ]);
 }
