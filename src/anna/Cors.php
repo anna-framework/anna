@@ -37,11 +37,12 @@ class Cors
     }
 
     /**
-     * Gera headers para requisições cors
+     * Gera headers para requisições cors.
      *
      * @return array
      */
-    public function genCorsHeaders() {
+    public function genCorsHeaders()
+    {
         $header = [];
 
         if ($this->config['is-active']) {
