@@ -261,7 +261,7 @@ function message($message, $type = 'success', $content = null)
  *
  * @return \Anna\Response
  */
-function response($content = null, $statusCode = 200)
+function response($content = null, $statusCode = \Anna\Response::HTTP_OK)
 {
     if (is_array($content) || is_object($content)) {
         $content = json_encode($content);
