@@ -97,7 +97,7 @@ class DoctrineAdapter implements AdaptersInterface
             case 'pdo_mysql':
                 $conn_params = [
                     'driver'           => $driver,
-                    'host '            => $config->get('database.connection.host'),
+                    'host'             => $config->get('database.connection.host'),
                     'user'             => $config->get('database.connection.user'),
                     'password'         => $config->get('database.connection.password'),
                     'dbname'           => $config->get('database.connection.db_name'),
