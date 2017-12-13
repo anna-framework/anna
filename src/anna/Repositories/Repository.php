@@ -5,6 +5,7 @@ namespace Anna\Repositories;
 use Anna\Config;
 use Anna\Databases\Model;
 use Anna\Error;
+use Anna\Exceptions\ModelPropertyException;
 use Anna\Request;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -282,10 +283,20 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
     }
 
     /**
-     * seta um valor na propriedade informada do model, caso contrário lança excessão
+     * Seta um valor na propriedade informada do model, caso contrário lança excessão
+     *
+     * @throws ModelPropertyException
      */
-    public function setValue() {
+    public function setValue($field, $value) {
+        $modelName = get_class($this->model);
+        $fields = $this->manager->getClassMetadata($modelName)
+            ->getFieldNames();
 
+        if(!in_array($field, $fields)) {
+            throw new ModelPropertyException("O campo {$field} não existe no modelo {$modelName}.");
+        }
+
+        $this->model->$field = $value;
     }
 
     /**

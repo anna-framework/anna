@@ -2,4 +2,4 @@
 
 namespace Anna\Exceptions;
 
-class ModelPropertyException {}
+class ModelPropertyException extends \Exception {}
