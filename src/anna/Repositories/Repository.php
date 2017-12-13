@@ -5,6 +5,7 @@ namespace Anna\Repositories;
 use Anna\Config;
 use Anna\Databases\Model;
 use Anna\Error;
+use Anna\Exceptions\ModelPropertyException;
 use Anna\Request;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -269,15 +270,33 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
      * Busca registros nos parametros POST de entrada com o mesmo nome das propriedades do modelo registrado e
      * preenche automaticamente seus valores.
      */
-    public function autoFill()
+    public function autoFill(array $params)
     {
-        $r = new Request();
-        $fields = $this->manager->getClassMetadata(get_class($this->model))->getFieldNames();
+        $fields = $this->manager->getClassMetadata(get_class($this->model))
+            ->getFieldNames();
 
         foreach ($fields as $field) {
-            $value = $r->post($field);
-            $this->model->$field = $value;
+            if (isset($params[$field])) {
+                $this->model->$field = $params[$field];
+            }
         }
+    }
+
+    /**
+     * Seta um valor na propriedade informada do model, caso contrário lança excessão
+     *
+     * @throws ModelPropertyException
+     */
+    public function setValue($field, $value) {
+        $modelName = get_class($this->model);
+        $fields = $this->manager->getClassMetadata($modelName)
+            ->getFieldNames();
+
+        if(!in_array($field, $fields)) {
+            throw new ModelPropertyException("O campo {$field} não existe no modelo {$modelName}.");
+        }
+
+        $this->model->$field = $value;
     }
 
     /**
