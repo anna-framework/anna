@@ -63,7 +63,15 @@ class MakeRepositoryCommand extends Command
                 $declaration .= "\t{".EOL;
                 $declaration .= "\t\t".'$this->model = new '.$model.'();'.EOL;
                 $declaration .= "\t\t".'parent::__construct();'.EOL;
-                $declaration .= "\t}".EOL;
+                $declaration .= "\t}".EOL.EOL;
+
+                $declaration .= "\t".'/**'.EOL;
+                $declaration .= "\t".' * @return '.$model.EOL;
+                $declaration .= "\t".' */'.EOL;
+                $declaration .= "\t".'public function getModel()'.EOL;
+                $declaration .= "\t{".EOL;
+                $declaration .= "\t\t".'return $this->model;'.EOL;
+                $declaration .= "\t}".EOL.EOL;
 
                 $params['construct'] = $declaration;
                 $params['use_model'] = 'use '.$root_ns.'\\Models\\'.$model.';';
