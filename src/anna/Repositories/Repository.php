@@ -269,15 +269,23 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
      * Busca registros nos parametros POST de entrada com o mesmo nome das propriedades do modelo registrado e
      * preenche automaticamente seus valores.
      */
-    public function autoFill()
+    public function autoFill(array $params)
     {
-        $r = new Request();
-        $fields = $this->manager->getClassMetadata(get_class($this->model))->getFieldNames();
+        $fields = $this->manager->getClassMetadata(get_class($this->model))
+            ->getFieldNames();
 
         foreach ($fields as $field) {
-            $value = $r->post($field);
-            $this->model->$field = $value;
+            if (isset($params[$field])) {
+                $this->model->$field = $params[$field];
+            }
         }
+    }
+
+    /**
+     * seta um valor na propriedade informada do model, caso contrário lança excessão
+     */
+    public function setValue() {
+
     }
 
     /**
