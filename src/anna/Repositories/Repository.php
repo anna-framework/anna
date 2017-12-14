@@ -286,12 +286,13 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
      *
      * @throws ModelPropertyException
      */
-    public function setValue($field, $value) {
+    public function setValue($field, $value)
+    {
         $modelName = get_class($this->model);
         $fields = $this->manager->getClassMetadata($modelName)
             ->getFieldNames();
 
-        if(!in_array($field, $fields)) {
+        if (!in_array($field, $fields)) {
             throw new ModelPropertyException("O campo {$field} não existe no modelo {$modelName}.");
         }
 
@@ -315,21 +316,24 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
     /**
      * Inicia transação no banco de dados.
      */
-    public function begin() {
+    public function begin()
+    {
         $this->manager->beginTransaction();
     }
 
     /**
      * Reverte alterações de uma transação.
      */
-    public function rollback() {
+    public function rollback()
+    {
         $this->manager->rollback();
     }
 
     /**
      * Commita as alterações realizadas na transação.
      */
-    public function commit() {
+    public function commit()
+    {
         $this->manager->commit();
     }
 
