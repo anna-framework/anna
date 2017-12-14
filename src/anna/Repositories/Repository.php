@@ -6,7 +6,6 @@ use Anna\Config;
 use Anna\Databases\Model;
 use Anna\Error;
 use Anna\Exceptions\ModelPropertyException;
-use Anna\Request;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
@@ -283,7 +282,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
     }
 
     /**
-     * Seta um valor na propriedade informada do model, caso contrário lança excessão
+     * Seta um valor na propriedade informada do model, caso contrário lança excessão.
      *
      * @throws ModelPropertyException
      */
@@ -314,21 +313,21 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
     }
 
     /**
-     * Inicia transação no banco de dados
+     * Inicia transação no banco de dados.
      */
     public function begin() {
         $this->manager->beginTransaction();
     }
 
     /**
-     * Reverte alterações de uma transação
+     * Reverte alterações de uma transação.
      */
     public function rollback() {
         $this->manager->rollback();
     }
 
     /**
-     * Commita as alterações realizadas na transação
+     * Commita as alterações realizadas na transação.
      */
     public function commit() {
         $this->manager->commit();
