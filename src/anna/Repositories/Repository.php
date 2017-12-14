@@ -268,6 +268,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
     /**
      * Busca registros nos parametros POST de entrada com o mesmo nome das propriedades do modelo registrado e
      * preenche automaticamente seus valores.
+     *
      * @throws \HttpMalformedHeadersException
      */
     public function autoFill(array $params)
@@ -280,27 +281,19 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
             }
 
             if (strstr($field, 'date')) {
-                $dt = \DateTime::createFromFormat("Y-m-d H:i:s", $params[$field]);
-                if ($dt !== false && !array_sum($dt->getLastErrors())){
+                $dt = \DateTime::createFromFormat('Y-m-d H:i:s', $params[$field]);
+                if ($dt !== false && !array_sum($dt->getLastErrors())) {
                     $this->model->$field = $dt;
                     continue;
                 }
 
-                $dt = \DateTime::createFromFormat("Y-m-d", $params[$field]);
-                if ($dt !== false && !array_sum($dt->getLastErrors())){
+                $dt = \DateTime::createFromFormat('Y-m-d', $params[$field]);
+                if ($dt !== false && !array_sum($dt->getLastErrors())) {
                     $this->model->$field = $dt;
                     continue;
                 }
 
                 throw new \HttpMalformedHeadersException("O valor do campo {$field}, é uma data inválida.");
-            }
-
-            if (strstr($field, 'date')) {
-                $dt = \DateTime::createFromFormat("Y-m-d", $params[$field]);
-                if ($dt !== false && !array_sum($dt->getLastErrors())){
-                    $this->model->$field = $dt;
-                }
-                continue;
             }
 
             $this->model->$field = $params[$field];
