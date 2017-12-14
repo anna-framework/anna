@@ -314,6 +314,27 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
     }
 
     /**
+     * Inicia transação no banco de dados
+     */
+    public function begin() {
+        $this->manager->beginTransaction();
+    }
+
+    /**
+     * Reverte alterações de uma transação
+     */
+    public function rollback() {
+        $this->manager->rollback();
+    }
+
+    /**
+     * Commita as alterações realizadas na transação
+     */
+    public function commit() {
+        $this->manager->commit();
+    }
+
+    /**
      * Paginador padrão, efetua a busca com base nos filtros recebidos e retorna componente de paginação.
      *
      * @param int   $page
