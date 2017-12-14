@@ -268,16 +268,35 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
     /**
      * Busca registros nos parametros POST de entrada com o mesmo nome das propriedades do modelo registrado e
      * preenche automaticamente seus valores.
+     *
+     * @throws \HttpMalformedHeadersException
      */
     public function autoFill(array $params)
     {
-        $fields = $this->manager->getClassMetadata(get_class($this->model))
-            ->getFieldNames();
+        $fields = $this->manager->getClassMetadata(get_class($this->model))->getFieldNames();
 
         foreach ($fields as $field) {
-            if (isset($params[$field])) {
-                $this->model->$field = $params[$field];
+            if (!isset($params[$field])) {
+                continue;
             }
+
+            if (strstr($field, 'date')) {
+                $dt = \DateTime::createFromFormat('Y-m-d H:i:s', $params[$field]);
+                if ($dt !== false && !array_sum($dt->getLastErrors())) {
+                    $this->model->$field = $dt;
+                    continue;
+                }
+
+                $dt = \DateTime::createFromFormat('Y-m-d', $params[$field]);
+                if ($dt !== false && !array_sum($dt->getLastErrors())) {
+                    $this->model->$field = $dt;
+                    continue;
+                }
+
+                throw new \HttpMalformedHeadersException("O valor do campo {$field}, é uma data inválida.");
+            }
+
+            $this->model->$field = $params[$field];
         }
     }
 
