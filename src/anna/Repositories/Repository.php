@@ -5,6 +5,7 @@ namespace Anna\Repositories;
 use Anna\Config;
 use Anna\Databases\Model;
 use Anna\Error;
+use Anna\Exceptions\MalformedDateException;
 use Anna\Exceptions\ModelPropertyException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -269,7 +270,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
      * Busca registros nos parametros POST de entrada com o mesmo nome das propriedades do modelo registrado e
      * preenche automaticamente seus valores.
      *
-     * @throws \HttpMalformedHeadersException
+     * @throws MalformedDateException
      */
     public function autoFill(array $params)
     {
@@ -293,7 +294,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
                     continue;
                 }
 
-                throw new \HttpMalformedHeadersException("O valor do campo {$field}, é uma data inválida.");
+                throw new MalformedDateException("O valor do campo {$field}, é uma data inválida.");
             }
 
             $this->model->$field = $params[$field];

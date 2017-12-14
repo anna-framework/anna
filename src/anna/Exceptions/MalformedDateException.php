@@ -2,6 +2,6 @@
 
 namespace Anna\Exceptions;
 
-class MalformedDateException
+class MalformedDateException extends \Exception
 {
 }
