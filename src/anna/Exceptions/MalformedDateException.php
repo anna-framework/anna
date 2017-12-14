@@ -4,5 +4,4 @@ namespace Anna\Exceptions;
 
 class MalformedDateException
 {
-
 }
