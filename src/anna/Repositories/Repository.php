@@ -51,8 +51,9 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
      *
      * @param mixed $model Qualquer entidade válida do Doctrine
      *
-     * @return bool
      * @throws \Exception
+     *
+     * @return bool
      */
     public function save($model = null)
     {
