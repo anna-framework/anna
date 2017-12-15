@@ -8,6 +8,7 @@ use Anna\Error;
 use Anna\Exceptions\MalformedDateException;
 use Anna\Exceptions\ModelPropertyException;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
@@ -36,7 +37,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
      *
      * @var Model
      */
-    protected $model;
+    public $model;
 
     /**
      * Não é necessário esta declaração, é apenas para gerar autocomplete nas IDE's.
@@ -51,24 +52,28 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
      * @param mixed $model Qualquer entidade válida do Doctrine
      *
      * @return bool
+     * @throws \Exception
      */
     public function save($model = null)
     {
-        $this->model = $model ? $model : $this->model;
+        $model = $model ? $model : $this->model;
 
-        if ($this->model->id) {
+        if ($model->id) {
             return $this->edit();
         }
 
-        $this->model->created_at = new \DateTime('now');
+        $model->created_at = new \DateTime('now');
 
         try {
-            $this->manager->persist($this->model);
-            $this->manager->flush();
+            $this->manager->persist($model);
+            $this->manager->flush($model);
+            $this->model = $model;
+        } catch (OptimisticLockException $oe) {
+            Error::logFile($oe->getMessage());
+            throw $oe;
         } catch (\Exception $e) {
-            Error::log($e);
-
-            return false;
+            Error::logFile($e->getMessage());
+            throw $e;
         }
 
         return true;
