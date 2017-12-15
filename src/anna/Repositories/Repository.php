@@ -71,9 +71,11 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
             $this->model = $model;
         } catch (OptimisticLockException $oe) {
             Error::logFile($oe->getMessage());
+
             throw $oe;
         } catch (\Exception $e) {
             Error::logFile($e->getMessage());
+
             throw $e;
         }
 
