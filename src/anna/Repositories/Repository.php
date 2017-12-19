@@ -201,6 +201,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
     {
         try {
             $this->manager->persist($model);
+            $this->manager->flush();
         } catch (\Exception  $e) {
             Error::log($e);
 
