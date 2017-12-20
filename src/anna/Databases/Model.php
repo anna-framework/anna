@@ -27,7 +27,8 @@ class Model
      */
     public $deleted_at;
 
-    public function __construct () {
+    public function __construct ()
+    {
         $this->created_at = new \DateTime('now');
     }
 }
