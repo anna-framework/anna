@@ -45,6 +45,16 @@ class Request extends \Symfony\Component\HttpFoundation\Request
     }
 
     /**
+     * Retorna todos os parametros recebidos via get.
+     *
+     * @return mixed
+     */
+    public function getAll()
+    {
+        return $this->query->all();
+    }
+
+    /**
      * Retorna parametros recebidos via post.
      *
      * @param string $param
@@ -52,6 +62,16 @@ class Request extends \Symfony\Component\HttpFoundation\Request
     public function post($param)
     {
         return $this->request->get($param);
+    }
+
+    /**
+     * Retorna todos os parametros recebidos via post.
+     *
+     * @param string $param
+     */
+    public function postAll()
+    {
+        return $this->request->all();
     }
 
     /**

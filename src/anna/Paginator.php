@@ -151,6 +151,13 @@ class Paginator
         $this->url_params[$params] = $value;
     }
 
+    public function getInfo() {
+        return [
+            'total_pages' => $this->total_pages,
+            'active_page' => $this->active_page
+        ];
+    }
+
     private function makeUrl()
     {
         $base_path = path('').$this->path.'?';
