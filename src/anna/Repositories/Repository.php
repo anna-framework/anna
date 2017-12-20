@@ -372,7 +372,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
      * @param int   $page
      * @param array $filters
      *
-     * @return Paginator
+     * @return \Anna\Paginator
      */
     public function paginate($page = 1, $filters = null)
     {
@@ -399,13 +399,10 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
 
         try {
             $paginator = new Paginator($query);
+            $paginator = new \Anna\Paginator($paginator, $this->per_page, $page);
         } catch (\Exception  $e) {
             Error::log($e);
-
-            return false;
         }
-
-        $paginator = new \Anna\Paginator($paginator, $this->per_page, $page);
 
         return $paginator;
     }
