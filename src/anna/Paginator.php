@@ -33,7 +33,9 @@ class Paginator
     public function __construct($result, $per_page, $active_page)
     {
         $this->total_items = $result->count();
-        $this->total_pages = ceil($this->total_items / $per_page);
+
+        $this->total_pages = $per_page ? ceil($this->total_items / $per_page) : 1;
+
         $this->per_page = $per_page;
         $this->active_page = $active_page;
         $this->result = $result;
