@@ -26,4 +26,9 @@ class Model
      * @Column(type="datetime", nullable=true)
      */
     public $deleted_at;
+
+    public function __construct()
+    {
+        $this->created_at = new \DateTime('now');
+    }
 }
