@@ -230,7 +230,13 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
 
     public function find($id)
     {
-        return $this->manager->find(get_class($this->model), $id);
+        $model = $this->manager->find(get_class($this->model), $id);
+
+        if ($model) {
+           $this->model = $model;
+        }
+
+        return $model;
     }
 
     /**
@@ -278,10 +284,18 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
      * Busca registros nos parametros POST de entrada com o mesmo nome das propriedades do modelo registrado e
      * preenche automaticamente seus valores.
      *
+     * @return Model
+     *
      * @throws MalformedDateException
      */
-    public function autoFill(array $params)
+    public function autoFill(array $params, string $modelClass = null)
     {
+        if (!empty($modelClass)) {
+
+            $this->model = new $modelClass();
+            $this->model->created_at = new \DateTime('now');
+        }
+
         $fields = $this->manager->getClassMetadata(get_class($this->model))->getFieldNames();
 
         foreach ($fields as $field) {
@@ -307,6 +321,8 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
 
             $this->model->$field = $params[$field];
         }
+
+        return $this->model;
     }
 
     /**
@@ -407,5 +423,13 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
         $paginator = new \Anna\Paginator($paginator, $this->per_page, $page);
 
         return $paginator;
+    }
+
+    /**
+     * @return EntityManager
+     */
+    public function getEntityManager()
+    {
+        return $this->manager;
     }
 }
