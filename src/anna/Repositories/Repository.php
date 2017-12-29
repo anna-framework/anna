@@ -233,7 +233,7 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
         $model = $this->manager->find(get_class($this->model), $id);
 
         if ($model) {
-           $this->model = $model;
+            $this->model = $model;
         }
 
         return $model;
@@ -284,9 +284,9 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
      * Busca registros nos parametros POST de entrada com o mesmo nome das propriedades do modelo registrado e
      * preenche automaticamente seus valores.
      *
-     * @return Model
-     *
      * @throws MalformedDateException
+     *
+     * @return Model
      */
     public function autoFill(array $params, string $modelClass = null)
     {
