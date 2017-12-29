@@ -291,7 +291,6 @@ class Repository extends \Anna\Repositories\Abstracts\Repository
     public function autoFill(array $params, string $modelClass = null)
     {
         if (!empty($modelClass)) {
-
             $this->model = new $modelClass();
             $this->model->created_at = new \DateTime('now');
         }
