@@ -79,6 +79,7 @@ class MakeControllerCommand extends Command
 
         fwrite($hand, $template);
         fclose($hand);
+        chmod($cmd_file_path, 777);
 
         //add controlador na router
         if (!$this->addControllerToRoute($class_name)) {
