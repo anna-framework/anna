@@ -82,7 +82,7 @@ class Request extends \Symfony\Component\HttpFoundation\Request
      */
     public function getAuthToken()
     {
-        $headers = getallheaders();
+        $headers = \getallheaders();
 
         if (!isset($headers['Authorization']) && !isset($headers['authorization'])) {
             return;
