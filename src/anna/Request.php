@@ -1,6 +1,7 @@
 <?php
 
 namespace Anna;
+use function PHPSTORM_META\elementType;
 
 /**
  * -------------------------------------------------------------
@@ -82,15 +83,27 @@ class Request extends \Symfony\Component\HttpFoundation\Request
      */
     public function getAuthToken()
     {
-        $headers = \getallheaders();
+        $tmp = [];
 
-        if (!isset($headers['Authorization']) && !isset($headers['authorization'])) {
-            return;
-        } else {
-            $header = isset($headers['Authorization']) ? $headers['Authorization'] : $headers['authorization'];
+        if (function_exists("getallheaders")) {
+            $headers = getallheaders();
+
+            if (!isset($headers['Authorization']) && !isset($headers['authorization'])) {
+                return;
+            } else {
+                $header = isset($headers['Authorization']) ? $headers['Authorization'] : $headers['authorization'];
+            }
+
+            $tmp = explode(' ', $header);
         }
 
-        $tmp = explode(' ', $header);
+        if (count($tmp) == 0 && isset($_SERVER['HTTP_AUTHORIZATION']) && $_SERVER['HTTP_AUTHORIZATION'] != '') {
+            $tmp = explode(' ', $_SERVER['HTTP_AUTHORIZATION']);
+        }
+
+        if (count($tmp) == 0) {
+            return;
+        }
 
         return end($tmp);
     }
